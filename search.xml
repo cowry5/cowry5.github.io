@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2F2018%2F05%2F11%2Ftest%2F</url>
-    <content type="text"><![CDATA[update test]]></content>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[你好，熊猫]]></title>
     <url>%2F2018%2F05%2F10%2F%E4%BD%A0%E5%A5%BD%EF%BC%8C%E7%86%8A%E7%8C%AB%2F</url>
     <content type="text"><![CDATA[哈哈]]></content>
