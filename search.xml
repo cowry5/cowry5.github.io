@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[180514_githubpages]]></title>
+    <title><![CDATA[GitHub Pages自定义域名如何支持https]]></title>
     <url>%2F2018%2F05%2F14%2F180514-githubpages%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[你好，熊猫]]></title>
