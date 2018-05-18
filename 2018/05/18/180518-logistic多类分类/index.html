@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="日常," />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -86,18 +86,26 @@
 
 
 
-<meta name="description" content="哈哈">
-<meta name="keywords" content="日常">
+<meta name="description" content="在此练习中，我们将使用logistic回归和神经网络来识别手写数字（0到9）。  1 多类分类(多个logistic回归)我们将扩展我们在练习2中写的logistic回归的实现，并将其应用于一对多的分类（不止两个类别）。 1234import numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom scipy.io im">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="你好，熊猫">
-<meta property="og:url" content="https://yoursite.com/2018/05/10/你好，熊猫/index.html">
+<meta property="og:title" content="Classification">
+<meta property="og:url" content="https://yoursite.com/2018/05/18/180518-logistic多类分类/index.html">
 <meta property="og:site_name" content="Cowry">
-<meta property="og:description" content="哈哈">
+<meta property="og:description" content="在此练习中，我们将使用logistic回归和神经网络来识别手写数字（0到9）。  1 多类分类(多个logistic回归)我们将扩展我们在练习2中写的logistic回归的实现，并将其应用于一对多的分类（不止两个类别）。 1234import numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom scipy.io im">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-11T10:16:56.279Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-604bde982f259637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-3f99fe13b4723feb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-f5d7c8b3f6b35e39.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-1af1ed720e55c31c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-7789f0fc5c892088.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-3c2d4648764aa9e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-89dc912947b3e9ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-18T10:09:59.702Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你好，熊猫">
-<meta name="twitter:description" content="哈哈">
+<meta name="twitter:title" content="Classification">
+<meta name="twitter:description" content="在此练习中，我们将使用logistic回归和神经网络来识别手写数字（0到9）。  1 多类分类(多个logistic回归)我们将扩展我们在练习2中写的logistic回归的实现，并将其应用于一对多的分类（不止两个类别）。 1234import numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom scipy.io im">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-604bde982f259637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -127,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="https://yoursite.com/2018/05/10/你好，熊猫/"/>
+  <link rel="canonical" href="https://yoursite.com/2018/05/18/180518-logistic多类分类/"/>
 
 
 
 
 
-  <title>你好，熊猫 | Cowry</title>
+  <title>Classification | Cowry</title>
   
 
 
@@ -304,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/10/你好，熊猫/">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/18/180518-logistic多类分类/">
 
     <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
       <meta itemprop="name" content="Cowry">
@@ -321,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">你好，熊猫</h1>
+          <h1 class="post-title" itemprop="name headline">Classification</h1>
         
 
         <div class="post-meta">
@@ -333,8 +341,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-10T23:53:23+08:00">
-                2018-05-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-18T17:50:31+08:00">
+                2018-05-18
               </time>
             
 
@@ -356,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/日常/" itemprop="url" rel="index">
-                    <span itemprop="name">日常</span>
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
                   </a>
                 </span>
 
@@ -373,7 +381,7 @@
 
           
           
-             <span id="/2018/05/10/你好，熊猫/" class="leancloud_visitors" data-flag-title="你好，熊猫">
+             <span id="/2018/05/18/180518-logistic多类分类/" class="leancloud_visitors" data-flag-title="Classification">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -398,7 +406,7 @@
                   <span class="post-meta-item-text">Words count&#58;</span>
                 
                 <span title="Words count">
-                  2
+                  2,042
                 </span>
               
 
@@ -414,7 +422,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  9
                 </span>
               
             </div>
@@ -435,7 +443,57 @@
       
 
       
-        <h2 id="哈哈"><a href="#哈哈" class="headerlink" title="哈哈"></a>哈哈</h2>
+        <blockquote>
+<p>在此练习中，我们将使用logistic回归和神经网络来识别手写数字（0到9）。</p>
+</blockquote>
+<h1 id="1-多类分类-多个logistic回归"><a href="#1-多类分类-多个logistic回归" class="headerlink" title="1 多类分类(多个logistic回归)"></a>1 多类分类(多个logistic回归)</h1><p>我们将扩展我们在练习2中写的logistic回归的实现，并将其应用于一对多的分类（不止两个类别）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> loadmat</span><br></pre></td></tr></table></figure>
+<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><p>首先，加载数据集。这里的数据为MATLAB的格式，所以要使用SciPy.io的loadmat函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">(path)</span>:</span></span><br><span class="line">    data = loadmat(path)</span><br><span class="line">    X = data[<span class="string">'X'</span>]</span><br><span class="line">    y = data[<span class="string">'y'</span>]</span><br><span class="line">    <span class="keyword">return</span> X,y</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X, y = load_data(<span class="string">'ex3data1.mat'</span>)</span><br><span class="line">print(np.unique(y))  <span class="comment"># 看下有几类标签</span></span><br><span class="line"><span class="comment"># [ 1  2  3  4  5  6  7  8  9 10]</span></span><br><span class="line">X.shape, y.shape</span><br><span class="line"><span class="comment"># ((5000, 400), (5000, 1))</span></span><br></pre></td></tr></table></figure>
+<p>其中有5000个训练样本，每个样本是20*20像素的数字的灰度图像。每个像素代表一个浮点数，表示该位置的灰度强度。20×20的像素网格被展开成一个400维的向量。在我们的数据矩阵X中，每一个样本都变成了一行，这给了我们一个5000×400矩阵X，每一行都是一个手写数字图像的训练样本。<br><img src="https://upload-images.jianshu.io/upload_images/11023262-604bde982f259637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>第一个任务是将我们的逻辑回归实现修改为完全向量化（即没有“for”循环）。这是因为向量化代码除了简洁外，还能够利用线性代数优化，并且通常比迭代代码快得多。</p>
+<h2 id="1-2-Visualizing-the-data"><a href="#1-2-Visualizing-the-data" class="headerlink" title="1.2 Visualizing the data"></a>1.2 Visualizing the data</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_an_image</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    随机打印一个数字</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    pick_one = np.random.randint(<span class="number">0</span>, <span class="number">5000</span>)</span><br><span class="line">    image = X[pick_one, :]</span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    ax.matshow(image.reshape((<span class="number">20</span>, <span class="number">20</span>)), cmap=<span class="string">'gray_r'</span>)</span><br><span class="line">    plt.xticks([])  <span class="comment"># 去除刻度，美观</span></span><br><span class="line">    plt.yticks([])</span><br><span class="line">    plt.show()</span><br><span class="line">    print(<span class="string">'this should be &#123;&#125;'</span>.format(y[pick_one]))</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-3f99fe13b4723feb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_100_image</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="string">""" </span></span><br><span class="line"><span class="string">    随机画100个数字</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    sample_idx = np.random.choice(np.arange(X.shape[<span class="number">0</span>]), <span class="number">100</span>)  <span class="comment"># 随机选100个样本</span></span><br><span class="line">    sample_images = X[sample_idx, :]  <span class="comment"># (100,400)</span></span><br><span class="line">    </span><br><span class="line">    fig, ax_array = plt.subplots(nrows=<span class="number">10</span>, ncols=<span class="number">10</span>, sharey=<span class="keyword">True</span>, sharex=<span class="keyword">True</span>, figsize=(<span class="number">8</span>, <span class="number">8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">for</span> column <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">            ax_array[row, column].matshow(sample_images[<span class="number">10</span> * row + column].reshape((<span class="number">20</span>, <span class="number">20</span>)),</span><br><span class="line">                                   cmap=<span class="string">'gray_r'</span>)</span><br><span class="line">    plt.xticks([])</span><br><span class="line">    plt.yticks([])        </span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-f5d7c8b3f6b35e39.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="1-3-Vectorizing-Logistic-Regression"><a href="#1-3-Vectorizing-Logistic-Regression" class="headerlink" title="1.3 Vectorizing Logistic Regression"></a>1.3 Vectorizing Logistic Regression</h2><p>我们将使用多个<code>one-vs-all</code>(一对多)logistic回归模型来构建一个多类分类器。由于有10个类，需要训练10个独立的分类器。为了提高训练效率，重要的是<strong>向量化</strong>。在本节中，我们将实现一个不使用任何for循环的向量化的logistic回归版本。</p>
+<p>首先准备下数据。</p>
+<h3 id="1-3-1-Vectorizing-the-cost-function"><a href="#1-3-1-Vectorizing-the-cost-function" class="headerlink" title="1.3.1 Vectorizing the cost function"></a>1.3.1 Vectorizing the cost function</h3><p>首先写出向量化的代价函数。回想正则化的logistic回归的代价函数是：<br>
+$$ J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{[-{{y}^{(i)}}\log \left( {{h}_{\theta }}\left( {{x}^{(i)}} \right) \right)-\left( 1-{{y}^{(i)}} \right)\log \left( 1-{{h}_{\theta }}\left( {{x}^{(i)}} \right) \right)]}+\frac{\lambda}{2m}\sum^n_{j=1}\theta^2_j $$
+
+首先我们对每个样本 $i$ 要计算$h_{\theta}(x^{(i)})$，$h_{\theta}(x^{(i)})=g(\theta^Tx^{(i)})$，$g(z)=\frac{1}{1+e^{-z}}$ sigmoid函数。
+<br>事实上我们可以对所有的样本用矩阵乘法来快速的计算。让我们如下来定义 $X$ 和 $\theta$ ：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-1af1ed720e55c31c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>然后通过计算矩阵积 $X\theta$ ，我们可以得到：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-7789f0fc5c892088.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>在最后一个等式中，我们用到了一个定理，如果 $a$ 和 $b$ 都是向量，那么 $a^Tb=b^Ta$，这样我们就可以用一行代码计算出所有的样本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">regularized_cost</span><span class="params">(theta, X, y, l)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    don't penalize theta_0</span></span><br><span class="line"><span class="string">    args:</span></span><br><span class="line"><span class="string">        X: feature matrix, (m, n+1) # 插入了x0=1</span></span><br><span class="line"><span class="string">        y: target vector, (m, )</span></span><br><span class="line"><span class="string">        l: lambda constant for regularization</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    thetaReg = theta[<span class="number">1</span>:]</span><br><span class="line">    first = (-y*np.log(sigmoid(X@theta))) + (y<span class="number">-1</span>)*np.log(<span class="number">1</span>-sigmoid(X@theta))</span><br><span class="line">    reg = (thetaReg@thetaReg)*l / (<span class="number">2</span>*len(X))</span><br><span class="line">    <span class="keyword">return</span> np.mean(first) + reg</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-2-Vectorizing-the-gradient"><a href="#1-3-2-Vectorizing-the-gradient" class="headerlink" title="1.3.2 Vectorizing the gradient"></a>1.3.2 Vectorizing the gradient</h3><p>回顾正则化logistic回归代价函数的梯度下降法如下表示，因为不惩罚<code>theta_0</code>，所以分为两种情况：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-3c2d4648764aa9e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>所以其中的梯度表示如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">regularized_gradient</span><span class="params">(theta, X, y, l)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    don't penalize theta_0</span></span><br><span class="line"><span class="string">    args:</span></span><br><span class="line"><span class="string">        l: lambda constant</span></span><br><span class="line"><span class="string">    return:</span></span><br><span class="line"><span class="string">        a vector of gradient</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    thetaReg = theta[<span class="number">1</span>:]</span><br><span class="line">    first = (<span class="number">1</span> / len(X)) * X.T @ (sigmoid(X @ theta) - y)</span><br><span class="line">    <span class="comment"># 这里人为插入一维0，使得对theta_0不惩罚，方便计算</span></span><br><span class="line">    reg = np.concatenate([np.array([<span class="number">0</span>]), (l / len(X)) * thetaReg])</span><br><span class="line">    <span class="keyword">return</span> first + reg</span><br></pre></td></tr></table></figure>
+<h2 id="1-4-One-vs-all-Classification"><a href="#1-4-One-vs-all-Classification" class="headerlink" title="1.4 One-vs-all Classification"></a>1.4 One-vs-all Classification</h2><p>这部分我们将实现一对多分类通过训练多个正则化logistic回归分类器，每个对应数据集中K类中的一个。</p>
+<p>对于这个任务，我们有10个可能的类，并且由于logistic回归只能一次在2个类之间进行分类，每个分类器在“类别 i”和“不是 i”之间决定。 我们将把分类器训练包含在一个函数中，该函数计算10个分类器中的每个分类器的最终权重，并将权重返回shape为(k, (n+1))数组，其中 n 是参数数量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> minimize</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">one_vs_all</span><span class="params">(X, y, l, K)</span>:</span></span><br><span class="line">    <span class="string">"""generalized logistic regression</span></span><br><span class="line"><span class="string">    args:</span></span><br><span class="line"><span class="string">        X: feature matrix, (m, n+1) # with incercept x0=1</span></span><br><span class="line"><span class="string">        y: target vector, (m, )</span></span><br><span class="line"><span class="string">        l: lambda constant for regularization</span></span><br><span class="line"><span class="string">        K: numbel of labels</span></span><br><span class="line"><span class="string">    return: trained parameters</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    all_theta = np.zeros((K, X.shape[<span class="number">1</span>]))  <span class="comment"># (10, 401)</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, K+<span class="number">1</span>):</span><br><span class="line">        theta = np.zeros(X.shape[<span class="number">1</span>])</span><br><span class="line">        y_i = np.array([<span class="number">1</span> <span class="keyword">if</span> label == i <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">for</span> label <span class="keyword">in</span> y])</span><br><span class="line">    </span><br><span class="line">        ret = minimize(fun=regularized_cost, x0=theta, args=(X, y_i, l), method=<span class="string">'TNC'</span>,</span><br><span class="line">                        jac=regularized_gradient, options=&#123;<span class="string">'disp'</span>: <span class="keyword">True</span>&#125;)</span><br><span class="line">        all_theta[i<span class="number">-1</span>,:] = ret.x</span><br><span class="line">                         </span><br><span class="line">    <span class="keyword">return</span> all_theta</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的几点：首先，我们为X添加了一列常数项 1 ，以计算截距项（常数项）。 其次，我们将y从类标签转换为每个分类器的二进制值（要么是类i，要么不是类i）。 最后，我们使用SciPy的较新优化API来最小化每个分类器的代价函数。 如果指定的话，API将采用目标函数，初始参数集，优化方法和jacobian（渐变）函数。 然后将优化程序找到的参数分配给参数数组。</p>
+<p>实现向量化代码的一个更具挑战性的部分是正确地写入所有的矩阵，保证维度正确。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict_all</span><span class="params">(X, all_theta)</span>:</span></span><br><span class="line">    <span class="comment"># compute the class probability for each class on each training instance   </span></span><br><span class="line">    h = sigmoid(X @ all_theta.T)  <span class="comment"># 注意的这里的all_theta需要转置</span></span><br><span class="line">    <span class="comment"># create array of the index with the maximum probability</span></span><br><span class="line">    <span class="comment"># Returns the indices of the maximum values along an axis.</span></span><br><span class="line">    h_argmax = np.argmax(h, axis=<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># because our array was zero-indexed we need to add one for the true label prediction</span></span><br><span class="line">    h_argmax = h_argmax + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> h_argmax</span><br></pre></td></tr></table></figure>
+<p>这里的<code>h</code>共5000行，10列，每行代表一个样本，每列是预测对应数字的概率。我们取概率最大对应的index加1就是我们分类器最终预测出来的类别。返回的<code>h_argmax</code>是一个array，包含5000个样本对应的预测值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">raw_X, raw_y = load_data(<span class="string">'ex3data1.mat'</span>)</span><br><span class="line">X = np.insert(raw_X, <span class="number">0</span>, <span class="number">0</span>, axis=<span class="number">1</span>) <span class="comment"># (5000, 401)</span></span><br><span class="line">y = raw_y.flatten()  <span class="comment"># 这里消除了一个维度，方便后面的计算 or .reshape(-1) （5000，）</span></span><br><span class="line"></span><br><span class="line">all_theta = one_vs_all(X, y, <span class="number">1</span>, <span class="number">10</span>)</span><br><span class="line">all_theta  <span class="comment"># 每一行是一个分类器的一组参数</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred = predict_all(X, all_theta)</span><br><span class="line">accuracy = np.mean(y_pred == y)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'accuracy = &#123;0&#125;%'</span>.format(accuracy * <span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+<p><strong>Tips: python中 true就是1，1就是true，false就是0，0就是false</strong></p>
+<h1 id="2-Neural-Networks"><a href="#2-Neural-Networks" class="headerlink" title="2 Neural Networks"></a>2 Neural Networks</h1><p>上面使用了多类logistic回归，然而logistic回归不能形成更复杂的假设，因为它只是一个线性分类器。</p>
+<p>接下来我们用神经网络来尝试下，神经网络可以实现非常复杂的非线性的模型。我们将利用已经训练好了的权重进行预测。<br><img src="https://upload-images.jianshu.io/upload_images/11023262-89dc912947b3e9ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_weight</span><span class="params">(path)</span>:</span></span><br><span class="line">    data = loadmat(path)</span><br><span class="line">    <span class="keyword">return</span> data[<span class="string">'Theta1'</span>], data[<span class="string">'Theta2'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">theta1, theta2 = load_weight(<span class="string">'ex3weights.mat'</span>)</span><br><span class="line"></span><br><span class="line">theta1.shape, theta2.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X, y = load_data(<span class="string">'ex3data1.mat'</span>)</span><br><span class="line">y = y.flatten()</span><br><span class="line">X = np.insert(X, <span class="number">0</span>, values=np.ones(X.shape[<span class="number">0</span>]), axis=<span class="number">1</span>)  <span class="comment"># intercept</span></span><br><span class="line"></span><br><span class="line">X.shape, y.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a1 = X</span><br><span class="line">z2 = a1 @ theta1.T</span><br><span class="line">z2.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z2 = np.insert(z2, <span class="number">0</span>, <span class="number">1</span>, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a2 = sigmoid(z2)</span><br><span class="line">a2.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">z3 = a2 @ theta2.T</span><br><span class="line">z3.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a3 = sigmoid(z3)</span><br><span class="line">a3.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred = np.argmax(a3, axis=<span class="number">1</span>) + <span class="number">1</span> </span><br><span class="line">accuracy = np.mean(y_pred == y)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'accuracy = &#123;0&#125;%'</span>.format(accuracy * <span class="number">100</span>))  <span class="comment"># accuracy = 97.52%</span></span><br></pre></td></tr></table></figure>
+<p>虽然人工神经网络是非常强大的模型，但训练数据的准确性并不能完美预测实际数据，在这里很容易过拟合。</p>
+
       
     </div>
     
@@ -460,7 +518,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/日常/" rel="tag"><i class="fa fa-tag"></i> 日常</a>
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
           
         </div>
       
@@ -473,15 +531,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/05/14/180514-githubpages/" rel="next" title="GitHub Pages自定义域名如何支持https">
+                <i class="fa fa-chevron-left"></i> GitHub Pages自定义域名如何支持https
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/14/180514-githubpages/" rel="prev" title="GitHub Pages自定义域名如何支持https">
-                GitHub Pages自定义域名如何支持https <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -644,7 +702,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈哈"><span class="nav-number">1.</span> <span class="nav-text">哈哈</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-多类分类-多个logistic回归"><span class="nav-number">1.</span> <span class="nav-text">1 多类分类(多个logistic回归)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Visualizing-the-data"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Visualizing the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Vectorizing-Logistic-Regression"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Vectorizing Logistic Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-Vectorizing-the-cost-function"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 Vectorizing the cost function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-Vectorizing-the-gradient"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 Vectorizing the gradient</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-One-vs-all-Classification"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 One-vs-all Classification</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Neural-Networks"><span class="nav-number">2.</span> <span class="nav-text">2 Neural Networks</span></a></li></ol></div>
             
 
           </div>
@@ -1331,6 +1389,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
