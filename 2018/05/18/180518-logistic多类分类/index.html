@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-7789f0fc5c892088.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-3c2d4648764aa9e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-89dc912947b3e9ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-18T10:12:16.862Z">
+<meta property="og:updated_time" content="2018-05-18T10:26:44.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达机器学习作业Python实现(三)：多类分类和前馈神经网络">
 <meta name="twitter:description" content="在此练习中，我们将使用logistic回归和神经网络来识别手写数字（0到9）。  1 多类分类(多个logistic回归)我们将扩展我们在练习2中写的logistic回归的实现，并将其应用于一对多的分类（不止两个类别）。 1234import numpy as npimport pandas as pdimport matplotlib.pyplot as pltfrom scipy.io im">
@@ -461,9 +461,8 @@
 <p>首先准备下数据。</p>
 <h3 id="1-3-1-Vectorizing-the-cost-function"><a href="#1-3-1-Vectorizing-the-cost-function" class="headerlink" title="1.3.1 Vectorizing the cost function"></a>1.3.1 Vectorizing the cost function</h3><p>首先写出向量化的代价函数。回想正则化的logistic回归的代价函数是：<br>
 $$ J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{[-{{y}^{(i)}}\log \left( {{h}_{\theta }}\left( {{x}^{(i)}} \right) \right)-\left( 1-{{y}^{(i)}} \right)\log \left( 1-{{h}_{\theta }}\left( {{x}^{(i)}} \right) \right)]}+\frac{\lambda}{2m}\sum^n_{j=1}\theta^2_j $$
-
-首先我们对每个样本 $i$ 要计算$h_{\theta}(x^{(i)})$，$h_{\theta}(x^{(i)})=g(\theta^Tx^{(i)})$，$g(z)=\frac{1}{1+e^{-z}}$ sigmoid函数。
-<br>事实上我们可以对所有的样本用矩阵乘法来快速的计算。让我们如下来定义 $X$ 和 $\theta$ ：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-1af1ed720e55c31c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<br>首先我们对每个样本 $i$ 要计算$h_{\theta}(x^{(i)})$，$h_{\theta}(x^{(i)})=g(\theta^Tx^{(i)})$，$g(z)=\frac{1}{1+e^{-z}}$ sigmoid函数。</p>
+<p>事实上我们可以对所有的样本用矩阵乘法来快速的计算。让我们如下来定义 $X$ 和 $\theta$ ：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-1af1ed720e55c31c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>然后通过计算矩阵积 $X\theta$ ，我们可以得到：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-7789f0fc5c892088.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>在最后一个等式中，我们用到了一个定理，如果 $a$ 和 $b$ 都是向量，那么 $a^Tb=b^Ta$，这样我们就可以用一行代码计算出所有的样本。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br></pre></td></tr></table></figure>
