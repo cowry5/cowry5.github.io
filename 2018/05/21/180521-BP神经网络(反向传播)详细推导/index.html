@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -86,13 +86,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Cowry">
-<meta property="og:url" content="https://yoursite.com/categories/Github/index.html">
+<meta name="description" content="这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。 在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。 注意接下来所讲是未正则化的神经网络。 1 计算公式1.1 正向传递假设现在">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BP神经网络(反向传播)详细推导">
+<meta property="og:url" content="https://yoursite.com/2018/05/21/180521-BP神经网络(反向传播)详细推导/index.html">
 <meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。 在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。 注意接下来所讲是未正则化的神经网络。 1 计算公式1.1 正向传递假设现在">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-b3c35c9f09bd7386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-829cafcdd84594b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-f5bd8f9b615fdec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-21T12:46:36.058Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cowry">
+<meta name="twitter:title" content="BP神经网络(反向传播)详细推导">
+<meta name="twitter:description" content="这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。 在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。 注意接下来所讲是未正则化的神经网络。 1 计算公式1.1 正向传递假设现在">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-b3c35c9f09bd7386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -122,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://yoursite.com/categories/Github/"/>
+  <link rel="canonical" href="https://yoursite.com/2018/05/21/180521-BP神经网络(反向传播)详细推导/"/>
 
 
 
 
 
-  <title>Category: Github | Cowry</title>
+  <title>BP神经网络(反向传播)详细推导 | Cowry</title>
   
 
 
@@ -157,7 +166,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
@@ -285,55 +294,277 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Github<small>Category</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/21/180521-BP神经网络(反向传播)详细推导/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/05/14/180514-githubpages/" itemprop="url">
-              
-                <span itemprop="name">GitHub Pages自定义域名如何支持https</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">BP神经网络(反向传播)详细推导</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-14T13:09:36+08:00"
-              content="2018-05-14" >
-          05-14
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-21T20:46:31+08:00">
+                2018-05-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/21/180521-BP神经网络(反向传播)详细推导/" class="leancloud_visitors" data-flag-title="BP神经网络(反向传播)详细推导">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  849
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。</p>
+<p>在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。</p>
+<p><strong>注意接下来所讲是未正则化的神经网络。</strong></p>
+<h2 id="1-计算公式"><a href="#1-计算公式" class="headerlink" title="1 计算公式"></a>1 计算公式</h2><h3 id="1-1-正向传递"><a href="#1-1-正向传递" class="headerlink" title="1.1 正向传递"></a>1.1 正向传递</h3><p>假设现在有一个三层的神经网络，如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-b3c35c9f09bd7386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>参数含义：</p>
+<ul>
+<li>$\theta^{(i)}$ 第 $i$ 层的参数矩阵</li>
+<li>$z^{(l)}$ 第 $l$ 层的输入</li>
+<li>$a^{(l)}$ 第 $l$ 层的输出</li>
+</ul>
+<p>传递过程：</p>
+<ul>
+<li>$a^{(1)}=x​$</li>
+<li>$z^{(2)}=\theta^{(1)}a^{(1)}$</li>
+<li>$a^{(2)}=g(z^{(2)}) (add\;a_0^{(2)})$</li>
+<li>$z^{(3)}=\theta^{(2)}a^{(2)}$</li>
+<li>$h=a^{(3)}=g(z^{(3)})$</li>
+</ul>
+<p>其中$g$ 为sigmoid激活函数。</p>
+<h3 id="1-2-反向传播"><a href="#1-2-反向传播" class="headerlink" title="1.2 反向传播"></a>1.2 反向传播</h3><p>我们用$\delta^{(l)}$ 表示每层的”误差“，$y$ 为每个样本的标签，$h$ 为每个样本的预测值。</p>
+<p>先来从后往前计算每层的“误差“。注意到这里的误差用双引号括起来，因为并不是真正的误差。</p>
+<ul>
+<li>$\delta^{(3)}=h-y$  (1)</li>
+<li>$\delta^{(2)}=(\theta^{(2)})^T\delta^{(3)}g^{‘}(z^{(2)})$   (2)</li>
+</ul>
+<p>注意第一层是没有误差的，因为是输入层。</p>
+<p>吴恩达在课里面提到，”误差“的实质是 $\delta^{(l)}=\frac{\partial J}{\partial z^{(l)}}$ ，没错，后面详细说明。</p>
+<p>然后来计算每层参数矩阵的梯度，用$\Delta^{(l)}$ 表示</p>
+<ul>
+<li>$\Delta^{(2)}=a^{(2)}\delta^{(3)}$   (3)</li>
+<li>$\Delta^{(1)}=a^{(1)}\delta^{(2)}$   (4)</li>
+</ul>
+<p>最后网络的总梯度为：</p>
+<ul>
+<li><p>$D=\frac{1}{m}(\Delta^{(1)}+\Delta^{(2)})$   (5)</p>
+<p>到这里反向传播就完成了，接着就可以利用梯度下降法或者更高级的优化算法来训练网络。</p>
+</li>
+</ul>
+<h2 id="2-推导"><a href="#2-推导" class="headerlink" title="2 推导"></a>2 推导</h2><p>这里只推导 $\delta\;和\;\Delta$ 是怎么来的，其余的比较好理解。</p>
+<p>首先明确我们要优化的参数有 $\theta^{(1)}$，$\theta^{(2)}$ ，利用梯度下降法的思想，我们只需要求解出代价函数对参数的梯度即可。</p>
+<p>假设只有一个输入样本，则代价函数是：<br>$$<br>J(\theta)=-ylogh(x)-(1-y)log(1-h)<br>$$<br>回顾下正向传递的过程，理解其中函数的嵌套关系：</p>
+<ul>
+<li>$a^{(1)}=x​$</li>
+<li>$z^{(2)}=\theta^{(1)}a^{(1)}$</li>
+<li>$a^{(2)}=g(z^{(2)}) (add\;a_0^{(2)})$</li>
+<li>$z^{(3)}=\theta^{(2)}a^{(2)}$</li>
+<li>$h=a^{(3)}=g(z^{(3)})$</li>
+</ul>
+<p>然后我们来求解代价函数对参数的梯度，$\frac{\partial}{\partial \theta^{(2)}}J(\theta)$ ，$\frac{\partial}{\partial \theta^{(1)}}J(\theta)$ 。</p>
+<p>根据链式求导法则，可以计算得到：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-829cafcdd84594b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>把我画红线的地方令为$\delta^{(3)}$ ，是不是就得到了反向传播中的公式（1）？</p>
+<p>把画绿线的部分令为$\Delta^{(2)}$ ，就得到了公式（3）。我们接着算：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-f5bd8f9b615fdec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>同样把红线部分令为$\delta^{(3)}$ ，紫色部分令为$\delta^{(2)}$ ，就得到了公式（2）。</p>
+<p>绿线部分令为$\Delta^{(1)}$ ，就得到了公式（4）。</p>
+<p>至此，推导完毕。得到这个规律后，便可以应用到深层次的网络中，计算反向传播时就很方便了。</p>
+<p>上面的公式因为书写麻烦，便只写了结果。如果你用笔去慢慢推几分钟，会发现其实很简单。</p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/18/180518-logistic多类分类/" rel="next" title="吴恩达机器学习作业Python实现(三)：多类分类和前馈神经网络">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(三)：多类分类和前馈神经网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -341,6 +572,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -361,8 +601,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
             
@@ -448,6 +697,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-计算公式"><span class="nav-number">1.</span> <span class="nav-text">1 计算公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-正向传递"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 正向传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-反向传播"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-推导"><span class="nav-number">2.</span> <span class="nav-text">2 推导</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -618,6 +883,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -646,6 +915,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
