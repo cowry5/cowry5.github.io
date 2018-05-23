@@ -86,13 +86,13 @@
 
 
 
-<meta name="description" content="##单变量线性回归 在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as p">
+<meta name="description" content="单变量线性回归在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as pdim">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="吴恩达机器学习作业Python实现(一)：线性回归">
 <meta property="og:url" content="https://yoursite.com/2018/05/18/180523-线性回归/index.html">
 <meta property="og:site_name" content="Cowry">
-<meta property="og:description" content="##单变量线性回归 在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as p">
+<meta property="og:description" content="单变量线性回归在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as pdim">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-73d009ea73abe32d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-61c3e1dc52c27018.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -103,10 +103,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-3129abc7c45f4f98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-674588ea62d0e010.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-b03ccbcb1e810a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-23T09:38:33.599Z">
+<meta property="og:updated_time" content="2018-05-23T09:39:50.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达机器学习作业Python实现(一)：线性回归">
-<meta name="twitter:description" content="##单变量线性回归 在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as p">
+<meta name="twitter:description" content="单变量线性回归在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as pdim">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-73d009ea73abe32d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -445,8 +445,7 @@
       
 
       
-        <p>##单变量线性回归</p>
-<p>在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。<br>您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。</p>
+        <h2 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h2><p>在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。<br>您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
 <p>导入数据，并查看</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">path =  <span class="string">'ex1data1.txt'</span></span><br><span class="line"><span class="comment"># names添加列名，header用指定的行来作为标题，若原无标题且指定标题则设为None</span></span><br><span class="line">data = pd.read_csv(path, header=<span class="keyword">None</span>, names=[<span class="string">'Population'</span>, <span class="string">'Profit'</span>])  </span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
@@ -653,8 +652,17 @@ $$
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
             
@@ -740,6 +748,22 @@ $$
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单变量线性回归"><span class="nav-number">1.</span> <span class="nav-text">单变量线性回归</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
