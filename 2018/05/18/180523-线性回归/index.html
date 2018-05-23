@@ -86,22 +86,28 @@
 
 
 
-<meta name="description" content="这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。 在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。 注意接下来所讲是未正则化的神经网络。 1 计算公式1.1 正向传递假设现在">
+<meta name="description" content="##单变量线性回归 在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as p">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BP神经网络(反向传播)详细推导">
-<meta property="og:url" content="https://yoursite.com/2018/05/21/180521-BP神经网络(反向传播)详细推导/index.html">
+<meta property="og:title" content="吴恩达机器学习作业Python实现(一)：线性回归">
+<meta property="og:url" content="https://yoursite.com/2018/05/18/180523-线性回归/index.html">
 <meta property="og:site_name" content="Cowry">
-<meta property="og:description" content="这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。 在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。 注意接下来所讲是未正则化的神经网络。 1 计算公式1.1 正向传递假设现在">
+<meta property="og:description" content="##单变量线性回归 在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as p">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-b3c35c9f09bd7386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-829cafcdd84594b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-f5bd8f9b615fdec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-21T12:49:32.162Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-73d009ea73abe32d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-61c3e1dc52c27018.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-8dcd0ea6622e2d49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-e08a578edcaac46f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-859ba7db33fc7a20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-7f7cec0b09342336.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-3129abc7c45f4f98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-674588ea62d0e010.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-b03ccbcb1e810a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-23T09:38:33.599Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BP神经网络(反向传播)详细推导">
-<meta name="twitter:description" content="这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。 在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。 注意接下来所讲是未正则化的神经网络。 1 计算公式1.1 正向传递假设现在">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-b3c35c9f09bd7386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="吴恩达机器学习作业Python实现(一)：线性回归">
+<meta name="twitter:description" content="##单变量线性回归 在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。 12345%matplotlib inlineimport numpy as npimport pandas as p">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-73d009ea73abe32d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -131,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https://yoursite.com/2018/05/21/180521-BP神经网络(反向传播)详细推导/"/>
+  <link rel="canonical" href="https://yoursite.com/2018/05/18/180523-线性回归/"/>
 
 
 
 
 
-  <title>BP神经网络(反向传播)详细推导 | Cowry</title>
+  <title>吴恩达机器学习作业Python实现(一)：线性回归 | Cowry</title>
   
 
 
@@ -308,7 +314,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/21/180521-BP神经网络(反向传播)详细推导/">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/18/180523-线性回归/">
 
     <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
       <meta itemprop="name" content="Cowry">
@@ -325,7 +331,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">BP神经网络(反向传播)详细推导</h1>
+          <h1 class="post-title" itemprop="name headline">吴恩达机器学习作业Python实现(一)：线性回归</h1>
         
 
         <div class="post-meta">
@@ -337,8 +343,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-21T20:46:31+08:00">
-                2018-05-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-18T15:50:31+08:00">
+                2018-05-18
               </time>
             
 
@@ -377,7 +383,7 @@
 
           
           
-             <span id="/2018/05/21/180521-BP神经网络(反向传播)详细推导/" class="leancloud_visitors" data-flag-title="BP神经网络(反向传播)详细推导">
+             <span id="/2018/05/18/180523-线性回归/" class="leancloud_visitors" data-flag-title="吴恩达机器学习作业Python实现(一)：线性回归">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,7 +408,7 @@
                   <span class="post-meta-item-text">Words count&#58;</span>
                 
                 <span title="Words count">
-                  849
+                  2,370
                 </span>
               
 
@@ -418,7 +424,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  3
+                  11
                 </span>
               
             </div>
@@ -439,65 +445,107 @@
       
 
       
-        <p>这篇文章主要讨论神经网络的反向传播的细节，“误差”是如何反向传播的，我们又是如何利用梯度来优化参数的。</p>
-<p>在学吴恩达机器学习视频的神经网络那节时，给出了许多公式，比如计算每层的误差，每层参数的梯度，但并没有给出推导过程，可能也是考虑入门级，大多人并不要知道其中含义就可以运用算法了。接下来我会给出详细的推导过程，帮助大家理解。</p>
-<p><strong>注意接下来所讲是未正则化的神经网络。</strong></p>
-<h2 id="1-计算公式"><a href="#1-计算公式" class="headerlink" title="1 计算公式"></a>1 计算公式</h2><h3 id="1-1-正向传递"><a href="#1-1-正向传递" class="headerlink" title="1.1 正向传递"></a>1.1 正向传递</h3><p>假设现在有一个三层的神经网络，如图：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/11023262-b3c35c9f09bd7386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>参数含义：</p>
-<ul>
-<li>$\theta^{(i)}$ 第 $i$ 层的参数矩阵</li>
-<li>$z^{(l)}$ 第 $l$ 层的输入</li>
-<li>$a^{(l)}$ 第 $l$ 层的输出</li>
-</ul>
-<p>传递过程：</p>
-<ul>
-<li>$a^{(1)}=x​$</li>
-<li>$z^{(2)}=\theta^{(1)}a^{(1)}$</li>
-<li>$a^{(2)}=g(z^{(2)}) (add\;a_0^{(2)})$</li>
-<li>$z^{(3)}=\theta^{(2)}a^{(2)}$</li>
-<li>$h=a^{(3)}=g(z^{(3)})$</li>
-</ul>
-<p>其中$g$ 为sigmoid激活函数。</p>
-<h3 id="1-2-反向传播"><a href="#1-2-反向传播" class="headerlink" title="1.2 反向传播"></a>1.2 反向传播</h3><p>我们用$\delta^{(l)}$ 表示每层的”误差“，$y$ 为每个样本的标签，$h$ 为每个样本的预测值。</p>
-<p>先来从后往前计算每层的“误差“。注意到这里的误差用双引号括起来，因为并不是真正的误差。</p>
-<ul>
-<li>$\delta^{(3)}=h-y$  (1)</li>
-<li>$\delta^{(2)}=(\theta^{(2)})^T\delta^{(3)}g^{‘}(z^{(2)})$   (2)</li>
-</ul>
-<p>注意第一层是没有误差的，因为是输入层。</p>
-<p>吴恩达在课里面提到，”误差“的实质是 $\delta^{(l)}=\frac{\partial J}{\partial z^{(l)}}$ ，没错，后面详细说明。</p>
-<p>然后来计算每层参数矩阵的梯度，用$\Delta^{(l)}$ 表示</p>
-<ul>
-<li>$\Delta^{(2)}=a^{(2)}\delta^{(3)}$   (3)</li>
-<li>$\Delta^{(1)}=a^{(1)}\delta^{(2)}$   (4)</li>
-</ul>
-<p>最后网络的总梯度为：</p>
-<ul>
-<li><p>$D=\frac{1}{m}(\Delta^{(1)}+\Delta^{(2)})$   (5)</p>
-<p>到这里反向传播就完成了，接着就可以利用梯度下降法或者更高级的优化算法来训练网络。</p>
-</li>
-</ul>
-<h2 id="2-推导"><a href="#2-推导" class="headerlink" title="2 推导"></a>2 推导</h2><p>这里只推导 $\delta\;和\;\Delta$ 是怎么来的，其余的比较好理解。</p>
-<p>首先明确我们要优化的参数有 $\theta^{(1)}$，$\theta^{(2)}$ ，利用梯度下降法的思想，我们只需要求解出代价函数对参数的梯度即可。</p>
-<p>假设只有一个输入样本，则代价函数是：<br>$$<br>J(\theta)=-ylogh(x)-(1-y)log(1-h)<br>$$<br>回顾下正向传递的过程，理解其中函数的嵌套关系：</p>
-<ul>
-<li>$a^{(1)}=x​$</li>
-<li>$z^{(2)}=\theta^{(1)}a^{(1)}$</li>
-<li>$a^{(2)}=g(z^{(2)}) (add\;a_0^{(2)})$</li>
-<li>$z^{(3)}=\theta^{(2)}a^{(2)}$</li>
-<li>$h=a^{(3)}=g(z^{(3)})$</li>
-</ul>
-<p>然后我们来求解代价函数对参数的梯度，$\frac{\partial}{\partial \theta^{(2)}}J(\theta)$ ，$\frac{\partial}{\partial \theta^{(1)}}J(\theta)$ 。</p>
-<p>根据链式求导法则，可以计算得到：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/11023262-829cafcdd84594b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>把我画红线的地方令为$\delta^{(3)}$ ，是不是就得到了反向传播中的公式（1）？</p>
-<p>把画绿线的部分令为$\Delta^{(2)}$ ，就得到了公式（3）。我们接着算：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/11023262-f5bd8f9b615fdec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>同样把红线部分令为$\delta^{(3)}$ ，紫色部分令为$\delta^{(2)}$ ，就得到了公式（2）。</p>
-<p>绿线部分令为$\Delta^{(1)}$ ，就得到了公式（4）。</p>
-<p>至此，推导完毕。得到这个规律后，便可以应用到深层次的网络中，计算反向传播时就很方便了。</p>
-<p>上面的公式因为书写麻烦，便只写了结果。如果你用笔去慢慢推几分钟，会发现其实很简单。</p>
+        <p>##单变量线性回归</p>
+<p>在本部分的练习中，您将使用一个变量实现线性回归，以预测食品卡车的利润。假设你是一家餐馆的首席执行官，正在考虑不同的城市开设一个新的分店。该连锁店已经在各个城市拥有卡车，而且你有来自城市的利润和人口数据。<br>您希望使用这些数据来帮助您选择将哪个城市扩展到下一个城市。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<p>导入数据，并查看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">path =  <span class="string">'ex1data1.txt'</span></span><br><span class="line"><span class="comment"># names添加列名，header用指定的行来作为标题，若原无标题且指定标题则设为None</span></span><br><span class="line">data = pd.read_csv(path, header=<span class="keyword">None</span>, names=[<span class="string">'Population'</span>, <span class="string">'Profit'</span>])  </span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-73d009ea73abe32d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.describe()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-61c3e1dc52c27018.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>在开始任何任务之前，通过<strong>可视化</strong>来理解数据通常是有用的。<br>对于这个数据集，您可以使用散点图来可视化数据，因为它只有两个属性(利润和人口)。<br>(你在现实生活中遇到的许多其他问题都是多维度的，不能在二维图上画出来。)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.plot(kind=<span class="string">'scatter'</span>, x=<span class="string">'Population'</span>, y=<span class="string">'Profit'</span>, figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-8dcd0ea6622e2d49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_7_0.png"></p>
+<p>现在让我们使用梯度下降来实现线性回归，以最小化成本函数。 以下代码示例中实现的方程在“练习”文件夹中的“ex1.pdf”中有详细说明。</p>
+<p>首先，我们将创建一个以参数θ为特征函数的代价函数<br>
+$$J\left( \theta  \right)=\frac{1}{2m}\sum\limits_{i=1}^{m}{{{\left( {{h}_{\theta }}\left( {{x}^{(i)}} \right)-{{y}^{(i)}} \right)}^{2}}}$$
+其中：${{h}_{\theta }}\left( x \right)={{\theta }^{T}}X={{\theta }_{0}}{{x}_{0}}+{{\theta }_{1}}{{x}_{1}}+{{\theta }_{2}}{{x}_{2}}+...+{{\theta }_{n}}{{x}_{n}}$
+<br>计算代价函数 $J(\theta)$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span><span class="params">(X, y, theta)</span>:</span></span><br><span class="line">    inner = np.power(((X * theta.T) -  y), <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> np.sum(inner) / (<span class="number">2</span> * len(X))</span><br></pre></td></tr></table></figure>
+<p>让我们在训练集中添加一列，以便我们可以使用向量化的解决方案来计算代价和梯度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.insert(<span class="number">0</span>, <span class="string">'Ones'</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>现在我们来做一些变量初始化。</p>
+<p>取最后一列为 y，其余为 X</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set X (training data) and y (target variable)</span></span><br><span class="line">cols = data.shape[<span class="number">1</span>]  <span class="comment"># 列数</span></span><br><span class="line">X = data.iloc[:,<span class="number">0</span>:cols<span class="number">-1</span>]  <span class="comment"># 取前cols-1列，即输入向量</span></span><br><span class="line">y = data.iloc[:,cols<span class="number">-1</span>:cols] <span class="comment"># 取最后一列，即目标向量</span></span><br></pre></td></tr></table></figure>
+<p>观察下 X (训练集) and y (目标变量)是否正确.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X.head()  <span class="comment"># head()是观察前5行</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y.head()</span><br></pre></td></tr></table></figure>
+<p>注意：这里我使用的是matix而不是array，两者基本通用。</p>
+<p>但是matrix的优势就是相对简单的运算符号，比如两个矩阵相乘，就是用符号*，但是array相乘不能这么用，得用方法.dot()<br>array的优势就是不仅仅表示二维，还能表示3、4、5…维，而且在大部分Python程序里，array也是更常用的。</p>
+<p>两者区别：</p>
+<ol>
+<li>对应元素相乘：matrix可以用np.multiply(X2,X1)，array直接X1*X2</li>
+<li>点乘：matrix直接X1*X2，array可以 X1@X2 或 X1.dot(X2) 或 np.dot(X1, X2)</li>
+</ol>
+<p>代价函数是应该是numpy矩阵，所以我们需要转换X和Y，然后才能使用它们。 我们还需要初始化theta。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = np.matrix(X.values)</span><br><span class="line">y = np.matrix(y.values)</span><br><span class="line">theta = np.matrix([<span class="number">0</span>,<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>theta 是一个(1,2)矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">np.array([[<span class="number">0</span>,<span class="number">0</span>]]).shape </span><br><span class="line"><span class="comment"># (1, 2)</span></span><br></pre></td></tr></table></figure>
+<p>看下维度，确保计算没问题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X.shape, theta.shape, y.shape</span><br><span class="line"><span class="comment"># ((97, 2), (1, 2), (97, 1))</span></span><br></pre></td></tr></table></figure>
+<p>计算初始代价函数的值 (theta初始值为0).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeCost(X, y, theta) <span class="comment"># 32.072733877455676</span></span><br></pre></td></tr></table></figure>
+<p>##batch gradient decent（批量梯度下降）<br>
+$$
+J\left( \theta  \right)=\frac{1}{2m}\sum\limits{i=1}^{m}{{{\left( {{h}{\theta }}\left( {{x}^{(i)}} \right)-{{y}^{(i)}} \right)}^{2}}}
+$$
+
+其中：
+$$
+{{h}_{\theta }}\left( x \right)={{\theta }^{T}}X={{\theta }_{0}}{{x}_{0}}+{{\theta }_{1}}{{x}_{1}}+{{\theta }_{2}}{{x}_{2}}+...+{{\theta }_{n}}{{x}_{n}}
+$$
+优化：
+$$
+{{\theta }_{j}}:={{\theta }_{j}}-\alpha \frac{\partial }{\partial {{\theta }_{j}}}J\left( \theta  \right)
+$$
+<br>$$<br>\theta_j:=\theta_j-\alpha\frac{1}{m}\sum^{m}<em>{i=1}(h</em>\theta(x^{(i)}) - y^{(i)})x_j^{(i)}<br>$$<br>使用 vectorization同时更新所有的 θ，可以大大提高效率</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X.shape, theta.shape, y.shape, X.shape[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># ((97, 2), (1, 2), (97, 1), 97)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradientDescent</span><span class="params">(X, y, theta, alpha, epoch)</span>:</span></span><br><span class="line">    <span class="string">"""reuturn theta, cost"""</span></span><br><span class="line">    </span><br><span class="line">    temp = np.matrix(np.zeros(theta.shape))  <span class="comment"># 初始化一个 θ 临时矩阵(1, 2)</span></span><br><span class="line">    parameters = int(theta.flatten().shape[<span class="number">1</span>])  <span class="comment"># 参数 θ的数量</span></span><br><span class="line">    cost = np.zeros(epoch)  <span class="comment"># 初始化一个ndarray，包含每次epoch的cost</span></span><br><span class="line">    m = X.shape[<span class="number">0</span>]  <span class="comment"># 样本数量m</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(epoch):</span><br><span class="line">        <span class="comment"># 利用向量化一步求解</span></span><br><span class="line">        temp =theta - (alpha / m) * (X * theta.T - y).T * X</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 以下是不用Vectorization求解梯度下降</span></span><br><span class="line"><span class="comment">#         error = (X * theta.T) - y  # (97, 1)</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#         for j in range(parameters):</span></span><br><span class="line"><span class="comment">#             term = np.multiply(error, X[:,j])  # (97, 1)</span></span><br><span class="line"><span class="comment">#             temp[0,j] = theta[0,j] - ((alpha / m) * np.sum(term))  # (1,1)</span></span><br><span class="line">            </span><br><span class="line">         theta = temp</span><br><span class="line">         cost[i] = computeCost(X, y, theta)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> theta, cost</span><br></pre></td></tr></table></figure>
+<p>初始化一些附加变量 - 学习速率α和要执行的迭代次数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alpha = <span class="number">0.01</span></span><br><span class="line">epoch = <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>现在让我们运行梯度下降算法来将我们的参数θ适合于训练集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final_theta, cost = gradientDescent(X, y, theta, alpha, epoch)</span><br></pre></td></tr></table></figure>
+<p>最后，我们可以使用我们拟合的参数计算训练模型的代价函数（误差）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeCost(X, y, final_theta)</span><br></pre></td></tr></table></figure>
+<p>现在我们来绘制线性模型以及数据，直观地看出它的拟合。</p>
+<p>np.linspace()在指定的间隔内返回均匀间隔的数字。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(data.Population.min(), data.Population.max(), <span class="number">100</span>)  <span class="comment"># 横坐标</span></span><br><span class="line">f = final_theta[<span class="number">0</span>, <span class="number">0</span>] + (final_theta[<span class="number">0</span>, <span class="number">1</span>] * x)  <span class="comment"># 纵坐标，利润</span></span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">6</span>,<span class="number">4</span>))</span><br><span class="line">ax.plot(x, f, <span class="string">'r'</span>, label=<span class="string">'Prediction'</span>)</span><br><span class="line">ax.scatter(data[<span class="string">'Population'</span>], data.Profit, label=<span class="string">'Traning Data'</span>)</span><br><span class="line">ax.legend(loc=<span class="number">2</span>)  <span class="comment"># 2表示在左上角</span></span><br><span class="line">ax.set_xlabel(<span class="string">'Population'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">'Profit'</span>)</span><br><span class="line">ax.set_title(<span class="string">'Predicted Profit vs. Population Size'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-e08a578edcaac46f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>由于梯度方程式函数也在每个训练迭代中输出一个代价的向量，所以我们也可以绘制。 请注意，线性回归中的代价函数总是降低的 - 这是凸优化问题的一个例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">8</span>,<span class="number">4</span>))</span><br><span class="line">ax.plot(np.arange(epoch), cost, <span class="string">'r'</span>)  <span class="comment"># np.arange()返回等差数组</span></span><br><span class="line">ax.set_xlabel(<span class="string">'Iterations'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">'Cost'</span>)</span><br><span class="line">ax.set_title(<span class="string">'Error vs. Training Epoch'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-859ba7db33fc7a20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>##多变量线性回归</p>
+<p>练习1还包括一个房屋价格数据集，其中有2个变量（房子的大小，卧室的数量）和目标（房子的价格）。 我们使用我们已经应用的技术来分析数据集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path =  <span class="string">'ex1data2.txt'</span></span><br><span class="line">data2 = pd.read_csv(path, names=[<span class="string">'Size'</span>, <span class="string">'Bedrooms'</span>, <span class="string">'Price'</span>])</span><br><span class="line">data2.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-7f7cec0b09342336.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>对于此任务，我们添加了另一个预处理步骤 - <strong>特征归一化</strong>。 这个对于pandas来说很简单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data2 = (data2 - data2.mean()) / data2.std()</span><br><span class="line">data2.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-3129abc7c45f4f98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>现在我们重复第1部分的预处理步骤，并对新数据集运行线性回归程序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add ones column</span></span><br><span class="line">data2.insert(<span class="number">0</span>, <span class="string">'Ones'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set X (training data) and y (target variable)</span></span><br><span class="line">cols = data2.shape[<span class="number">1</span>]</span><br><span class="line">X2 = data2.iloc[:,<span class="number">0</span>:cols<span class="number">-1</span>]</span><br><span class="line">y2 = data2.iloc[:,cols<span class="number">-1</span>:cols]</span><br><span class="line"></span><br><span class="line"><span class="comment"># convert to matrices and initialize theta</span></span><br><span class="line">X2 = np.matrix(X2.values)</span><br><span class="line">y2 = np.matrix(y2.values)</span><br><span class="line">theta2 = np.matrix(np.array([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># perform linear regression on the data set</span></span><br><span class="line">g2, cost2 = gradientDescent(X2, y2, theta2, alpha, epoch)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get the cost (error) of the model</span></span><br><span class="line">computeCost(X2, y2, g2), g2</span><br></pre></td></tr></table></figure>
+<p>我们也可以快速查看这一个的训练进程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>))</span><br><span class="line">ax.plot(np.arange(epoch), cost2, <span class="string">'r'</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">'Iterations'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">'Cost'</span>)</span><br><span class="line">ax.set_title(<span class="string">'Error vs. Training Epoch'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-674588ea62d0e010.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>我们也可以使用scikit-learn的线性回归函数，而不是从头开始实现这些算法。 我们将scikit-learn的线性回归算法应用于第1部分的数据，并看看它的表现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</span><br><span class="line">model = linear_model.LinearRegression()</span><br><span class="line">model.fit(X, y)</span><br></pre></td></tr></table></figure>
+<p>scikit-learn model的预测表现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x = np.array(X[:, <span class="number">1</span>].A1)</span><br><span class="line">f = model.predict(X).flatten()</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">ax.plot(x, f, <span class="string">'r'</span>, label=<span class="string">'Prediction'</span>)</span><br><span class="line">ax.scatter(data.Population, data.Profit, label=<span class="string">'Traning Data'</span>)</span><br><span class="line">ax.legend(loc=<span class="number">2</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">'Population'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">'Profit'</span>)</span><br><span class="line">ax.set_title(<span class="string">'Predicted Profit vs. Population Size'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-b03ccbcb1e810a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>##normal equation（正规方程）<br>
+正规方程是通过求解下面的方程来找出使得代价函数最小的参数的：$\frac{\partial }{\partial {{\theta }_{j}}}J\left( {{\theta }_{j}} \right)=0$ 。
+ 假设我们的训练集特征矩阵为 X（包含了${{x}_{0}}=1$）并且我们的训练集结果为向量 y，则利用正规方程解出向量 $\theta ={{\left( {{X}^{T}}X \right)}^{-1}}{{X}^{T}}y$ 。
+上标T代表矩阵转置，上标-1 代表矩阵的逆。设矩阵$A={{X}^{T}}X$，则：${{\left( {{X}^{T}}X \right)}^{-1}}={{A}^{-1}}$
+
+梯度下降与正规方程的比较：
+
+梯度下降：需要选择学习率α，需要多次迭代，当特征数量n大时也能较好适用，适用于各种类型的模型	
+
+正规方程：不需要选择学习率α，一次计算得出，需要计算${{\left( {{X}^{T}}X \right)}^{-1}}$，如果特征数量n较大则运算代价大，因为矩阵逆的计算时间复杂度为$O(n3)$，通常来说当$n$小于10000 时还是可以接受的，只适用于线性模型，不适合逻辑回归模型等其他模型
+</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正规方程</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalEqn</span><span class="params">(X, y)</span>:</span></span><br><span class="line">    theta = np.linalg.inv(X.T@X)@X.T@y<span class="comment">#X.T@X等价于X.T.dot(X)</span></span><br><span class="line">    <span class="keyword">return</span> theta</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final_theta2=normalEqn(X, y)<span class="comment">#感觉和批量梯度下降的theta的值有点差距</span></span><br><span class="line">final_theta2</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#梯度下降得到的结果是matrix([[-3.24140214,  1.1272942 ]])</span></span><br></pre></td></tr></table></figure>
+<p>在练习2中，我们将看看分类问题的逻辑回归。</p>
 
       
     </div>
@@ -536,8 +584,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/18/180518-logistic多类分类/" rel="next" title="吴恩达机器学习作业Python实现(三)：多类分类和前馈神经网络">
-                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(三)：多类分类和前馈神经网络
+              <a href="/2018/05/14/180514-githubpages/" rel="next" title="GitHub Pages自定义域名如何支持https">
+                <i class="fa fa-chevron-left"></i> GitHub Pages自定义域名如何支持https
               </a>
             
           </div>
@@ -546,8 +594,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/21/180521-神经网络(反向传播)实现/" rel="prev" title="吴恩达机器学习作业Python实现(四)：神经网络反向传播">
-                吴恩达机器学习作业Python实现(四)：神经网络反向传播 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/18/180523-logistic回归/" rel="prev" title="吴恩达机器学习作业Python实现(二)：logistic回归">
+                吴恩达机器学习作业Python实现(二)：logistic回归 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -605,17 +653,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
             
@@ -701,22 +740,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-计算公式"><span class="nav-number">1.</span> <span class="nav-text">1 计算公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-正向传递"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 正向传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-反向传播"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-推导"><span class="nav-number">2.</span> <span class="nav-text">2 推导</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
