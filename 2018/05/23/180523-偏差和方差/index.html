@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta https-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta https-equiv="Cache-Control" content="no-transform" />
+<meta https-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在本练习中，您将实现正则化的线性回归和多项式回归，并使用它来研究具有不同偏差-方差属性的模型 1 Regularized Linear Regression 正则线性回归在前半部分的练习中，你将实现正则化线性回归，以预测水库中的水位变化，从而预测大坝流出的水量。在下半部分中，您将通过一些调试学习算法的诊断，并检查偏差 v.s. 方差的影响。 1.1 Visualizing the dataset我">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达机器学习作业Python实现(五)：偏差和方差">
+<meta property="og:url" content="https://yoursite.com/2018/05/23/180523-偏差和方差/index.html">
+<meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="在本练习中，您将实现正则化的线性回归和多项式回归，并使用它来研究具有不同偏差-方差属性的模型 1 Regularized Linear Regression 正则线性回归在前半部分的练习中，你将实现正则化线性回归，以预测水库中的水位变化，从而预测大坝流出的水量。在下半部分中，您将通过一些调试学习算法的诊断，并检查偏差 v.s. 方差的影响。 1.1 Visualizing the dataset我">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-1151db61afa0c3cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-33264b2e9f116780.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-a1535bcc657c400a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-9721a484b450634c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-c532ba2077cca7c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-c48c468a598dfe88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-0048932987bbaf06.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-9a0dbba22f3ac523.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-f5d8e5245ad2f20f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-30e6a1a90065ca45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-d44847b5c67bd14a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-6263580110b0edc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-b49c9af8f3f7fad0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-f68c3ac191b31e33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-23T08:22:24.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达机器学习作业Python实现(五)：偏差和方差">
+<meta name="twitter:description" content="在本练习中，您将实现正则化的线性回归和多项式回归，并使用它来研究具有不同偏差-方差属性的模型 1 Regularized Linear Regression 正则线性回归在前半部分的练习中，你将实现正则化线性回归，以预测水库中的水位变化，从而预测大坝流出的水量。在下半部分中，您将通过一些调试学习算法的诊断，并检查偏差 v.s. 方差的影响。 1.1 Visualizing the dataset我">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-1151db61afa0c3cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2018/05/23/180523-偏差和方差/"/>
+
+
+
+
+
+  <title>吴恩达机器学习作业Python实现(五)：偏差和方差 | Cowry</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9aa1b9dca27042171881932a6fb39c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cowry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Live your life with passion!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/23/180523-偏差和方差/">
+
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达机器学习作业Python实现(五)：偏差和方差</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-23T16:22:31+08:00">
+                2018-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/23/180523-偏差和方差/" class="leancloud_visitors" data-flag-title="吴恩达机器学习作业Python实现(五)：偏差和方差">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  2,122
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在本练习中，您将实现正则化的线性回归和多项式回归，并使用它来研究具有不同偏差-方差属性的模型</p>
+<h2 id="1-Regularized-Linear-Regression-正则线性回归"><a href="#1-Regularized-Linear-Regression-正则线性回归" class="headerlink" title="1 Regularized Linear Regression 正则线性回归"></a>1 Regularized Linear Regression 正则线性回归</h2><p>在前半部分的练习中，你将实现正则化线性回归，以预测水库中的水位变化，从而预测大坝流出的水量。在下半部分中，您将通过一些调试学习算法的诊断，并检查偏差 v.s. 方差的影响。</p>
+<h3 id="1-1-Visualizing-the-dataset"><a href="#1-1-Visualizing-the-dataset" class="headerlink" title="1.1 Visualizing the dataset"></a>1.1 Visualizing the dataset</h3><p>我们将从可视化数据集开始，其中包含水位变化的历史记录，x，以及从大坝流出的水量，y。</p>
+<p>这个数据集分为了三个部分：</p>
+<ul>
+<li>training set 训练集：训练模型</li>
+<li>cross validation set 交叉验证集：选择正则化参数</li>
+<li>test set 测试集：评估性能，模型训练中不曾用过的样本</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> loadmat</span><br><span class="line"><span class="keyword">import</span> scipy.optimize <span class="keyword">as</span> opt</span><br></pre></td></tr></table></figure>
+<p>读取数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">'ex5data1.mat'</span></span><br><span class="line">data = loadmat(path)</span><br><span class="line"><span class="comment">#Training set</span></span><br><span class="line">X, y = data[<span class="string">'X'</span>], data[<span class="string">'y'</span>]</span><br><span class="line"><span class="comment">#Cross validation set</span></span><br><span class="line">Xval, yval = data[<span class="string">'Xval'</span>], data[<span class="string">'yval'</span>]</span><br><span class="line"><span class="comment">#Test set</span></span><br><span class="line">Xtest, ytest = data[<span class="string">'Xtest'</span>], data[<span class="string">'ytest'</span>]</span><br><span class="line"><span class="comment">#Insert a column of 1's to all of the X's, as usual</span></span><br><span class="line">X = np.insert(X    ,<span class="number">0</span>,<span class="number">1</span>,axis=<span class="number">1</span>)</span><br><span class="line">Xval = np.insert(Xval ,<span class="number">0</span>,<span class="number">1</span>,axis=<span class="number">1</span>)</span><br><span class="line">Xtest = np.insert(Xtest,<span class="number">0</span>,<span class="number">1</span>,axis=<span class="number">1</span>)</span><br><span class="line">print(<span class="string">'X=&#123;&#125;,y=&#123;&#125;'</span>.format(X.shape, y.shape))</span><br><span class="line">print(<span class="string">'Xval=&#123;&#125;,yval=&#123;&#125;'</span>.format(Xval.shape, yval.shape))</span><br><span class="line">print(<span class="string">'Xtest=&#123;&#125;,ytest=&#123;&#125;'</span>.format(Xtest.shape, ytest.shape))</span><br></pre></td></tr></table></figure>
+<pre><code>X=(12, 2),y=(12, 1)
+Xval=(21, 2),yval=(21, 1)
+Xtest=(21, 2),ytest=(21, 1)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotData</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""瞧一瞧数据长啥样"""</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">    plt.scatter(X[:,<span class="number">1</span>:], y, c=<span class="string">'r'</span>, marker=<span class="string">'x'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'Change in water level (x)'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'Water flowing out of the dam (y)'</span>)</span><br><span class="line">    plt.grid(<span class="keyword">True</span>)</span><br><span class="line">    </span><br><span class="line">plotData()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-1151db61afa0c3cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_6_0.png"></p>
+<h3 id="1-2-Regularized-linear-regression-cost-function"><a href="#1-2-Regularized-linear-regression-cost-function" class="headerlink" title="1.2 Regularized linear regression cost function"></a>1.2 Regularized linear regression cost function</h3><p><img src="https://upload-images.jianshu.io/upload_images/11023262-33264b2e9f116780.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">costReg</span><span class="params">(theta, X, y, l)</span>:</span></span><br><span class="line">    <span class="string">'''do not regularizethe theta0</span></span><br><span class="line"><span class="string">    theta is a 1-d array with shape (n+1,)</span></span><br><span class="line"><span class="string">    X is a matrix with shape (m, n+1)</span></span><br><span class="line"><span class="string">    y is a matrix with shape (m, 1)</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    cost = ((X @ theta - y.flatten()) ** <span class="number">2</span>).sum()</span><br><span class="line">    regterm = l * (theta[<span class="number">1</span>:] @ theta[<span class="number">1</span>:])</span><br><span class="line">    <span class="keyword">return</span> (cost + regterm) / (<span class="number">2</span> * len(X))</span><br></pre></td></tr></table></figure>
+<p> Using theta initialized at [1, 1], and lambda = 1, you should expect to see an output of 303.993192</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">theta = np.ones(X.shape[<span class="number">1</span>])</span><br><span class="line">print(costReg(theta, X, y, <span class="number">1</span>))  <span class="comment"># 303.9931922202643</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-Regularized-linear-regression-gradient"><a href="#1-3-Regularized-linear-regression-gradient" class="headerlink" title="1.3 Regularized linear regression gradient"></a>1.3 Regularized linear regression gradient</h3><p><img src="https://upload-images.jianshu.io/upload_images/11023262-a1535bcc657c400a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradientReg</span><span class="params">(theta, X, y, l)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    theta: 1-d array with shape (2,)</span></span><br><span class="line"><span class="string">    X: 2-d array with shape (12, 2)</span></span><br><span class="line"><span class="string">    y: 2-d array with shape (12, 1)</span></span><br><span class="line"><span class="string">    l: lambda constant</span></span><br><span class="line"><span class="string">    grad has same shape as theta (2,)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    grad = (X @ theta - y.flatten()) @ X</span><br><span class="line">    regterm = l * theta</span><br><span class="line">    regterm[<span class="number">0</span>] = <span class="number">0</span>  <span class="comment"># #don't regulate bias term</span></span><br><span class="line">    <span class="keyword">return</span> (grad + regterm) / len(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using theta initialized at [1; 1] you should expect to see a </span></span><br><span class="line"><span class="comment"># gradient of [-15.303016; 598.250744] (with lambda=1)</span></span><br><span class="line">print(gradientReg(theta, X, y, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="1-4-Fitting-linear-regression-拟合线性回归"><a href="#1-4-Fitting-linear-regression-拟合线性回归" class="headerlink" title="1.4 Fitting linear regression 拟合线性回归"></a>1.4 Fitting linear regression 拟合线性回归</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainLinearReg</span><span class="params">(X, y, l)</span>:</span></span><br><span class="line">    theta = np.zeros(X.shape[<span class="number">1</span>])</span><br><span class="line">    res = opt.minimize(fun=costReg, </span><br><span class="line">                       x0=theta, </span><br><span class="line">                       args=(X, y ,l), </span><br><span class="line">                       method=<span class="string">'TNC'</span>, </span><br><span class="line">                       jac=gradientReg)</span><br><span class="line">    <span class="keyword">return</span> res.x</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fit_theta = trainLinearReg(X, y, <span class="number">0</span>)</span><br><span class="line">plotData()</span><br><span class="line">plt.plot(X[:,<span class="number">1</span>], X @ fit_theta)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-9721a484b450634c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_15_1.png"></p>
+<p>这里我们把$\lambda$ = 0，因为我们现在实现的线性回归只有两个参数，这么低的维度，正则化并没有用。</p>
+<p>从图中可以看到，拟合最好的这条直线告诉我们这个模型并不适合这个数据。</p>
+<p>在下一节中，您将实现一个函数来生成学习曲线，它可以帮助您调试学习算法，即使可视化数据不那么容易。</p>
+<h2 id="2-Bias-variance"><a href="#2-Bias-variance" class="headerlink" title="2 Bias-variance"></a>2 Bias-variance</h2><p>机器学习中一个重要的概念是偏差（bias）和方差（variance）的权衡。高偏差意味着欠拟合，高方差意味着过拟合。</p>
+<p>在这部分练习中，您将在学习曲线上绘制训练误差和验证误差，以诊断bias-variance问题。</p>
+<h3 id="2-1-Learning-curves-学习曲线"><a href="#2-1-Learning-curves-学习曲线" class="headerlink" title="2.1 Learning curves 学习曲线"></a>2.1 Learning curves 学习曲线</h3><p><img src="https://upload-images.jianshu.io/upload_images/11023262-c532ba2077cca7c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>训练样本X从1开始逐渐增加，训练出不同的参数向量θ。接着通过交叉验证样本Xval计算验证误差。</p>
+<ol>
+<li><p>使用训练集的子集来训练模型，得到不同的theta。</p>
+</li>
+<li><p>通过theta计算训练代价和交叉验证代价，切记此时<strong>不要使用正则化</strong>，将 $\lambda = 0$。</p>
+</li>
+<li><p>计算交叉验证代价时记得整个交叉验证集来计算，无需分为子集。</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_learning_curve</span><span class="params">(X, y, Xval, yval, l)</span>:</span></span><br><span class="line">    <span class="string">"""画出学习曲线，即交叉验证误差和训练误差随样本数量的变化的变化"""</span></span><br><span class="line">    xx = range(<span class="number">1</span>, len(X) + <span class="number">1</span>)  <span class="comment"># at least has one example </span></span><br><span class="line">    training_cost, cv_cost = [], []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xx:</span><br><span class="line">        res = trainLinearReg(X[:i], y[:i], l)</span><br><span class="line">        training_cost_i = costReg(res, X[:i], y[:i], <span class="number">0</span>)</span><br><span class="line">        cv_cost_i = costReg(res, Xval, yval, <span class="number">0</span>)</span><br><span class="line">        training_cost.append(training_cost_i)</span><br><span class="line">        cv_cost.append(cv_cost_i)</span><br><span class="line">        </span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">    plt.plot(xx, training_cost, label=<span class="string">'training cost'</span>)  </span><br><span class="line">    plt.plot(xx, cv_cost, label=<span class="string">'cv cost'</span>) </span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.xlabel(<span class="string">'Number of training examples'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'Error'</span>)</span><br><span class="line">    plt.title(<span class="string">'Learning curve for linear regression'</span>)</span><br><span class="line">    plt.grid(<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">learningCurve(X, y, Xval, yval, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-c48c468a598dfe88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_20_0.png"></p>
+<p>从图中看出来，随着样本数量的增加，训练误差和交叉验证误差都很高，这属于高偏差，欠拟合。</p>
+<h2 id="3-Polynomial-regression-多项式回归"><a href="#3-Polynomial-regression-多项式回归" class="headerlink" title="3 Polynomial regression 多项式回归"></a>3 Polynomial regression 多项式回归</h2><p>我们的线性模型对于数据来说太简单了，导致了欠拟合(高偏差)。在这一部分的练习中，您将通过添加更多的特性来解决这个问题。</p>
+<p>使用多项式回归，假设函数形式如下：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-0048932987bbaf06.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="3-1-Learning-Polynomial-Regression"><a href="#3-1-Learning-Polynomial-Regression" class="headerlink" title="3.1 Learning Polynomial Regression"></a>3.1 Learning Polynomial Regression</h3><p>数据预处理</p>
+<ol>
+<li><p>X，Xval，Xtest都需要添加多项式特征，这里我们选择增加到6次方，因为若选8次方无法达到作业pdf上的效果图，这是因为scipy和octave版本的优化算法不同。</p>
+</li>
+<li><p>不要忘了标准化。</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">genPolyFeatures</span><span class="params">(X, power)</span>:</span></span><br><span class="line">    <span class="string">"""添加多项式特征</span></span><br><span class="line"><span class="string">    每次在array的最后一列插入第二列的i+2次方（第一列为偏置）</span></span><br><span class="line"><span class="string">    从二次方开始开始插入（因为本身含有一列一次方）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    Xpoly = X.copy()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, power + <span class="number">1</span>):</span><br><span class="line">        Xpoly = np.insert(Xpoly, Xpoly.shape[<span class="number">1</span>], np.power(Xpoly[:,<span class="number">1</span>], i), axis=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> Xpoly</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_means_std</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="string">"""获取训练集的均值和误差，用来标准化所有数据。"""</span></span><br><span class="line">    means = np.mean(X,axis=<span class="number">0</span>)</span><br><span class="line">    stds = np.std(X,axis=<span class="number">0</span>,ddof=<span class="number">1</span>)  <span class="comment"># ddof=1 means 样本标准差</span></span><br><span class="line">    <span class="keyword">return</span> means, stds</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">featureNormalize</span><span class="params">(myX, means, stds)</span>:</span></span><br><span class="line">    <span class="string">"""标准化"""</span></span><br><span class="line">    X_norm = myX.copy()</span><br><span class="line">    X_norm[:,<span class="number">1</span>:] = X_norm[:,<span class="number">1</span>:] - means[<span class="number">1</span>:]</span><br><span class="line">    X_norm[:,<span class="number">1</span>:] = X_norm[:,<span class="number">1</span>:] / stds[<span class="number">1</span>:]</span><br><span class="line">    <span class="keyword">return</span> X_norm</span><br></pre></td></tr></table></figure>
+<p>关于归一化，所有数据集应该都用<strong>训练集的均值和样本标准差</strong>处理。切记。所以要将训练集的均值和样本标准差存储起来，对后面的数据进行处理。</p>
+<p>而且注意这里是<strong>样本标准差而不是总体标准差</strong>，使用np.std()时，将ddof=1则是样本标准差，默认=0是总体标准差。而pandas默认计算样本标准差。</p>
+<p>获取添加多项式特征以及 标准化之后的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">power = <span class="number">6</span>  <span class="comment"># 扩展到x的6次方</span></span><br><span class="line"></span><br><span class="line">train_means, train_stds = get_means_std(genPolyFeatures(X,power))</span><br><span class="line">X_norm = featureNormalize(genPolyFeatures(X,power), train_means, train_stds)</span><br><span class="line">Xval_norm = featureNormalize(genPolyFeatures(Xval,power), train_means, train_stds)</span><br><span class="line">Xtest_norm = featureNormalize(genPolyFeatures(Xtest,power), train_means, train_stds)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_fit</span><span class="params">(means, stds, l)</span>:</span></span><br><span class="line">    <span class="string">"""画出拟合曲线"""</span></span><br><span class="line">    theta = trainLinearReg(X_norm,y, l)</span><br><span class="line">    x = np.linspace(<span class="number">-75</span>,<span class="number">55</span>,<span class="number">50</span>)</span><br><span class="line">    xmat = x.reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">    xmat = np.insert(xmat,<span class="number">0</span>,<span class="number">1</span>,axis=<span class="number">1</span>)</span><br><span class="line">    Xmat = genPolyFeatures(xmat, power)</span><br><span class="line">    Xmat_norm = featureNormalize(Xmat, means, stds)</span><br><span class="line">    </span><br><span class="line">    plotData()</span><br><span class="line">    plt.plot(x, Xmat_norm@theta,<span class="string">'b--'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_fit(train_means, train_stds, <span class="number">0</span>)</span><br><span class="line">plot_learning_curve(X_norm, y, Xval_norm, yval, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-9a0dbba22f3ac523.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_29_0.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-f5d8e5245ad2f20f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_29_1.png"></p>
+<h3 id="3-2-Adjusting-the-regularization-parameter"><a href="#3-2-Adjusting-the-regularization-parameter" class="headerlink" title="3.2 Adjusting the regularization parameter"></a>3.2 Adjusting the regularization parameter</h3><p>上图可以看到 $\lambda$ = 0时，训练误差太小了，明显过拟合了。</p>
+<p>我们继续调整$\lambda$ = 1 时：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_fit(train_means, train_stds, <span class="number">1</span>)</span><br><span class="line">plot_learning_curve(X_norm, y, Xval_norm, yval, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-30e6a1a90065ca45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_32_0.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-d44847b5c67bd14a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_32_1.png"></p>
+<p>我们继续调整$\lambda$ = 100 时，很明显惩罚过多，欠拟合了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_fit(train_means, train_stds, <span class="number">100</span>)</span><br><span class="line">plot_learning_curve(X_norm, y, Xval_norm, yval, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-6263580110b0edc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_34_0.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-b49c9af8f3f7fad0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_34_1.png"></p>
+<h3 id="3-3-Selecting-λ-using-a-cross-validation-set"><a href="#3-3-Selecting-λ-using-a-cross-validation-set" class="headerlink" title="3.3 Selecting λ using a cross validation set"></a>3.3 Selecting λ using a cross validation set</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">lambdas = [<span class="number">0.</span>, <span class="number">0.001</span>, <span class="number">0.003</span>, <span class="number">0.01</span>, <span class="number">0.03</span>, <span class="number">0.1</span>, <span class="number">0.3</span>, <span class="number">1.</span>, <span class="number">3.</span>, <span class="number">10.</span>]</span><br><span class="line">errors_train, errors_val = [], []</span><br><span class="line"><span class="keyword">for</span> l <span class="keyword">in</span> lambdas:</span><br><span class="line">    theta = trainLinearReg(X_norm, y, l)</span><br><span class="line">    errors_train.append(costReg(theta,X_norm,y,<span class="number">0</span>))  <span class="comment"># 记得把lambda = 0</span></span><br><span class="line">    errors_val.append(costReg(theta,Xval_norm,yval,<span class="number">0</span>))</span><br><span class="line">    </span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">plt.plot(lambdas,errors_train,label=<span class="string">'Train'</span>)</span><br><span class="line">plt.plot(lambdas,errors_val,label=<span class="string">'Cross Validation'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlabel(<span class="string">'lambda'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Error'</span>)</span><br><span class="line">plt.grid(<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-f68c3ac191b31e33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_36_0.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以看到时交叉验证代价最小的是 lambda = 3</span></span><br><span class="line">lambdas[np.argmin(errors_val)]  <span class="comment"># 3.0</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-4-Computing-test-set-error"><a href="#3-4-Computing-test-set-error" class="headerlink" title="3.4 Computing test set error"></a>3.4 Computing test set error</h3><p>In our cross validation, we obtained a test error of 3.8599 for λ = 3.</p>
+<p>实际上我在上面调整了power=6来匹配作业里面的图，所以得不到3.8599。但是调整power=8时（同作业里一样）,就可以得到上述数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">theta = trainLinearReg(X_norm, y, <span class="number">3</span>)</span><br><span class="line">print(<span class="string">'test cost(l=&#123;&#125;) = &#123;&#125;'</span>.format(<span class="number">3</span>, costReg(theta, Xtest_norm, ytest, <span class="number">0</span>)))</span><br><span class="line"><span class="comment"># for l in lambdas:</span></span><br><span class="line"><span class="comment">#     theta = trainLinearReg(X_norm, y, l)</span></span><br><span class="line"><span class="comment">#     print('test cost(l=&#123;&#125;) = &#123;&#125;'.format(l, costReg(theta, Xtest_norm, ytest, 0)))</span></span><br></pre></td></tr></table></figure>
+<pre><code>test cost(l=3) = 4.7552720391599
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/21/180521-神经网络(反向传播)实现/" rel="next" title="吴恩达机器学习作业Python实现(四)：神经网络反向传播">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(四)：神经网络反向传播
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Cowry" />
+            
+              <p class="site-author-name" itemprop="name">Cowry</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cowry5" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2658018575" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/Cowry5" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Regularized-Linear-Regression-正则线性回归"><span class="nav-number">1.</span> <span class="nav-text">1 Regularized Linear Regression 正则线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Visualizing-the-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Visualizing the dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Regularized-linear-regression-cost-function"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Regularized linear regression cost function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Regularized-linear-regression-gradient"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Regularized linear regression gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Fitting-linear-regression-拟合线性回归"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Fitting linear regression 拟合线性回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Bias-variance"><span class="nav-number">2.</span> <span class="nav-text">2 Bias-variance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Learning-curves-学习曲线"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Learning curves 学习曲线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Polynomial-regression-多项式回归"><span class="nav-number">3.</span> <span class="nav-text">3 Polynomial regression 多项式回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Learning-Polynomial-Regression"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Learning Polynomial Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Adjusting-the-regularization-parameter"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Adjusting the regularization parameter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Selecting-λ-using-a-cross-validation-set"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Selecting λ using a cross validation set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Computing-test-set-error"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Computing test set error</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cowry</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Words total count&#58;</span>
+    
+    <span title="Words total count">8.0k</span>
+  
+</div>
+
+<div class="busuanzi-count">
+  <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>     
+    </span>
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>    
+    </span>
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mrmD4pdG7Ueu5OlKl2v1Ig47-9Nh9j0Va", "T6pUVA4kFI5NzhTwXhWePPS8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
