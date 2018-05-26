@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta https-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta https-equiv="Cache-Control" content="no-transform" />
+<meta https-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 Support Vector Machines1.1 Example Dataset 11234567%matplotlib inlineimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltimport seaborn as sbfrom scipy.io import loadmatfrom sklearn">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达机器学习作业Python实现(六)：SVM支持向量机">
+<meta property="og:url" content="https://yoursite.com/2018/05/26/180526S-VM支持向量机/index.html">
+<meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="1 Support Vector Machines1.1 Example Dataset 11234567%matplotlib inlineimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltimport seaborn as sbfrom scipy.io import loadmatfrom sklearn">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-4f8298ce87d98c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-0f9ccb7157295606.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-26e565b90ac0b916.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-8a40487afc0073f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-1d0b07b8f1ddc214.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-f4d9bdac428a6ca2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-d54a1e542a3dd88f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-ce5e1d4082ee5c3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-4e9eb31238e07f92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-26T15:01:04.222Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达机器学习作业Python实现(六)：SVM支持向量机">
+<meta name="twitter:description" content="1 Support Vector Machines1.1 Example Dataset 11234567%matplotlib inlineimport numpy as npimport pandas as pdimport matplotlib.pyplot as pltimport seaborn as sbfrom scipy.io import loadmatfrom sklearn">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-4f8298ce87d98c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2018/05/26/180526S-VM支持向量机/"/>
+
+
+
+
+
+  <title>吴恩达机器学习作业Python实现(六)：SVM支持向量机 | Cowry</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9aa1b9dca27042171881932a6fb39c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cowry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Live your life with passion!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/26/180526S-VM支持向量机/">
+
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达机器学习作业Python实现(六)：SVM支持向量机</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-26T23:00:31+08:00">
+                2018-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/26/180526S-VM支持向量机/" class="leancloud_visitors" data-flag-title="吴恩达机器学习作业Python实现(六)：SVM支持向量机">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  2,244
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Support-Vector-Machines"><a href="#1-Support-Vector-Machines" class="headerlink" title="1 Support Vector Machines"></a>1 Support Vector Machines</h2><h3 id="1-1-Example-Dataset-1"><a href="#1-1-Example-Dataset-1" class="headerlink" title="1.1 Example Dataset 1"></a>1.1 Example Dataset 1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sb</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> loadmat</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br></pre></td></tr></table></figure>
+<p>大多数SVM的库会自动帮你添加额外的特征 $x_0$ 已经 $\theta_0$，所以无需手动添加。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'./data/ex6data1.mat'</span>)</span><br><span class="line">print(mat.keys())</span><br><span class="line"><span class="comment"># dict_keys(['__header__', '__version__', '__globals__', 'X', 'y'])</span></span><br><span class="line">X = mat[<span class="string">'X'</span>]</span><br><span class="line">y = mat[<span class="string">'y'</span>]</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotData</span><span class="params">(X, y)</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">    plt.scatter(X[:,<span class="number">0</span>], X[:,<span class="number">1</span>], c=y.flatten(), cmap=<span class="string">'rainbow'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'X1'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'X2'</span>)</span><br><span class="line">    plt.legend() </span><br><span class="line">plotData(X, y)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-4f8298ce87d98c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_5_1.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotBoundary</span><span class="params">(clf, X)</span>:</span></span><br><span class="line">    <span class="string">'''plot decision bondary'''</span></span><br><span class="line">    x_min, x_max = X[:,<span class="number">0</span>].min()*<span class="number">1.2</span>, X[:,<span class="number">0</span>].max()*<span class="number">1.1</span></span><br><span class="line">    y_min, y_max = X[:,<span class="number">1</span>].min()*<span class="number">1.1</span>,X[:,<span class="number">1</span>].max()*<span class="number">1.1</span></span><br><span class="line">    xx, yy = np.meshgrid(np.linspace(x_min, x_max, <span class="number">500</span>),</span><br><span class="line">                         np.linspace(y_min, y_max, <span class="number">500</span>))</span><br><span class="line">    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">    Z = Z.reshape(xx.shape)</span><br><span class="line">    plt.contour(xx, yy, Z)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">models = [svm.SVC(C, kernel=<span class="string">'linear'</span>) <span class="keyword">for</span> C <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">100</span>]]</span><br><span class="line">clfs = [model.fit(X, y.ravel()) <span class="keyword">for</span> model <span class="keyword">in</span> models]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title = [<span class="string">'SVM Decision Boundary with C = &#123;&#125; (Example Dataset 1'</span>.format(C) <span class="keyword">for</span> C <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">100</span>]]</span><br><span class="line"><span class="keyword">for</span> model,title <span class="keyword">in</span> zip(clfs,title):</span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">    plotData(X, y)</span><br><span class="line">    plotBoundary(model, X)</span><br><span class="line">    plt.title(title)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-0f9ccb7157295606.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_9_2.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-26e565b90ac0b916.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_9_4.png"></p>
+<p>可以从上图看到，当C比较小时模型对误分类的惩罚增大，比较严格，误分类少，间隔比较狭窄。</p>
+<p>当C比较大时模型对误分类的惩罚增大，比较宽松，允许一定的误分类存在，间隔较大。</p>
+<h3 id="1-2-SVM-with-Gaussian-Kernels"><a href="#1-2-SVM-with-Gaussian-Kernels" class="headerlink" title="1.2 SVM with Gaussian Kernels"></a>1.2 SVM with Gaussian Kernels</h3><p>这部分，使用SVM做非线性分类。我们将使用高斯核函数。</p>
+<p>为了用SVM找出一个非线性的决策边界，我们首先要实现高斯核函数。我可以把高斯核函数想象成一个相似度函数，用来测量一对样本的距离，$(x^{(i)}, y^{(j)})$ 。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-8a40487afc0073f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这里我们用sklearn自带的svm中的核函数即可。</p>
+<h4 id="1-2-1-Gaussian-Kernel"><a href="#1-2-1-Gaussian-Kernel" class="headerlink" title="1.2.1 Gaussian Kernel"></a>1.2.1 Gaussian Kernel</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gaussKernel</span><span class="params">(x1, x2, sigma)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.exp(- ((x1 - x2) ** <span class="number">2</span>).sum() / (<span class="number">2</span> * sigma ** <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">gaussKernel(np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>]),np.array([<span class="number">0</span>, <span class="number">4</span>, <span class="number">-1</span>]), <span class="number">2.</span>)  <span class="comment"># 0.32465246735834974</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-2-2-Example-Dataset-2"><a href="#1-2-2-Example-Dataset-2" class="headerlink" title="1.2.2 Example Dataset 2"></a>1.2.2 Example Dataset 2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'./data/ex6data2.mat'</span>)</span><br><span class="line">X2 = mat[<span class="string">'X'</span>]</span><br><span class="line">y2 = mat[<span class="string">'y'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plotData(X2, y2)</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-1d0b07b8f1ddc214.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_16_1.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sigma = <span class="number">0.1</span></span><br><span class="line">gamma = np.power(sigma,<span class="number">-2.</span>)/<span class="number">2</span></span><br><span class="line">clf = svm.SVC(C=<span class="number">1</span>, kernel=<span class="string">'rbf'</span>, gamma=gamma)</span><br><span class="line">modle = clf.fit(X2, y2.flatten())</span><br><span class="line">plotData(X2, y2)</span><br><span class="line">plotBoundary(modle, X2)</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-f4d9bdac428a6ca2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_17_1.png"></p>
+<h4 id="1-2-3-Example-Dataset-3"><a href="#1-2-3-Example-Dataset-3" class="headerlink" title="1.2.3 Example Dataset 3"></a>1.2.3 Example Dataset 3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mat3 = loadmat(<span class="string">'data/ex6data3.mat'</span>)</span><br><span class="line">X3, y3 = mat3[<span class="string">'X'</span>], mat3[<span class="string">'y'</span>]</span><br><span class="line">Xval, yval = mat3[<span class="string">'Xval'</span>], mat3[<span class="string">'yval'</span>]</span><br><span class="line">plotData(X3, y3)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-d54a1e542a3dd88f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_19_1.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Cvalues = (<span class="number">0.01</span>, <span class="number">0.03</span>, <span class="number">0.1</span>, <span class="number">0.3</span>, <span class="number">1.</span>, <span class="number">3.</span>, <span class="number">10.</span>, <span class="number">30.</span>)</span><br><span class="line">sigmavalues = Cvalues</span><br><span class="line">best_pair, best_score = (<span class="number">0</span>, <span class="number">0</span>), <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> C <span class="keyword">in</span> Cvalues:</span><br><span class="line">    <span class="keyword">for</span> sigma <span class="keyword">in</span> sigmavalues:</span><br><span class="line">        gamma = np.power(sigma,<span class="number">-2.</span>)/<span class="number">2</span></span><br><span class="line">        model = svm.SVC(C=C,kernel=<span class="string">'rbf'</span>,gamma=gamma)</span><br><span class="line">        model.fit(X3, y3.flatten())</span><br><span class="line">        this_score = model.score(Xval, yval)</span><br><span class="line">        <span class="keyword">if</span> this_score &gt; best_score:</span><br><span class="line">            best_score = this_score</span><br><span class="line">            best_pair = (C, sigma)</span><br><span class="line">print(<span class="string">'best_pair=&#123;&#125;, best_score=&#123;&#125;'</span>.format(best_pair, best_score))</span><br><span class="line"><span class="comment"># best_pair=(1.0, 0.1), best_score=0.965</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">model = svm.SVC(C=<span class="number">1.</span>, kernel=<span class="string">'rbf'</span>, gamma = np.power(<span class="number">.1</span>, <span class="number">-2.</span>)/<span class="number">2</span>)</span><br><span class="line">model.fit(X3, y3.flatten())</span><br><span class="line">plotData(X3, y3)</span><br><span class="line">plotBoundary(model, X3)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-ce5e1d4082ee5c3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_21_1.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这我的一个练习画图的，和作业无关，给个画图的参考。</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line"></span><br><span class="line"><span class="comment"># we create 40 separable points</span></span><br><span class="line">np.random.seed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">3</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">1</span>]])</span><br><span class="line">Y = np.array([<span class="number">1</span>,<span class="number">1</span>,<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># fit the model</span></span><br><span class="line">clf = svm.SVC(kernel=<span class="string">'linear'</span>)</span><br><span class="line">clf.fit(X, Y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get the separating hyperplane</span></span><br><span class="line">w = clf.coef_[<span class="number">0</span>]</span><br><span class="line">a = -w[<span class="number">0</span>] / w[<span class="number">1</span>]</span><br><span class="line">xx = np.linspace(<span class="number">-5</span>, <span class="number">5</span>)</span><br><span class="line">yy = a * xx - (clf.intercept_[<span class="number">0</span>]) / w[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot the parallels to the separating hyperplane that pass through the</span></span><br><span class="line"><span class="comment"># support vectors</span></span><br><span class="line">b = clf.support_vectors_[<span class="number">0</span>]</span><br><span class="line">yy_down = a * xx + (b[<span class="number">1</span>] - a * b[<span class="number">0</span>])</span><br><span class="line">b = clf.support_vectors_[<span class="number">-1</span>]</span><br><span class="line">yy_up = a * xx + (b[<span class="number">1</span>] - a * b[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot the line, the points, and the nearest vectors to the plane</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">plt.plot(xx, yy, <span class="string">'k-'</span>)</span><br><span class="line">plt.plot(xx, yy_down, <span class="string">'k--'</span>)</span><br><span class="line">plt.plot(xx, yy_up, <span class="string">'k--'</span>)</span><br><span class="line"><span class="comment"># 圈出支持向量</span></span><br><span class="line">plt.scatter(clf.support_vectors_[:, <span class="number">0</span>], clf.support_vectors_[:, <span class="number">1</span>],</span><br><span class="line">            s=<span class="number">150</span>, facecolors=<span class="string">'none'</span>, edgecolors=<span class="string">'k'</span>, linewidths=<span class="number">1.5</span>)</span><br><span class="line">plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=Y, cmap=plt.cm.rainbow)</span><br><span class="line"></span><br><span class="line">plt.axis(<span class="string">'tight'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">print(clf.decision_function(X))</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-4e9eb31238e07f92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_22_0.png"></p>
+<pre><code>[ 1.   1.5 -1. ]
+</code></pre><p>​    </p>
+<h2 id="2-Spam-Classification"><a href="#2-Spam-Classification" class="headerlink" title="2 Spam Classification"></a>2 Spam Classification</h2><h3 id="2-1-Preprocessing-Emails"><a href="#2-1-Preprocessing-Emails" class="headerlink" title="2.1 Preprocessing Emails"></a>2.1 Preprocessing Emails</h3><p>这部分用SVM建立一个垃圾邮件分类器。你需要将每个email变成一个n维的特征向量，这个分类器将判断给定一个邮件x是垃圾邮件(y=1)或不是垃圾邮件(y=0)。</p>
+<p>take a look at examples from the dataset</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'data/emailSample1.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    email = f.read()</span><br><span class="line">    print(email)</span><br></pre></td></tr></table></figure>
+<pre><code>&gt; Anyone knows how much it costs to host a web portal ?
+&gt;
+Well, it depends on how many visitors you&apos;re expecting.
+This can be anywhere from less than 10 bucks a month to a couple of $100. 
+You should checkout http://www.rackspace.com/ or perhaps Amazon EC2 
+if youre running something big..
+
+To unsubscribe yourself from this mailing list, send an email to:
+groupname-unsubscribe@egroups.com
+</code></pre><p>​    </p>
+<p>可以看到，邮件内容包含 a URL, an email address(at the end), numbers, and dollar amounts. 很多邮件都会包含这些元素，但是每封邮件的具体内容可能会不一样。因此，处理邮件经常采用的方法是标准化这些数据，把所有URL当作一样，所有数字看作一样。</p>
+<p>例如，我们用唯一的一个字符串‘httpaddr’来替换所有的URL，来表示邮件包含URL，而不要求具体的URL内容。这通常会提高垃圾邮件分类器的性能，因为垃圾邮件发送者通常会随机化URL，因此在新的垃圾邮件中再次看到任何特定URL的几率非常小。</p>
+<p>我们可以做如下处理：</p>
+<pre><code>1. Lower-casing: 把整封邮件转化为小写。
+2. Stripping HTML: 移除所有HTML标签，只保留内容。
+3. Normalizing URLs: 将所有的URL替换为字符串 “httpaddr”.
+4. Normalizing Email Addresses: 所有的地址替换为 “emailaddr”
+5. Normalizing Dollars: 所有dollar符号($)替换为“dollar”.
+6. Normalizing Numbers: 所有数字替换为“number”
+7. Word Stemming(词干提取): 将所有单词还原为词源。例如，“discount”, “discounts”, “discounted” and “discounting”都替换为“discount”。
+8. Removal of non-words: 移除所有非文字类型，所有的空格(tabs, newlines, spaces)调整为一个空格.
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> loadmat</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line"><span class="keyword">import</span> re <span class="comment">#regular expression for e-mail processing</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这是一个可用的英文分词算法(Porter stemmer)</span></span><br><span class="line"><span class="keyword">from</span> stemming.porter2 <span class="keyword">import</span> stem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个英文算法似乎更符合作业里面所用的代码，与上面效果差不多</span></span><br><span class="line"><span class="keyword">import</span> nltk, nltk.stem.porter</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">processEmail</span><span class="params">(email)</span>:</span></span><br><span class="line">    <span class="string">"""做除了Word Stemming和Removal of non-words的所有处理"""</span></span><br><span class="line">    email = email.lower()</span><br><span class="line">    email = re.sub(<span class="string">'&lt;[^&lt;&gt;]&gt;'</span>, <span class="string">' '</span>, email)  <span class="comment"># 匹配&lt;开头，然后所有不是&lt; ,&gt; 的内容，知道&gt;结尾，相当于匹配&lt;...&gt;</span></span><br><span class="line">    email = re.sub(<span class="string">'(http|https)://[^\s]*'</span>, <span class="string">'httpaddr'</span>, email )  <span class="comment"># 匹配//后面不是空白字符的内容，遇到空白字符则停止</span></span><br><span class="line">    email = re.sub(<span class="string">'[^\s]+@[^\s]+'</span>, <span class="string">'emailaddr'</span>, email)</span><br><span class="line">    email = re.sub(<span class="string">'[\$]+'</span>, <span class="string">'dollar'</span>, email)</span><br><span class="line">    email = re.sub(<span class="string">'[\d]+'</span>, <span class="string">'number'</span>, email) </span><br><span class="line">    <span class="keyword">return</span> email</span><br></pre></td></tr></table></figure>
+<p>接下来就是提取词干，以及去除非字符内容。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">email2TokenList</span><span class="params">(email)</span>:</span></span><br><span class="line">    <span class="string">"""预处理数据，返回一个干净的单词列表"""</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># I'll use the NLTK stemmer because it more accurately duplicates the</span></span><br><span class="line">    <span class="comment"># performance of the OCTAVE implementation in the assignment</span></span><br><span class="line">    stemmer = nltk.stem.porter.PorterStemmer()</span><br><span class="line">    </span><br><span class="line">    email = preProcess(email)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将邮件分割为单个单词，re.split() 可以设置多种分隔符</span></span><br><span class="line">    tokens = re.split(<span class="string">'[ \@\$\/\#\.\-\:\&amp;\*\+\=\[\]\?\!\(\)\&#123;\&#125;\,\'\"\&gt;\_\&lt;\;\%]'</span>, email)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 遍历每个分割出来的内容</span></span><br><span class="line">    tokenlist = []</span><br><span class="line">    <span class="keyword">for</span> token <span class="keyword">in</span> tokens:</span><br><span class="line">        <span class="comment"># 删除任何非字母数字的字符</span></span><br><span class="line">        token = re.sub(<span class="string">'[^a-zA-Z0-9]'</span>, <span class="string">''</span>, token);</span><br><span class="line">        <span class="comment"># Use the Porter stemmer to 提取词根</span></span><br><span class="line">        stemmed = stemmer.stem(token)</span><br><span class="line">        <span class="comment"># 去除空字符串‘’，里面不含任何字符</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> len(token): <span class="keyword">continue</span></span><br><span class="line">        tokenlist.append(stemmed)</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">return</span> tokenlist</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-1-Vocabulary-List-词汇表"><a href="#2-1-1-Vocabulary-List-词汇表" class="headerlink" title="2.1.1 Vocabulary List(词汇表)"></a>2.1.1 Vocabulary List(词汇表)</h4><p>在对邮件进行预处理之后，我们有一个处理后的单词列表。下一步是选择我们想在分类器中使用哪些词，我们需要去除哪些词。</p>
+<p>我们有一个词汇表vocab.txt，里面存储了在实际中经常使用的单词，共1899个。</p>
+<p>我们要算出处理后的email中含有多少vocab.txt中的单词，并返回在vocab.txt中的index，这就我们想要的训练单词的索引。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">email2VocabIndices</span><span class="params">(email, vocab)</span>:</span></span><br><span class="line">    <span class="string">"""提取存在单词的索引"""</span></span><br><span class="line">    token = email2TokenList(email)</span><br><span class="line">    index = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(len(vocab)) <span class="keyword">if</span> vocab[i] <span class="keyword">in</span> token ]</span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-Extracting-Features-from-Emails"><a href="#2-2-Extracting-Features-from-Emails" class="headerlink" title="2.2 Extracting Features from Emails"></a>2.2 Extracting Features from Emails</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">email2FeatureVector</span><span class="params">(email)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    将email转化为词向量，n是vocab的长度。存在单词的相应位置的值置为1，其余为0</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    df = pd.read_table(<span class="string">'data/vocab.txt'</span>,names=[<span class="string">'words'</span>])</span><br><span class="line">    vocab = df.as_matrix()  <span class="comment"># return array</span></span><br><span class="line">    vector = np.zeros(len(vocab))  <span class="comment"># init vector</span></span><br><span class="line">    vocab_indices = email2VocabIndices(email, vocab)  <span class="comment"># 返回含有单词的索引</span></span><br><span class="line">    <span class="comment"># 将有单词的索引置为1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> vocab_indices:</span><br><span class="line">        vector[i] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> vector</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector = email2FeatureVector(email)</span><br><span class="line">print(<span class="string">'length of vector = &#123;&#125;\nnum of non-zero = &#123;&#125;'</span>.format(len(vector), int(vector.sum())))</span><br></pre></td></tr></table></figure>
+<pre><code>length of vector = 1899
+num of non-zero = 45
+</code></pre><h3 id="2-3-Training-SVM-for-Spam-Classification"><a href="#2-3-Training-SVM-for-Spam-Classification" class="headerlink" title="2.3 Training SVM for Spam Classification"></a>2.3 Training SVM for Spam Classification</h3><p>读取已经训提取好的特征向量以及相应的标签。分训练集和测试集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training set</span></span><br><span class="line">mat1 = loadmat(<span class="string">'data/spamTrain.mat'</span>)</span><br><span class="line">X, y = mat1[<span class="string">'X'</span>], mat1[<span class="string">'y'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Test set</span></span><br><span class="line">mat2 = scipy.io.loadmat(<span class="string">'data/spamTest.mat'</span>)</span><br><span class="line">Xtest, ytest = mat2[<span class="string">'Xtest'</span>], mat2[<span class="string">'ytest'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clf = svm.SVC(C=<span class="number">0.1</span>, kernel=<span class="string">'linear'</span>)</span><br><span class="line">clf.fit(X, y)</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-Top-Predictors-for-Spam"><a href="#2-4-Top-Predictors-for-Spam" class="headerlink" title="2.4 Top Predictors for Spam"></a>2.4 Top Predictors for Spam</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">predTrain = clf.score(X, y)</span><br><span class="line">predTest = clf.score(Xtest, ytest)</span><br><span class="line">predTrain, predTest</span><br></pre></td></tr></table></figure>
+<pre><code>(0.99825, 0.989)
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/23/180523-偏差和方差/" rel="next" title="吴恩达机器学习作业Python实现(五)：偏差和方差">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(五)：偏差和方差
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Cowry" />
+            
+              <p class="site-author-name" itemprop="name">Cowry</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cowry5" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2658018575" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/Cowry5" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Support-Vector-Machines"><span class="nav-number">1.</span> <span class="nav-text">1 Support Vector Machines</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Example-Dataset-1"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Example Dataset 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-SVM-with-Gaussian-Kernels"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 SVM with Gaussian Kernels</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-Gaussian-Kernel"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 Gaussian Kernel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-Example-Dataset-2"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 Example Dataset 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-3-Example-Dataset-3"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3 Example Dataset 3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spam-Classification"><span class="nav-number">2.</span> <span class="nav-text">2 Spam Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Preprocessing-Emails"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Preprocessing Emails</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-Vocabulary-List-词汇表"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 Vocabulary List(词汇表)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Extracting-Features-from-Emails"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Extracting Features from Emails</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Training-SVM-for-Spam-Classification"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Training SVM for Spam Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Top-Predictors-for-Spam"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 Top Predictors for Spam</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cowry</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Words total count&#58;</span>
+    
+    <span title="Words total count">15.8k</span>
+  
+</div>
+
+<div class="busuanzi-count">
+  <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>     
+    </span>
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>    
+    </span>
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mrmD4pdG7Ueu5OlKl2v1Ig47-9Nh9j0Va", "T6pUVA4kFI5NzhTwXhWePPS8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
