@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta https-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta https-equiv="Cache-Control" content="no-transform" />
+<meta https-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 K-means Clustering在这个练习中，您将实现K-means算法并将其用于图像压缩。通过减少图像中出现的颜色的数量，只剩下那些在图像中最常见的颜色。 1.1 Implementing K-means1.1.1 Finding closest centroids在K-means算法的分配簇的阶段，算法将每一个训练样本 $x_i$ 分配给最接近的簇中心。  $c^{(i)}$ 表示离样">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析">
+<meta property="og:url" content="https://yoursite.com/2018/05/29/180529-K-means和PCA主成分分析/index.html">
+<meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="1 K-means Clustering在这个练习中，您将实现K-means算法并将其用于图像压缩。通过减少图像中出现的颜色的数量，只剩下那些在图像中最常见的颜色。 1.1 Implementing K-means1.1.1 Finding closest centroids在K-means算法的分配簇的阶段，算法将每一个训练样本 $x_i$ 分配给最接近的簇中心。  $c^{(i)}$ 表示离样">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-5bc3778976e4955c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-8f8bbd2fac4937f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-99bcd4e42261e382.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-dee8e85fcb61ca0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-e185eb01ee583ba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-fee5952cd9ef9601.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-723654a97082d967.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-04457c9ed677f770.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-81edcc43747be944.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-87de0ba132cd30d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-bc74ee2a60ef3dd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-ed6f14bef246b62d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-244436ae80f16225.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-8e8ebdef4ef57983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-51ab4755896f2093.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-d190e78dc4b6f58e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-a42d5e04ae88de52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-29T14:46:31.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析">
+<meta name="twitter:description" content="1 K-means Clustering在这个练习中，您将实现K-means算法并将其用于图像压缩。通过减少图像中出现的颜色的数量，只剩下那些在图像中最常见的颜色。 1.1 Implementing K-means1.1.1 Finding closest centroids在K-means算法的分配簇的阶段，算法将每一个训练样本 $x_i$ 分配给最接近的簇中心。  $c^{(i)}$ 表示离样">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-5bc3778976e4955c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2018/05/29/180529-K-means和PCA主成分分析/"/>
+
+
+
+
+
+  <title>吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析 | Cowry</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9aa1b9dca27042171881932a6fb39c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cowry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Live your life with passion!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/05/29/180529-K-means和PCA主成分分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-29T23:00:31+08:00">
+                2018-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/29/180529-K-means和PCA主成分分析/" class="leancloud_visitors" data-flag-title="吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  2,303
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-K-means-Clustering"><a href="#1-K-means-Clustering" class="headerlink" title="1 K-means Clustering"></a>1 K-means Clustering</h2><p>在这个练习中，您将实现K-means算法并将其用于图像压缩。通过减少图像中出现的颜色的数量，只剩下那些在图像中最常见的颜色。</p>
+<h3 id="1-1-Implementing-K-means"><a href="#1-1-Implementing-K-means" class="headerlink" title="1.1 Implementing K-means"></a>1.1 Implementing K-means</h3><h4 id="1-1-1-Finding-closest-centroids"><a href="#1-1-1-Finding-closest-centroids" class="headerlink" title="1.1.1 Finding closest centroids"></a>1.1.1 Finding closest centroids</h4><p>在K-means算法的分配簇的阶段，算法将每一个训练样本 $x_i$ 分配给最接近的簇中心。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-5bc3778976e4955c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>$c^{(i)}$ 表示离样本$x_i$ 最近的簇中心点。$u_j$ 是第j 个簇中心点的位置（值），</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> loadmat</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findClosestCentroids</span><span class="params">(X, centroids)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    output a one-dimensional array idx that holds the </span></span><br><span class="line"><span class="string">    index of the closest centroid to every training example.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    idx = []</span><br><span class="line">    max_dist = <span class="number">1000000</span>  <span class="comment"># 限制一下最大距离</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(X)):</span><br><span class="line">        minus = X[i] - centroids  <span class="comment"># here use numpy's broadcasting</span></span><br><span class="line">        dist = minus[:,<span class="number">0</span>]**<span class="number">2</span> + minus[:,<span class="number">1</span>]**<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> dist.min() &lt; max_dist:</span><br><span class="line">            ci = np.argmin(dist)</span><br><span class="line">            idx.append(ci)</span><br><span class="line">    <span class="keyword">return</span> np.array(idx)</span><br></pre></td></tr></table></figure>
+<p>接下来使用作业提供的例子，自定义一个centroids,[3, 3], [6, 2], [8, 5]，算出结果idx[0:3]应该是 [0, 2, 1]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex7data2.mat'</span>)</span><br><span class="line"><span class="comment"># print(mat.keys())</span></span><br><span class="line">X = mat[<span class="string">'X'</span>]</span><br><span class="line">init_centroids = np.array([[<span class="number">3</span>, <span class="number">3</span>], [<span class="number">6</span>, <span class="number">2</span>], [<span class="number">8</span>, <span class="number">5</span>]])</span><br><span class="line">idx = findClosestCentroids(X, init_centroids)</span><br><span class="line">print(idx[<span class="number">0</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>[0 2 1]
+</code></pre><p>​    </p>
+<h4 id="1-1-2-Computing-centroid-means"><a href="#1-1-2-Computing-centroid-means" class="headerlink" title="1.1.2 Computing centroid means"></a>1.1.2 Computing centroid means</h4><p>分配好每个点对应的簇中心，接下来要做的是，重新计算每个簇中心，为这个簇里面所有点位置的平均值。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-8f8bbd2fac4937f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>$C_k$ 是我们分配好给簇中心点的样本集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCentroids</span><span class="params">(X, idx)</span>:</span></span><br><span class="line">    centroids = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(np.unique(idx))):  <span class="comment"># np.unique() means K</span></span><br><span class="line">        u_k = X[idx==i].mean(axis=<span class="number">0</span>)  <span class="comment"># 求每列的平均值</span></span><br><span class="line">        centroids.append(u_k)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> np.array(centroids)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeCentroids(X, idx)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[2.42830111, 3.15792418],
+       [5.81350331, 2.63365645],
+       [7.11938687, 3.6166844 ]])
+</code></pre><h3 id="1-2-K-means-on-example-dataset"><a href="#1-2-K-means-on-example-dataset" class="headerlink" title="1.2 K-means on example dataset"></a>1.2 K-means on example dataset</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotData</span><span class="params">(X, centroids, idx=None)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    可视化数据，并自动分开着色。</span></span><br><span class="line"><span class="string">    idx: 最后一次迭代生成的idx向量，存储每个样本分配的簇中心点的值</span></span><br><span class="line"><span class="string">    centroids: 包含每次中心点历史记录</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    colors = [<span class="string">'b'</span>,<span class="string">'g'</span>,<span class="string">'gold'</span>,<span class="string">'darkorange'</span>,<span class="string">'salmon'</span>,<span class="string">'olivedrab'</span>, </span><br><span class="line">              <span class="string">'maroon'</span>, <span class="string">'navy'</span>, <span class="string">'sienna'</span>, <span class="string">'tomato'</span>, <span class="string">'lightgray'</span>, <span class="string">'gainsboro'</span></span><br><span class="line">             <span class="string">'coral'</span>, <span class="string">'aliceblue'</span>, <span class="string">'dimgray'</span>, <span class="string">'mintcream'</span>, <span class="string">'mintcream'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assert</span> len(centroids[<span class="number">0</span>]) &lt;= len(colors), <span class="string">'colors not enough '</span></span><br><span class="line">      </span><br><span class="line">    subX = []  <span class="comment"># 分号类的样本点</span></span><br><span class="line">    <span class="keyword">if</span> idx <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(centroids[<span class="number">0</span>].shape[<span class="number">0</span>]):</span><br><span class="line">            x_i = X[idx == i]</span><br><span class="line">            subX.append(x_i)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        subX = [X]  <span class="comment"># 将X转化为一个元素的列表，每个元素为每个簇的样本集，方便下方绘图</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 分别画出每个簇的点，并着不同的颜色</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(subX)):</span><br><span class="line">        xx = subX[i]</span><br><span class="line">        plt.scatter(xx[:,<span class="number">0</span>], xx[:,<span class="number">1</span>], c=colors[i], label=<span class="string">'Cluster %d'</span>%i)</span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.grid(<span class="keyword">True</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'x1'</span>,fontsize=<span class="number">14</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'x2'</span>,fontsize=<span class="number">14</span>)</span><br><span class="line">    plt.title(<span class="string">'Plot of X Points'</span>,fontsize=<span class="number">16</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 画出簇中心点的移动轨迹</span></span><br><span class="line">    xx, yy = [], []</span><br><span class="line">    <span class="keyword">for</span> centroid <span class="keyword">in</span> centroids:</span><br><span class="line">        xx.append(centroid[:,<span class="number">0</span>])</span><br><span class="line">        yy.append(centroid[:,<span class="number">1</span>])</span><br><span class="line">    </span><br><span class="line">    plt.plot(xx, yy, <span class="string">'rx--'</span>, markersize=<span class="number">8</span>)</span><br><span class="line">                         </span><br><span class="line">plotData(X, [init_centroids])</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-99bcd4e42261e382.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_11_0.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">runKmeans</span><span class="params">(X, centroids, max_iters)</span>:</span></span><br><span class="line">    K = len(centroids)</span><br><span class="line">    </span><br><span class="line">    centroids_all = []</span><br><span class="line">    centroids_all.append(centroids)</span><br><span class="line">    centroid_i = centroids</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(max_iters):</span><br><span class="line">        idx = findClosestCentroids(X, centroid_i)</span><br><span class="line">        centroid_i = computeCentroids(X, idx)</span><br><span class="line">        centroids_all.append(centroid_i)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> idx, centroids_all</span><br><span class="line">    </span><br><span class="line">idx, centroids_all = runKmeans(X, init_centroids, <span class="number">20</span>)</span><br><span class="line">plotData(X, centroids_all, idx)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-dee8e85fcb61ca0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_12_0.png"></p>
+<h3 id="1-3-Random-initialization"><a href="#1-3-Random-initialization" class="headerlink" title="1.3 Random initialization"></a>1.3 Random initialization</h3><p>在实践中，对簇中心点进行初始化的一个好的策略就是从训练集中选择随机的例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initCentroids</span><span class="params">(X, K)</span>:</span></span><br><span class="line">    <span class="string">"""随机初始化"""</span></span><br><span class="line">    m, n = X.shape</span><br><span class="line">    idx = np.random.choice(m, K)</span><br><span class="line">    centroids = X[idx]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> centroids</span><br></pre></td></tr></table></figure>
+<p>进行三次随机初始化，看下各自的效果。会发现第三次的效果并不理想，这是正常的，落入了局部最优。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    centroids = initCentroids(X, <span class="number">3</span>)</span><br><span class="line">    idx, centroids_all = runKmeans(X, centroids, <span class="number">10</span>)</span><br><span class="line">    plotData(X, centroids_all, idx)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-e185eb01ee583ba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_16_0.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-fee5952cd9ef9601.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_16_1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-723654a97082d967.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_16_2.png"></p>
+<p>上面运行了三次随机初始化，可以看到不同的随机化，效果是不一样的。</p>
+<h3 id="1-4-Image-compression-with-K-means"><a href="#1-4-Image-compression-with-K-means" class="headerlink" title="1.4 Image compression with K-means"></a>1.4 Image compression with K-means</h3><p>这部分你将用Kmeans来进行图片压缩。在一个简单的24位颜色表示图像。每个像素被表示为三个8位无符号整数(从0到255)，指定了红、绿和蓝色的强度值。这种编码通常被称为RGB编码。我们的图像包含数千种颜色，在这一部分的练习中，你将把颜色的数量减少到16种颜色。</p>
+<p>这可以有效地压缩照片。具体地说，您只需要存储16个选中颜色的RGB值，而对于图中的每个像素，现在只需要将该颜色的索引存储在该位置(只需要4 bits就能表示16种可能性)。</p>
+<p>接下来我们要用K-means算法选16种颜色，用于图片压缩。你将把原始图片的每个像素看作一个数据样本，然后利用K-means算法去找分组最好的16种颜色。</p>
+<h4 id="1-4-1-K-means-on-pixels"><a href="#1-4-1-K-means-on-pixels" class="headerlink" title="1.4.1 K-means on pixels"></a>1.4.1 K-means on pixels</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> io</span><br><span class="line"></span><br><span class="line">A = io.imread(<span class="string">'data/bird_small.png'</span>)</span><br><span class="line">print(A.shape)</span><br><span class="line">plt.imshow(A);</span><br><span class="line">A = A/<span class="number">255.</span>  <span class="comment"># Divide by 255 so that all values are in the range 0 - 1</span></span><br></pre></td></tr></table></figure>
+<pre><code>(128, 128, 3)
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-04457c9ed677f770.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_20_1.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Reshape the image into an (N,3) matrix where N = number of pixels.</span></span><br><span class="line"><span class="comment">#  Each row will contain the Red, Green and Blue pixel values</span></span><br><span class="line"><span class="comment">#  This gives us our dataset matrix X that we will use K-Means on.</span></span><br><span class="line">X = A.reshape(<span class="number">-1</span>, <span class="number">3</span>)</span><br><span class="line">K = <span class="number">16</span></span><br><span class="line">centroids = initCentroids(X, K)</span><br><span class="line">idx, centroids_all = runKmeans(X, centroids, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">img = np.zeros(X.shape)</span><br><span class="line">centroids = centroids_all[<span class="number">-1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(centroids)):</span><br><span class="line">    img[idx == i] = centroids[i]</span><br><span class="line">    </span><br><span class="line">img = img.reshape((<span class="number">128</span>, <span class="number">128</span>, <span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">12</span>,<span class="number">6</span>))</span><br><span class="line">axes[<span class="number">0</span>].imshow(A)</span><br><span class="line">axes[<span class="number">1</span>].imshow(img)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x2bd54e4ed68&gt;
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/11023262-81edcc43747be944.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_22_1.png"></p>
+<h2 id="2-Principal-Component-Analysis"><a href="#2-Principal-Component-Analysis" class="headerlink" title="2 Principal Component Analysis"></a>2 Principal Component Analysis</h2><p>这部分，你将运用PCA来实现降维。您将首先通过一个2D数据集进行实验，以获得关于PCA如何工作的直观感受，然后在一个更大的图像数据集上使用它。</p>
+<h3 id="2-1-Example-Dataset"><a href="#2-1-Example-Dataset" class="headerlink" title="2.1 Example Dataset"></a>2.1 Example Dataset</h3><p>为了帮助您理解PCA是如何工作的，您将首先从一个二维数据集开始，该数据集有一个大的变化方向和一个较小的变化方向。</p>
+<p>在这部分练习中，您将看到使用PCA将数据从2D减少到1D时会发生什么。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex7data1.mat'</span>)</span><br><span class="line">X = mat[<span class="string">'X'</span>]</span><br><span class="line">print(X.shape)</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>], X[:,<span class="number">1</span>], facecolors=<span class="string">'none'</span>, edgecolors=<span class="string">'b'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>(50, 2)
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-87de0ba132cd30d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_25_2.png"></p>
+<h3 id="2-2-Implementing-PCA"><a href="#2-2-Implementing-PCA" class="headerlink" title="2.2 Implementing PCA"></a>2.2 Implementing PCA</h3><p>PCA由两部分组成：</p>
+<ol>
+<li>计算数据的方差矩阵</li>
+<li>用SVD计算特征向量$(U_1, U_2, …, U_n)$</li>
+</ol>
+<p>在PCA之前，记得标准化数据。</p>
+<p>然后计算方差矩阵，如果你的每条样本数据是以行的形式表示，那么计算公式如下：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-bc74ee2a60ef3dd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>接着就可以用SVD计算主成分<br><img src="https://upload-images.jianshu.io/upload_images/11023262-ed6f14bef246b62d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>U包含了主成分，<strong>每一列</strong>就是我们数据要映射的向量，S为对角矩阵，为奇异值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">featureNormalize</span><span class="params">(X)</span>:</span></span><br><span class="line">    means = X.mean(axis=<span class="number">0</span>)</span><br><span class="line">    stds = X.std(axis=<span class="number">0</span>, ddof=<span class="number">1</span>)</span><br><span class="line">    X_norm = (X - means) / stds</span><br><span class="line">    <span class="keyword">return</span> X_norm, means, stds</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pca</span><span class="params">(X)</span>:</span></span><br><span class="line">    sigma = (X.T @ X) / len(X)</span><br><span class="line">    U, S, V = np.linalg.svd(sigma)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> U, S, V</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">X_norm, means, stds = featureNormalize(X)</span><br><span class="line">U, S, V = pca(X_norm)</span><br><span class="line"></span><br><span class="line">print(U[:,<span class="number">0</span>]) </span><br><span class="line">plt.figure(figsize=(<span class="number">7</span>, <span class="number">5</span>))</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>], X[:,<span class="number">1</span>], facecolors=<span class="string">'none'</span>, edgecolors=<span class="string">'b'</span>)</span><br><span class="line"></span><br><span class="line">plt.plot([means[<span class="number">0</span>], means[<span class="number">0</span>] + <span class="number">1.5</span>*S[<span class="number">0</span>]*U[<span class="number">0</span>,<span class="number">0</span>]], </span><br><span class="line">         [means[<span class="number">1</span>], means[<span class="number">1</span>] + <span class="number">1.5</span>*S[<span class="number">0</span>]*U[<span class="number">0</span>,<span class="number">1</span>]],</span><br><span class="line">        c=<span class="string">'r'</span>, linewidth=<span class="number">3</span>, label=<span class="string">'First Principal Component'</span>)</span><br><span class="line">plt.plot([means[<span class="number">0</span>], means[<span class="number">0</span>] + <span class="number">1.5</span>*S[<span class="number">1</span>]*U[<span class="number">1</span>,<span class="number">0</span>]], </span><br><span class="line">         [means[<span class="number">1</span>], means[<span class="number">1</span>] + <span class="number">1.5</span>*S[<span class="number">1</span>]*U[<span class="number">1</span>,<span class="number">1</span>]],</span><br><span class="line">        c=<span class="string">'g'</span>, linewidth=<span class="number">3</span>, label=<span class="string">'Second Principal Component'</span>)</span><br><span class="line">plt.grid()</span><br><span class="line"><span class="comment"># changes limits of x or y axis so that equal increments of x and y have the same length</span></span><br><span class="line"><span class="comment"># 不然看着不垂直，不舒服。：）</span></span><br><span class="line">plt.axis(<span class="string">"equal"</span>)  </span><br><span class="line">plt.legend()</span><br></pre></td></tr></table></figure>
+<pre><code>[-0.70710678 -0.70710678]
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/11023262-244436ae80f16225.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_29_2.png"></p>
+<h3 id="2-3-Dimensionality-Reduction-with-PCA"><a href="#2-3-Dimensionality-Reduction-with-PCA" class="headerlink" title="2.3 Dimensionality Reduction with PCA"></a>2.3 Dimensionality Reduction with PCA</h3><h4 id="2-3-1-Projecting-the-data-onto-the-principal-components"><a href="#2-3-1-Projecting-the-data-onto-the-principal-components" class="headerlink" title="2.3.1 Projecting the data onto the principal components"></a>2.3.1 Projecting the data onto the principal components</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">projectData</span><span class="params">(X, U, K)</span>:</span></span><br><span class="line">    Z = X @ U[:,:K]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Z</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project the first example onto the first dimension </span></span><br><span class="line"><span class="comment"># and you should see a value of about 1.481</span></span><br><span class="line">Z = projectData(X_norm, U, <span class="number">1</span>)</span><br><span class="line">Z[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>array([1.48127391])
+</code></pre><h4 id="2-3-2-Reconstructing-an-approximation-of-the-data"><a href="#2-3-2-Reconstructing-an-approximation-of-the-data" class="headerlink" title="2.3.2 Reconstructing an approximation of the data"></a>2.3.2 Reconstructing an approximation of the data</h4><p>重建数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recoverData</span><span class="params">(Z, U, K)</span>:</span></span><br><span class="line">    X_rec = Z @ U[:,:K].T</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> X_rec</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># you will recover an approximation of the first example and you should see a value of</span></span><br><span class="line"><span class="comment"># about [-1.047 -1.047].</span></span><br><span class="line">X_rec = recoverData(Z, U, <span class="number">1</span>)</span><br><span class="line">X_rec[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>array([-1.04741883, -1.04741883])
+</code></pre><h4 id="2-3-3-Visualizing-the-projections"><a href="#2-3-3-Visualizing-the-projections" class="headerlink" title="2.3.3 Visualizing the projections"></a>2.3.3 Visualizing the projections</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">7</span>,<span class="number">5</span>))</span><br><span class="line">plt.axis(<span class="string">"equal"</span>) </span><br><span class="line">plot = plt.scatter(X_norm[:,<span class="number">0</span>], X_norm[:,<span class="number">1</span>], s=<span class="number">30</span>, facecolors=<span class="string">'none'</span>, </span><br><span class="line">                   edgecolors=<span class="string">'b'</span>,label=<span class="string">'Original Data Points'</span>)</span><br><span class="line">plot = plt.scatter(X_rec[:,<span class="number">0</span>], X_rec[:,<span class="number">1</span>], s=<span class="number">30</span>, facecolors=<span class="string">'none'</span>, </span><br><span class="line">                   edgecolors=<span class="string">'r'</span>,label=<span class="string">'PCA Reduced Data Points'</span>)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">"Example Dataset: Reduced Dimension Points Shown"</span>,fontsize=<span class="number">14</span>)</span><br><span class="line">plt.xlabel(<span class="string">'x1 [Feature Normalized]'</span>,fontsize=<span class="number">14</span>)</span><br><span class="line">plt.ylabel(<span class="string">'x2 [Feature Normalized]'</span>,fontsize=<span class="number">14</span>)</span><br><span class="line">plt.grid(<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(X_norm.shape[<span class="number">0</span>]):</span><br><span class="line">    plt.plot([X_norm[x,<span class="number">0</span>],X_rec[x,<span class="number">0</span>]],[X_norm[x,<span class="number">1</span>],X_rec[x,<span class="number">1</span>]],<span class="string">'k--'</span>)</span><br><span class="line">    <span class="comment"># 输入第一项全是X坐标，第二项都是Y坐标</span></span><br><span class="line">plt.legend()</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.legend.Legend at 0x2bd54da7b70&gt;
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/11023262-8e8ebdef4ef57983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_38_1.png"></p>
+<h3 id="2-4-Face-Image-Dataset"><a href="#2-4-Face-Image-Dataset" class="headerlink" title="2.4 Face Image Dataset"></a>2.4 Face Image Dataset</h3><p>在这部分练习中，您将人脸图像上运行PCA，看看如何在实践中使用它来减少维度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex7faces.mat'</span>)</span><br><span class="line">X = mat[<span class="string">'X'</span>]</span><br><span class="line">print(X.shape)</span><br></pre></td></tr></table></figure>
+<pre><code>(5000, 1024)
+</code></pre><p>​    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">displayData</span><span class="params">(X, row, col)</span>:</span></span><br><span class="line">    fig, axs = plt.subplots(row, col, figsize=(<span class="number">8</span>,<span class="number">8</span>))</span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> range(row):</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> range(col):</span><br><span class="line">            axs[r][c].imshow(X[r*col + c].reshape(<span class="number">32</span>,<span class="number">32</span>).T, cmap = <span class="string">'Greys_r'</span>)</span><br><span class="line">            axs[r][c].set_xticks([])</span><br><span class="line">            axs[r][c].set_yticks([])</span><br><span class="line">            </span><br><span class="line">displayData(X, <span class="number">10</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-51ab4755896f2093.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_41_0.png"></p>
+<h4 id="2-4-1-PCA-on-Faces"><a href="#2-4-1-PCA-on-Faces" class="headerlink" title="2.4.1 PCA on Faces"></a>2.4.1 PCA on Faces</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X_norm, means, stds = featureNormalize(X)</span><br><span class="line"></span><br><span class="line">U, S, V = pca(X_norm)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">U.shape, S.shape</span><br></pre></td></tr></table></figure>
+<pre><code>((1024, 1024), (1024,))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">displayData(U[:,:<span class="number">36</span>].T, <span class="number">6</span>, <span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-d190e78dc4b6f58e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_45_0.png"></p>
+<h4 id="2-4-2-Dimensionality-Reduction"><a href="#2-4-2-Dimensionality-Reduction" class="headerlink" title="2.4.2 Dimensionality Reduction"></a>2.4.2 Dimensionality Reduction</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z = projectData(X_norm, U, K=<span class="number">36</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_rec = recoverData(z, U, K=<span class="number">36</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">displayData(X_rec, <span class="number">10</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-a42d5e04ae88de52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_49_0.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/26/180526S-SVM支持向量机/" rel="next" title="吴恩达机器学习作业Python实现(六)：SVM支持向量机">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(六)：SVM支持向量机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Cowry" />
+            
+              <p class="site-author-name" itemprop="name">Cowry</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cowry5" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2658018575" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/Cowry5" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-K-means-Clustering"><span class="nav-number">1.</span> <span class="nav-text">1 K-means Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Implementing-K-means"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Implementing K-means</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-Finding-closest-centroids"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 Finding closest centroids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-Computing-centroid-means"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 Computing centroid means</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-K-means-on-example-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 K-means on example dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Random-initialization"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Random initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Image-compression-with-K-means"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Image compression with K-means</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-K-means-on-pixels"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 K-means on pixels</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Principal-Component-Analysis"><span class="nav-number">2.</span> <span class="nav-text">2 Principal Component Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Example-Dataset"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Example Dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Implementing-PCA"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Implementing PCA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Dimensionality-Reduction-with-PCA"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Dimensionality Reduction with PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-Projecting-the-data-onto-the-principal-components"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 Projecting the data onto the principal components</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-Reconstructing-an-approximation-of-the-data"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 Reconstructing an approximation of the data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-Visualizing-the-projections"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 Visualizing the projections</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Face-Image-Dataset"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 Face Image Dataset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-PCA-on-Faces"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 PCA on Faces</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-Dimensionality-Reduction"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 Dimensionality Reduction</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cowry</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Words total count&#58;</span>
+    
+    <span title="Words total count">18.2k</span>
+  
+</div>
+
+<div class="busuanzi-count">
+  <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>     
+    </span>
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>    
+    </span>
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mrmD4pdG7Ueu5OlKl2v1Ig47-9Nh9j0Va", "T6pUVA4kFI5NzhTwXhWePPS8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
