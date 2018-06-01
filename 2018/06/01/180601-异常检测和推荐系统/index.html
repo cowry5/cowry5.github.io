@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta https-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta https-equiv="Cache-Control" content="no-transform" />
+<meta https-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 Anomaly detection这部分，您将实现一个异常检测算法来检测服务器计算机中的异常行为。他的特征是测量每个服务器的响应速度(mb/s)和延迟(ms)。当你的服务器运行时，你收集到了m=307的样本，是无标签的。你相信其中绝大多数样本是正常的，但还是有一小部分的样本是异常的。 我们将使用高斯分布模型来检测数据集中的异常样本。 12345% matplotlib inlineimport">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达机器学习作业Python实现(八)：异常检测和推荐系统">
+<meta property="og:url" content="https://yoursite.com/2018/06/01/180601-异常检测和推荐系统/index.html">
+<meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="1 Anomaly detection这部分，您将实现一个异常检测算法来检测服务器计算机中的异常行为。他的特征是测量每个服务器的响应速度(mb/s)和延迟(ms)。当你的服务器运行时，你收集到了m=307的样本，是无标签的。你相信其中绝大多数样本是正常的，但还是有一小部分的样本是异常的。 我们将使用高斯分布模型来检测数据集中的异常样本。 12345% matplotlib inlineimport">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-995b369d277fc5cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-bbed4cabd9f59882.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-cbac08b7ff2c7250.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-e46df00505cb3569.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-049151e8a5821876.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-83de0d8c59c77396.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-013ef1c9f81ff051.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-71b6bb67c49ac3c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-806475a1cd714469.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-81e39aa343b66d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-db34cf727b832105.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-93e7fe405183ca25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-31ce820fc2a55fc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-06-01T10:26:09.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达机器学习作业Python实现(八)：异常检测和推荐系统">
+<meta name="twitter:description" content="1 Anomaly detection这部分，您将实现一个异常检测算法来检测服务器计算机中的异常行为。他的特征是测量每个服务器的响应速度(mb/s)和延迟(ms)。当你的服务器运行时，你收集到了m=307的样本，是无标签的。你相信其中绝大多数样本是正常的，但还是有一小部分的样本是异常的。 我们将使用高斯分布模型来检测数据集中的异常样本。 12345% matplotlib inlineimport">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-995b369d277fc5cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2018/06/01/180601-异常检测和推荐系统/"/>
+
+
+
+
+
+  <title>吴恩达机器学习作业Python实现(八)：异常检测和推荐系统 | Cowry</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9aa1b9dca27042171881932a6fb39c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cowry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Live your life with passion!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/06/01/180601-异常检测和推荐系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达机器学习作业Python实现(八)：异常检测和推荐系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T18:00:31+08:00">
+                2018-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/01/180601-异常检测和推荐系统/" class="leancloud_visitors" data-flag-title="吴恩达机器学习作业Python实现(八)：异常检测和推荐系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  4,095
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Anomaly-detection"><a href="#1-Anomaly-detection" class="headerlink" title="1 Anomaly detection"></a>1 Anomaly detection</h2><p>这部分，您将实现一个异常检测算法来检测服务器计算机中的异常行为。他的特征是测量每个服务器的响应速度(mb/s)和延迟(ms)。当你的服务器运行时，你收集到了m=307的样本，是无标签的。你相信其中绝大多数样本是正常的，但还是有一小部分的样本是异常的。</p>
+<p>我们将使用高斯分布模型来检测数据集中的异常样本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">% matplotlib inline</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> loadmat</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex8data1.mat'</span>)</span><br><span class="line">print(mat.keys())</span><br><span class="line"><span class="comment"># dict_keys(['__header__', '__version__', '__globals__', 'X', 'Xval', 'yval'])</span></span><br><span class="line">X = mat[<span class="string">'X'</span>]</span><br><span class="line">Xval, yval = mat[<span class="string">'Xval'</span>], mat[<span class="string">'yval'</span>]</span><br><span class="line">X.shape, Xval.shape, yval.shape</span><br><span class="line"><span class="comment"># ((307, 2), (307, 2), (307, 1))</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_data</span><span class="params">()</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">    plt.plot(X[:,<span class="number">0</span>], X[:,<span class="number">1</span>], <span class="string">'bx'</span>)</span><br><span class="line">    <span class="comment"># plt.scatter(Xval[:,0], Xval[:,1], c=yval.flatten(), marker='x', cmap='rainbow')</span></span><br><span class="line">    </span><br><span class="line">plot_data()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-995b369d277fc5cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_3_0.png"></p>
+<h3 id="1-1-Gaussian-distribution"><a href="#1-1-Gaussian-distribution" class="headerlink" title="1.1 Gaussian distribution"></a>1.1 Gaussian distribution</h3><p>要执行异常检测，首先需要将模型拟合数据的分布。</p>
+<p>给定训练集${x^{(1)}, …, x^{(m)}}$, 我们想要对每个特征$x_i$ 做高斯分布估计。对于每个特征，$i = 1…n$，我们需要找到参数 $u_i, \delta^2_i$ 来拟合数据。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-bbed4cabd9f59882.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-cbac08b7ff2c7250.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gaussian</span><span class="params">(X, mu, sigma2)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    mu, sigma2参数已经决定了一个高斯分布模型</span></span><br><span class="line"><span class="string">    因为原始模型就是多元高斯模型在sigma2上是对角矩阵而已，所以如下：</span></span><br><span class="line"><span class="string">    If Sigma2 is a matrix, it is treated as the covariance matrix. </span></span><br><span class="line"><span class="string">    If Sigma2 is a vector, it is treated as the sigma^2 values of the variances</span></span><br><span class="line"><span class="string">    in each dimension (a diagonal covariance matrix)</span></span><br><span class="line"><span class="string">    output:</span></span><br><span class="line"><span class="string">        一个(m, )维向量，包含每个样本的概率值。</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line"><span class="comment"># 如果想用矩阵相乘求解exp()中的项，一定要注意维度的变换。</span></span><br><span class="line"><span class="comment"># 事实上我们只需要取对角线上的元素即可。（类似于方差而不是想要协方差）</span></span><br><span class="line"><span class="comment"># 最后得到一个（m，）的向量，包含每个样本的概率，而不是想要一个（m,m）的矩阵</span></span><br><span class="line"><span class="comment"># 注意这里，当矩阵过大时，numpy矩阵相乘会出现内存错误。例如9万维的矩阵。所以画图时不能生成太多数据~！</span></span><br><span class="line"><span class="comment">#     n = len(mu) </span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#     if np.ndim(sigma2) == 1:</span></span><br><span class="line"><span class="comment">#         sigma2 = np.diag(sigma2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#     X = X - mu</span></span><br><span class="line"><span class="comment">#     p1 = np.power(2 * np.pi, -n/2)*np.sqrt(np.linalg.det(sigma2))</span></span><br><span class="line"><span class="comment">#     e = np.diag(X@np.linalg.inv(sigma2)@X.T)  # 取对角元素，类似与方差，而不要协方差</span></span><br><span class="line"><span class="comment">#     p2 = np.exp(-.5*e)</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#     return p1 * p2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面是不利用矩阵的解法，相当于把每行数据输入进去，不会出现内存错误。</span></span><br><span class="line">    m, n = X.shape</span><br><span class="line">    <span class="keyword">if</span> np.ndim(sigma2) == <span class="number">1</span>:</span><br><span class="line">        sigma2 = np.diag(sigma2)</span><br><span class="line"></span><br><span class="line">    norm = <span class="number">1.</span>/(np.power((<span class="number">2</span>*np.pi), n/<span class="number">2</span>)*np.sqrt(np.linalg.det(sigma2)))</span><br><span class="line">    exp = np.zeros((m,<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> range(m):</span><br><span class="line">        xrow = X[row]</span><br><span class="line">        exp[row] = np.exp(<span class="number">-0.5</span>*((xrow-mu).T).dot(np.linalg.inv(sigma2)).dot(xrow-mu))</span><br><span class="line">    <span class="keyword">return</span> norm*exp</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-Estimating-parameters-for-a-Gaussian"><a href="#1-2-Estimating-parameters-for-a-Gaussian" class="headerlink" title="1.2 Estimating parameters for a Gaussian"></a>1.2 Estimating parameters for a Gaussian</h3><p>参数估计：<br><img src="https://upload-images.jianshu.io/upload_images/11023262-e46df00505cb3569.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getGaussianParams</span><span class="params">(X, useMultivariate)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    The input X is the dataset with each n-dimensional data point in one row</span></span><br><span class="line"><span class="string">    The output is an n-dimensional vector mu, the mean of the data set </span></span><br><span class="line"><span class="string">    the variances sigma^2, an n x 1 vector 或者是(n,n)矩阵，if你使用了多元高斯函数</span></span><br><span class="line"><span class="string">    作业这里求样本方差除的是 m 而不是 m - 1，实际上效果差不了多少。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    mu = X.mean(axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> useMultivariate:    </span><br><span class="line">        sigma2 = ((X-mu).T @ (X-mu)) / len(X)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        sigma2 = X.var(axis=<span class="number">0</span>, ddof=<span class="number">0</span>)  <span class="comment"># 样本方差</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> mu, sigma2</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-049151e8a5821876.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotContours</span><span class="params">(mu, sigma2)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    画出高斯概率分布的图，在三维中是一个上凸的曲面。投影到平面上则是一圈圈的等高线。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    delta = <span class="number">.3</span>  <span class="comment"># 注意delta不能太小！！！否则会生成太多的数据，导致矩阵相乘会出现内存错误。</span></span><br><span class="line">    x = np.arange(<span class="number">0</span>,<span class="number">30</span>,delta)</span><br><span class="line">    y = np.arange(<span class="number">0</span>,<span class="number">30</span>,delta)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 这部分要转化为X形式的坐标矩阵，也就是一列是横坐标，一列是纵坐标，</span></span><br><span class="line">    <span class="comment"># 然后才能传入gaussian中求解得到每个点的概率值</span></span><br><span class="line">    xx, yy = np.meshgrid(x, y)</span><br><span class="line">    points = np.c_[xx.ravel(), yy.ravel()]  <span class="comment"># 按列合并，一列横坐标，一列纵坐标</span></span><br><span class="line">    z = gaussian(points, mu, sigma2)</span><br><span class="line">    z = z.reshape(xx.shape)  <span class="comment"># 这步骤不能忘</span></span><br><span class="line">    </span><br><span class="line">    cont_levels = [<span class="number">10</span>**h <span class="keyword">for</span> h <span class="keyword">in</span> range(<span class="number">-20</span>,<span class="number">0</span>,<span class="number">3</span>)]</span><br><span class="line">    plt.contour(xx, yy, z, cont_levels)  <span class="comment"># 这个levels是作业里面给的参考,或者通过求解的概率推出来。</span></span><br><span class="line"></span><br><span class="line">    plt.title(<span class="string">'Gaussian Contours'</span>,fontsize=<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># First contours without using multivariate gaussian:</span></span><br><span class="line">plot_data()</span><br><span class="line">useMV = <span class="keyword">False</span></span><br><span class="line">plotContours(*getGaussianParams(X, useMV))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Then contours with multivariate gaussian:</span></span><br><span class="line">plot_data()</span><br><span class="line">useMV = <span class="keyword">True</span></span><br><span class="line"><span class="comment"># *表示解元组</span></span><br><span class="line">plotContours(*getGaussianParams(X, useMV))</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-83de0d8c59c77396.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_10_0.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-013ef1c9f81ff051.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_10_1.png"></p>
+<p>从上面的图可以看到，一元高斯模型仅在横向和纵向上有变化，而多元高斯模型在斜轴上也有相关变化，对应着特征间的相关关系。而一元高斯模型就是多元高斯模型中协方差矩阵为对角矩阵的结果，即协方差都为0，不考虑协方差，只考虑方差，故一元高斯模型不会有斜轴上的变化。</p>
+<p>从上面的图我们可以清晰的看到，哪些样本的概率高，哪些样本的概率低，概率低的样本很大程度上就是异常值。</p>
+<h3 id="1-3-Selecting-the-threshold-ε"><a href="#1-3-Selecting-the-threshold-ε" class="headerlink" title="1.3 Selecting the threshold, ε"></a>1.3 Selecting the threshold, ε</h3><p>确定哪些例子是异常的一种方法是通过一组交叉验证集，选择一个好的阈值 ε 。</p>
+<p>在这部分的练习中,您将实现一个算法使用交叉验证集的F1分数来选择合理的阈值 ε 。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-71b6bb67c49ac3c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>tp means true positives：是异常值，并且我们的模型预测成异常值了，即真的异常值。</p>
+<p>fp means false positives：是正常值，但模型把它预测成异常值，即假的异常值。</p>
+<p>fn means false negatives：是异常值，但是模型把它预测成正常值，即假的正常值。</p>
+<p>precision 表示你预测为positive的样本中有多少是真的positive的样本。<br>recall 表示实际有多少positive的样本，而你成功预测出多少positive的样本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">selectThreshold</span><span class="params">(yval, pval)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">computeF1</span><span class="params">(yval, pval)</span>:</span></span><br><span class="line">        m = len(yval)</span><br><span class="line">        tp = float(len([i <span class="keyword">for</span> i <span class="keyword">in</span> range(m) <span class="keyword">if</span> pval[i] <span class="keyword">and</span> yval[i]]))</span><br><span class="line">        fp = float(len([i <span class="keyword">for</span> i <span class="keyword">in</span> range(m) <span class="keyword">if</span> pval[i] <span class="keyword">and</span> <span class="keyword">not</span> yval[i]]))</span><br><span class="line">        fn = float(len([i <span class="keyword">for</span> i <span class="keyword">in</span> range(m) <span class="keyword">if</span> <span class="keyword">not</span> pval[i] <span class="keyword">and</span> yval[i]]))</span><br><span class="line">        prec = tp/(tp+fp) <span class="keyword">if</span> (tp+fp) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">        rec = tp/(tp+fn) <span class="keyword">if</span> (tp+fn) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">        F1 = <span class="number">2</span>*prec*rec/(prec+rec) <span class="keyword">if</span> (prec+rec) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> F1</span><br><span class="line">   </span><br><span class="line">    epsilons = np.linspace(min(pval), max(pval), <span class="number">1000</span>)</span><br><span class="line">    bestF1, bestEpsilon = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> epsilons:</span><br><span class="line">        pval_ = pval &lt; e</span><br><span class="line">        thisF1 = computeF1(yval, pval_)</span><br><span class="line">        <span class="keyword">if</span> thisF1 &gt; bestF1:</span><br><span class="line">            bestF1 = thisF1</span><br><span class="line">            bestEpsilon = e</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bestF1, bestEpsilon</span><br></pre></td></tr></table></figure>
+<p>you should see a value epsilon of about 8.99e-05</p>
+<p>you should see a Best F1 value of  0.875000</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mu, sigma2 = getGaussianParams(X, useMultivariate=<span class="keyword">False</span>)</span><br><span class="line">pval = gaussian(Xval, mu, sigma2)</span><br><span class="line">bestF1, bestEpsilon = selectThreshold(yval, pval)  </span><br><span class="line"><span class="comment"># (0.8750000000000001, 8.999852631901397e-05)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y = gaussian(X, mu, sigma2)  <span class="comment"># X的概率</span></span><br><span class="line">xx = np.array([X[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(y)) <span class="keyword">if</span> y[i] &lt; bestEpsilon])</span><br><span class="line">xx  <span class="comment"># 离群点</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plot_data()</span><br><span class="line">plotContours(mu, sigma2)</span><br><span class="line">plt.scatter(xx[:,<span class="number">0</span>], xx[:,<span class="number">1</span>], s=<span class="number">80</span>, facecolors=<span class="string">'none'</span>, edgecolors=<span class="string">'r'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-806475a1cd714469.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_17_1.png"></p>
+<h3 id="1-4-High-dimensional-dataset"><a href="#1-4-High-dimensional-dataset" class="headerlink" title="1.4 High dimensional dataset"></a>1.4 High dimensional dataset</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat( <span class="string">'data/ex8data2.mat'</span> )</span><br><span class="line">X2 = mat[<span class="string">'X'</span>]</span><br><span class="line">Xval2, yval2 = mat[<span class="string">'Xval'</span>], mat[<span class="string">'yval'</span>]</span><br><span class="line">X2.shape  <span class="comment"># (1000, 11)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mu, sigma2 = getGaussianParams(X2, useMultivariate=<span class="keyword">False</span>)</span><br><span class="line">ypred = gaussian(X2, mu, sigma2)</span><br><span class="line"></span><br><span class="line">yval2pred = gaussian(Xval2, mu, sigma2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># You should see a value epsilon of about 1.38e-18, and 117 anomalies found.</span></span><br><span class="line">bestF1, bestEps = selectThreshold(yval2, yval2pred)</span><br><span class="line">anoms = [X2[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(X2.shape[<span class="number">0</span>]) <span class="keyword">if</span> ypred[i] &lt; bestEps]</span><br><span class="line">bestEps, len(anoms)</span><br><span class="line"><span class="comment"># (1.378607498200024e-18, 117)</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-Recommender-Systems"><a href="#2-Recommender-Systems" class="headerlink" title="2 Recommender Systems"></a>2 Recommender Systems</h2><p>实际上呢，这里使用的就是改良后的SVD矩阵分解算法。<a href="http://www.cnblogs.com/pinard/p/6351319.html" target="_blank" rel="noopener">矩阵分解在协同过滤推荐算法中的应用</a></p>
+<p>这一部分，将实现协同过滤学习算法，并将其应用于电影评分数据集。这个数据集由1到5的等级组成。数据集有$n_u$ = 943个用户，$n_m$ = 1682部电影。</p>
+<h3 id="2-1-Movie-ratings-dataset"><a href="#2-1-Movie-ratings-dataset" class="headerlink" title="2.1 Movie ratings dataset"></a>2.1 Movie ratings dataset</h3><p>矩阵Y(nm, nu)是不同电影的不同用户的评分，行数为电影数目，列数为用户数目。</p>
+<p>矩阵R是二进制指示矩阵，R(i, j)=1 表示用户j 对电影i 有评分，R(i, j)=0 表示用户j对电影i没有评分。</p>
+<p>协同过滤的目标是预测用户还没有评分的电影的评分，也就是R(i, j) = 0的项。这将允许我们向用户推荐预测收视率最高的电影。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-81e39aa343b66d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>X第i行代表第i个电影的特征向量$x^{(i)}$，theta矩阵的第j列代表第j用户一个参数向量$\theta_{(j)}$。$x^{(i)}$ 和 $\theta^{(j)}$ 都是n维向量。</p>
+<p>这个练习，我们取n=100(这里实际上已经做了降维分解)，所以，X is a ($n_m$, 100) matrix and $\theta$ is a ($n_u$, 100) matrix.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex8_movies.mat'</span>)</span><br><span class="line">print(mat.keys())</span><br><span class="line">Y, R = mat[<span class="string">'Y'</span>], mat[<span class="string">'R'</span>]</span><br><span class="line">nm, nu = Y.shape  <span class="comment"># Y中0代表用户没有评分</span></span><br><span class="line">nf = <span class="number">100</span></span><br><span class="line">Y.shape, R.shape</span><br><span class="line"><span class="comment"># ((1682, 943), (1682, 943))</span></span><br></pre></td></tr></table></figure>
+<p>先来求第一个电影的评分的平均值，注意有些人是没有评分这电影的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Y[<span class="number">0</span>].sum() / R[<span class="number">0</span>].sum()  <span class="comment"># 分子代表第一个电影的总分数，分母代表这部电影有多少评分数据</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># "Visualize the ratings matrix"</span></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">8</span>,<span class="number">8</span>*(<span class="number">1682.</span>/<span class="number">943.</span>)))</span><br><span class="line">plt.imshow(Y, cmap=<span class="string">'rainbow'</span>)</span><br><span class="line">plt.colorbar()</span><br><span class="line">plt.ylabel(<span class="string">'Movies (%d)'</span>%nm,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Users (%d)'</span>%nu,fontsize=<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-db34cf727b832105.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_26_1.png"></p>
+<h3 id="2-2-Collaborative-filtering-learning-algorithm"><a href="#2-2-Collaborative-filtering-learning-algorithm" class="headerlink" title="2.2 Collaborative filtering learning algorithm"></a>2.2 Collaborative filtering learning algorithm</h3><p>这部分实现协同过滤算法，首先实现代价函数。</p>
+<p>这里我们考虑对每一个参数$x^{(1…n_m)}\;and\;\theta^{(1…n_u)}$，都是一个n维的向量，这个n我们选取100。用户j对电影i的评分表示为$y^{(i,j)}=(\theta^{(\;j\;)})^Tx^{(i)}$，给定一个评分数据集，我们想要学习出 $x^{(1)},…,x^{(n_m)}\;and\;\theta^{(1)},…,\theta^{(n_u)}$，使代价函数最小。</p>
+<p>也就是X矩阵，和θ矩阵。</p>
+<p>为了使用高级优化算法，我们要将X和θ的参数量结合成一维的数组传入，在函数中再分解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex8_movieParams.mat'</span>)</span><br><span class="line">X = mat[<span class="string">'X'</span>]</span><br><span class="line">Theta = mat[<span class="string">'Theta'</span>]</span><br><span class="line">nu = int(mat[<span class="string">'num_users'</span>])</span><br><span class="line">nm = int(mat[<span class="string">'num_movies'</span>])</span><br><span class="line">nf = int(mat[<span class="string">'num_features'</span>])</span><br><span class="line"><span class="comment"># For now, reduce the data set size so that this runs faster</span></span><br><span class="line">nu = <span class="number">4</span>; nm = <span class="number">5</span>; nf = <span class="number">3</span></span><br><span class="line">X = X[:nm,:nf]</span><br><span class="line">Theta = Theta[:nu,:nf]</span><br><span class="line">Y = Y[:nm,:nu]</span><br><span class="line">R = R[:nm,:nu]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X.shape, Theta.shape</span><br></pre></td></tr></table></figure>
+<pre><code>((5, 3), (4, 3))
+</code></pre><h4 id="2-2-1-Collaborative-filtering-cost-function"><a href="#2-2-1-Collaborative-filtering-cost-function" class="headerlink" title="2.2.1 Collaborative filtering cost function"></a>2.2.1 Collaborative filtering cost function</h4><p>协同过滤的参数都不需要加偏置项了，故都可以正则化。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-93e7fe405183ca25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serialize</span><span class="params">(X, Theta)</span>:</span></span><br><span class="line">    <span class="string">'''展开参数'''</span></span><br><span class="line">    <span class="keyword">return</span> np.r_[X.flatten(),Theta.flatten()]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deserialize</span><span class="params">(seq, nm, nu, nf)</span>:</span></span><br><span class="line">    <span class="string">'''提取参数'''</span></span><br><span class="line">    <span class="keyword">return</span> seq[:nm*nf].reshape(nm, nf), seq[nm*nf:].reshape(nu, nf)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cofiCostFunc</span><span class="params">(params, Y, R, nm, nu, nf, l=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    params : 拉成一维之后的参数向量(X, Theta)</span></span><br><span class="line"><span class="string">    Y : 评分矩阵 (nm, nu)</span></span><br><span class="line"><span class="string">    R ：0-1矩阵，表示用户对某一电影有无评分</span></span><br><span class="line"><span class="string">    nu : 用户数量</span></span><br><span class="line"><span class="string">    nm : 电影数量</span></span><br><span class="line"><span class="string">    nf : 自定义的特征的维度</span></span><br><span class="line"><span class="string">    l : lambda for regularization</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    X, Theta = deserialize(params, nm, nu, nf)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># (X@Theta)*R含义如下： 因为X@Theta是我们用自定义参数算的评分，但是有些电影本来是没有人</span></span><br><span class="line">    <span class="comment"># 评分的，存储在R中，0-1表示。将这两个相乘，得到的值就是我们要的已经被评分过的电影的预测分数。</span></span><br><span class="line">    error = <span class="number">0.5</span>*np.square((X@Theta.T - Y)*R).sum()</span><br><span class="line">    reg1 = <span class="number">.5</span>*l*np.square(Theta).sum()</span><br><span class="line">    reg2 = <span class="number">.5</span>*l*np.square(X).sum()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> error + reg1 +reg2</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cofiCostFunc(serialize(X,Theta),Y,R,nm,nu,nf),cofiCostFunc(serialize(X,Theta),Y,R,nm,nu,nf,<span class="number">1.5</span>)</span><br><span class="line"><span class="comment"># (22.224603725685675, 31.34405624427422)</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-Collaborative-filtering-gradient"><a href="#2-2-2-Collaborative-filtering-gradient" class="headerlink" title="2.2.2 Collaborative filtering gradient"></a>2.2.2 Collaborative filtering gradient</h4><p><img src="https://upload-images.jianshu.io/upload_images/11023262-31ce820fc2a55fc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cofiGradient</span><span class="params">(params, Y, R, nm, nu, nf, l=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算X和Theta的梯度，并序列化输出。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    X, Theta = deserialize(params, nm, nu, nf)</span><br><span class="line">    </span><br><span class="line">    X_grad = ((X@Theta.T-Y)*R)@Theta + l*X</span><br><span class="line">    Theta_grad = ((X@Theta.T-Y)*R).T@X + l*Theta</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> serialize(X_grad, Theta_grad)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkGradient</span><span class="params">(params, Y, myR, nm, nu, nf, l = <span class="number">0.</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Let's check my gradient computation real quick</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    print(<span class="string">'Numerical Gradient \t cofiGrad \t\t Difference'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 分析出来的梯度</span></span><br><span class="line">    grad = cofiGradient(params,Y,myR,nm,nu,nf,l)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 用 微小的e 来计算数值梯度。</span></span><br><span class="line">    e = <span class="number">0.0001</span></span><br><span class="line">    nparams = len(params)</span><br><span class="line">    e_vec = np.zeros(nparams)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Choose 10 random elements of param vector and compute the numerical gradient</span></span><br><span class="line">    <span class="comment"># 每次只能改变e_vec中的一个值，并在计算完数值梯度后要还原。</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        idx = np.random.randint(<span class="number">0</span>,nparams)</span><br><span class="line">        e_vec[idx] = e</span><br><span class="line">        loss1 = cofiCostFunc(params-e_vec,Y,myR,nm,nu,nf,l)</span><br><span class="line">        loss2 = cofiCostFunc(params+e_vec,Y,myR,nm,nu,nf,l)</span><br><span class="line">        numgrad = (loss2 - loss1) / (<span class="number">2</span>*e)</span><br><span class="line">        e_vec[idx] = <span class="number">0</span></span><br><span class="line">        diff = np.linalg.norm(numgrad - grad[idx]) / np.linalg.norm(numgrad + grad[idx])</span><br><span class="line">        print(<span class="string">'%0.15f \t %0.15f \t %0.15f'</span> %(numgrad, grad[idx], diff))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Checking gradient with lambda = 0..."</span>)</span><br><span class="line">checkGradient(serialize(X,Theta), Y, R, nm, nu, nf)</span><br><span class="line">print(<span class="string">"\nChecking gradient with lambda = 1.5..."</span>)</span><br><span class="line">checkGradient(serialize(X,Theta), Y, R, nm, nu, nf, l=<span class="number">1.5</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-Learning-movie-recommendations"><a href="#2-3-Learning-movie-recommendations" class="headerlink" title="2.3 Learning movie recommendations"></a>2.3 Learning movie recommendations</h3><p>在我们训练协同过滤模型之前，我们先要获取所有电影的名称以及 添加与我们刚才观察到的新用户对应的评分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">movies = []  <span class="comment"># 包含所有电影的列表</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'data/movie_ids.txt'</span>,<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line"><span class="comment">#         movies.append(' '.join(line.strip().split(' ')[1:]))</span></span><br><span class="line">        movies.append(<span class="string">' '</span>.join(line.strip().split(<span class="string">' '</span>)[<span class="number">1</span>:]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">my_ratings = np.zeros((<span class="number">1682</span>,<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">my_ratings[<span class="number">0</span>]   = <span class="number">4</span></span><br><span class="line">my_ratings[<span class="number">97</span>]  = <span class="number">2</span></span><br><span class="line">my_ratings[<span class="number">6</span>]   = <span class="number">3</span></span><br><span class="line">my_ratings[<span class="number">11</span>]  = <span class="number">5</span></span><br><span class="line">my_ratings[<span class="number">53</span>]  = <span class="number">4</span></span><br><span class="line">my_ratings[<span class="number">63</span>]  = <span class="number">5</span></span><br><span class="line">my_ratings[<span class="number">65</span>]  = <span class="number">3</span></span><br><span class="line">my_ratings[<span class="number">68</span>]  = <span class="number">5</span></span><br><span class="line">my_ratings[<span class="number">182</span>] = <span class="number">4</span></span><br><span class="line">my_ratings[<span class="number">225</span>] = <span class="number">5</span></span><br><span class="line">my_ratings[<span class="number">354</span>] = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(my_ratings)):</span><br><span class="line">    <span class="keyword">if</span> my_ratings[i] &gt; <span class="number">0</span>:</span><br><span class="line">        print(my_ratings[i], movies[i])</span><br></pre></td></tr></table></figure>
+<p>导入Y矩阵以及R矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mat = loadmat(<span class="string">'data/ex8_movies.mat'</span>)</span><br><span class="line">Y, R = mat[<span class="string">'Y'</span>], mat[<span class="string">'R'</span>]</span><br><span class="line">Y.shape, R.shape</span><br></pre></td></tr></table></figure>
+<p>将我们刚才添加的新用户数据合并到Y 和R</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Y = np.c_[Y, my_ratings]  <span class="comment"># (1682, 944)</span></span><br><span class="line">R = np.c_[R, my_ratings!=<span class="number">0</span>]  <span class="comment"># (1682, 944)</span></span><br><span class="line">nm, nu = Y.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nf = <span class="number">10</span> <span class="comment"># 我们使用10维的特征向量</span></span><br></pre></td></tr></table></figure>
+<p>均值归一化数据，这个可以使一个完全没有评分的的特征最后也会获得非零值。是因为，最后要加回均值。</p>
+<p>注意只对有评分的数据求均值，没有评分的数据不包含在内，要用R矩阵判断。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalizeRatings</span><span class="params">(Y, R)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    The mean is only counting movies that were rated</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    Ymean = (Y.sum(axis=<span class="number">1</span>) / R.sum(axis=<span class="number">1</span>)).reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line"><span class="comment">#     Ynorm = (Y - Ymean)*R  # 这里也要注意不要归一化未评分的数据</span></span><br><span class="line">    Ynorm = (Y - Ymean)*R  <span class="comment"># 这里也要注意不要归一化未评分的数据</span></span><br><span class="line">    <span class="keyword">return</span> Ynorm, Ymean</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ynorm, Ymean = normalizeRatings(Y, R)</span><br><span class="line">Ynorm.shape, Ymean.shape</span><br><span class="line"><span class="comment"># ((1682, 944), (1682, 1))</span></span><br></pre></td></tr></table></figure>
+<p>生成初始化参数X矩阵，Theta矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X = np.random.random((nm, nf))</span><br><span class="line">Theta = np.random.random((nu, nf))</span><br><span class="line">params = serialize(X, Theta)</span><br><span class="line">l = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scipy.optimize <span class="keyword">as</span> opt</span><br><span class="line">res = opt.minimize(fun=cofiCostFunc,</span><br><span class="line">                   x0=params,</span><br><span class="line">                   args=(Y, R, nm, nu, nf, l),</span><br><span class="line">                   method=<span class="string">'TNC'</span>,</span><br><span class="line">                   jac=cofiGradient,</span><br><span class="line">                   options=&#123;<span class="string">'maxiter'</span>: <span class="number">100</span>&#125;)</span><br><span class="line"></span><br><span class="line">ret = res.x</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import scipy.optimize as opt</span></span><br><span class="line"><span class="comment"># ret = opt.fmin_cg(cofiCostFunc, x0=params, fprime=cofiGradient, </span></span><br><span class="line"><span class="comment">#                   args=(Y, R, nm, nu, nf, l), maxiter=100)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fit_X, fit_Theta = deserialize(ret, nm, nu, nf)</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-1-Recommendations"><a href="#2-3-1-Recommendations" class="headerlink" title="2.3.1 Recommendations"></a>2.3.1 Recommendations</h4><p>现在我们就可以利用训练好的参数来预测用户的分数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 所有用户的剧场分数矩阵</span></span><br><span class="line">pred_mat = fit_X @ fit_Theta.T</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最后一个用户的预测分数， 也就是我们刚才添加的用户</span></span><br><span class="line">pred = pred_mat[:,<span class="number">-1</span>] + Ymean.flatten()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pred_sorted_idx = np.argsort(pred)[::<span class="number">-1</span>] <span class="comment"># 排序并翻转，使之从大到小排列</span></span><br></pre></td></tr></table></figure>
+<p>作业中最后的截图应该是算错了，用的是非归一化的数据Y来训练的。所以我在这里也在这里用的非归一化的数据Y来训练的。事实上应该用归一化之后的数据Ynorm来训练，可自行尝试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Top recommendations for you:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    print(<span class="string">'Predicting rating %0.1f for movie %s.'</span> \</span><br><span class="line">          %(pred[pred_sorted_idx[i]],movies[pred_sorted_idx[i]]))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"\nOriginal ratings provided:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(my_ratings)):</span><br><span class="line">    <span class="keyword">if</span> my_ratings[i] &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Rated %d for movie %s.'</span>% (my_ratings[i],movies[i]))</span><br></pre></td></tr></table></figure>
+<pre><code>Top recommendations for you:
+Predicting rating 8.5 for movie Titanic (1997).
+Predicting rating 8.4 for movie Star Wars (1977).
+Predicting rating 8.3 for movie Shawshank Redemption, The (1994).
+Predicting rating 8.3 for movie Schindler&apos;s List (1993).
+Predicting rating 8.3 for movie Raiders of the Lost Ark (1981).
+Predicting rating 8.2 for movie Good Will Hunting (1997).
+Predicting rating 8.1 for movie Empire Strikes Back, The (1980).
+Predicting rating 8.1 for movie Wrong Trousers, The (1993).
+Predicting rating 8.0 for movie Casablanca (1942).
+Predicting rating 8.0 for movie Usual Suspects, The (1995).
+
+Original ratings provided:
+Rated 4 for movie Toy Story (1995).
+Rated 3 for movie Twelve Monkeys (1995).
+Rated 5 for movie Usual Suspects, The (1995).
+Rated 4 for movie Outbreak (1995).
+Rated 5 for movie Shawshank Redemption, The (1994).
+Rated 3 for movie While You Were Sleeping (1995).
+Rated 5 for movie Forrest Gump (1994).
+Rated 2 for movie Silence of the Lambs, The (1991).
+Rated 4 for movie Alien (1979).
+Rated 5 for movie Die Hard 2 (1990).
+Rated 5 for movie Sphere (1998).
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/29/180529-K-means和PCA主成分分析/" rel="next" title="吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(七)：K-means和PCA主成分分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Cowry" />
+            
+              <p class="site-author-name" itemprop="name">Cowry</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cowry5" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2658018575" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/Cowry5" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Anomaly-detection"><span class="nav-number">1.</span> <span class="nav-text">1 Anomaly detection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Gaussian-distribution"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Gaussian distribution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Estimating-parameters-for-a-Gaussian"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Estimating parameters for a Gaussian</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Selecting-the-threshold-ε"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Selecting the threshold, ε</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-High-dimensional-dataset"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 High dimensional dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Recommender-Systems"><span class="nav-number">2.</span> <span class="nav-text">2 Recommender Systems</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Movie-ratings-dataset"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Movie ratings dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Collaborative-filtering-learning-algorithm"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Collaborative filtering learning algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-Collaborative-filtering-cost-function"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 Collaborative filtering cost function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-Collaborative-filtering-gradient"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 Collaborative filtering gradient</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Learning-movie-recommendations"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Learning movie recommendations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-Recommendations"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 Recommendations</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cowry</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Words total count&#58;</span>
+    
+    <span title="Words total count">22.3k</span>
+  
+</div>
+
+<div class="busuanzi-count">
+  <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>     
+    </span>
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>    
+    </span>
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mrmD4pdG7Ueu5OlKl2v1Ig47-9Nh9j0Va", "T6pUVA4kFI5NzhTwXhWePPS8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
