@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta https-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta https-equiv="Cache-Control" content="no-transform" />
+<meta https-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Logistic Regression with a Neural Network mindsetWelcome to your first (required) programming assignment! You will build a logistic regression classifier to recognize  cats. This assignment will step">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset">
+<meta property="og:url" content="https://yoursite.com/2018/06/04/180604-吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset/index.html">
+<meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="Logistic Regression with a Neural Network mindsetWelcome to your first (required) programming assignment! You will build a logistic regression classifier to recognize  cats. This assignment will step">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-c6f1cd1864dc5c89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-54528b56401f0f9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-9eb325fc26b48f01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-80213451e0169d1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-5421303c442b4e4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-06-04T00:50:39.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset">
+<meta name="twitter:description" content="Logistic Regression with a Neural Network mindsetWelcome to your first (required) programming assignment! You will build a logistic regression classifier to recognize  cats. This assignment will step">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-c6f1cd1864dc5c89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2018/06/04/180604-吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset/"/>
+
+
+
+
+
+  <title>吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset | Cowry</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9aa1b9dca27042171881932a6fb39c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cowry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Live your life with passion!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/06/04/180604-吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset/">
+
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-04T09:00:31+08:00">
+                2018-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/04/180604-吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset/" class="leancloud_visitors" data-flag-title="吴恩达深度学习-神经网络和深度学习-第二周：Logistic Regression with a Neural Network mindset">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  4,741
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  30
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Logistic-Regression-with-a-Neural-Network-mindset"><a href="#Logistic-Regression-with-a-Neural-Network-mindset" class="headerlink" title="Logistic Regression with a Neural Network mindset"></a>Logistic Regression with a Neural Network mindset</h1><p>Welcome to your first (required) programming assignment! You will build a logistic regression classifier to recognize  cats. This assignment will step you through how to do this with a Neural Network mindset, and so will also hone your intuitions about deep learning.</p>
+<p><strong>Instructions:</strong></p>
+<ul>
+<li>Do not use loops (for/while) in your code, unless the instructions explicitly ask you to do so.</li>
+</ul>
+<p><strong>You will learn to:</strong></p>
+<ul>
+<li>Build the general architecture of a learning algorithm, including:<ul>
+<li>Initializing parameters</li>
+<li>Calculating the cost function and its gradient</li>
+<li>Using an optimization algorithm (gradient descent) </li>
+</ul>
+</li>
+<li>Gather all three functions above into a main model function, in the right order.</li>
+</ul>
+<h2 id="1-Packages"><a href="#1-Packages" class="headerlink" title="1 - Packages"></a>1 - Packages</h2><p>First, let’s run the cell below to import all the packages that you will need during this assignment. </p>
+<ul>
+<li><a href="www.numpy.org">numpy</a> is the fundamental package for scientific computing with Python.</li>
+<li><a href="http://www.h5py.org" target="_blank" rel="noopener">h5py</a> is a common package to interact with a dataset that is stored on an H5 file.</li>
+<li><a href="http://matplotlib.org" target="_blank" rel="noopener">matplotlib</a> is a famous library to plot graphs in Python.</li>
+<li><a href="http://www.pythonware.com/products/pil/" target="_blank" rel="noopener">PIL</a> and <a href="https://www.scipy.org/" target="_blank" rel="noopener">scipy</a> are used here to test your model with your own picture at the end.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"><span class="keyword">import</span> scipy</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> ndimage</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<pre><code>D:\Anaconda3\envs\Tensorflow\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</code></pre><h2 id="2-Overview-of-the-Problem-set"><a href="#2-Overview-of-the-Problem-set" class="headerlink" title="2 - Overview of the Problem set"></a>2 - Overview of the Problem set</h2><p><strong>Problem Statement</strong>: You are given a dataset (“data.h5”) containing:</p>
+<pre><code>- a training set of m_train images labeled as cat (y=1) or non-cat (y=0)
+- a test set of m_test images labeled as cat or non-cat
+- each image is of shape (num_px, num_px, 3) where 3 is for the 3 channels (RGB). Thus, each image is square (height = num_px) and (width = num_px).
+</code></pre><p>You will build a simple image-recognition algorithm that can correctly classify pictures as cat or non-cat.</p>
+<p>Let’s get more familiar with the dataset. Load the data by running the following code.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_dataset</span><span class="params">()</span>:</span></span><br><span class="line">    train_dataset = h5py.File(<span class="string">'datasets/train_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    train_set_x_orig = np.array(train_dataset[<span class="string">"train_set_x"</span>][:]) <span class="comment"># your train set features</span></span><br><span class="line">    train_set_y_orig = np.array(train_dataset[<span class="string">"train_set_y"</span>][:]) <span class="comment"># your train set labels</span></span><br><span class="line"></span><br><span class="line">    test_dataset = h5py.File(<span class="string">'datasets/test_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    test_set_x_orig = np.array(test_dataset[<span class="string">"test_set_x"</span>][:]) <span class="comment"># your test set features</span></span><br><span class="line">    test_set_y_orig = np.array(test_dataset[<span class="string">"test_set_y"</span>][:]) <span class="comment"># your test set labels</span></span><br><span class="line"></span><br><span class="line">    classes = np.array(test_dataset[<span class="string">"list_classes"</span>][:]) <span class="comment"># the list of classes</span></span><br><span class="line">    </span><br><span class="line">    train_set_y_orig = train_set_y_orig.reshape((<span class="number">1</span>, train_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    test_set_y_orig = test_set_y_orig.reshape((<span class="number">1</span>, test_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Loading the data (cat/non-cat)</span></span><br><span class="line">train_set_x_orig, train_set_y, test_set_x_orig, test_set_y, classes = load_dataset()</span><br><span class="line">train_set_x_orig.shape, train_set_y.shape, test_set_x_orig.shape, test_set_y.shape</span><br><span class="line"><span class="comment"># ((209, 64, 64, 3), (1, 209), (50, 64, 64, 3), (1, 50))</span></span><br><span class="line"><span class="comment"># train_set_x_orig每行都是一个图片，像素大小(64x64), rgb</span></span><br></pre></td></tr></table></figure>
+<p>We added “_orig” at the end of image datasets (train and test) because we are going to preprocess them. After preprocessing, we will end up with train_set_x and test_set_x (the labels train_set_y and test_set_y don’t need any preprocessing).</p>
+<p>Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the <code>index</code> value and re-run to see other images. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example of a picture</span></span><br><span class="line"><span class="comment"># np.suqeeze means Remove single-dimensional entries from the shape of an array.</span></span><br><span class="line">index = <span class="number">25</span></span><br><span class="line">plt.imshow(train_set_x_orig[index])</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(train_set_y[:, index]) + <span class="string">", it's a '"</span> + classes[np.squeeze(train_set_y[:, index])].decode(<span class="string">"utf-8"</span>) +  <span class="string">"' picture."</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>y = [1], it&apos;s a &apos;cat&apos; picture.
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-c6f1cd1864dc5c89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_7_1.png"></p>
+<p>Many software bugs in deep learning come from having matrix/vector dimensions that don’t fit. If you can keep your matrix/vector dimensions straight you will go a long way toward eliminating many bugs. </p>
+<p><strong>Exercise:</strong> Find the values for:</p>
+<pre><code>- m_train (number of training examples)
+- m_test (number of test examples)
+- num_px (= height = width of a training image)
+</code></pre><p>Remember that <code>train_set_x_orig</code> is a numpy-array of shape (m_train, num_px, num_px, 3). For instance, you can access <code>m_train</code> by writing <code>train_set_x_orig.shape[0]</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### START CODE HERE ### (≈ 3 lines of code)</span></span><br><span class="line">m_train = <span class="number">209</span></span><br><span class="line">m_test = <span class="number">50</span></span><br><span class="line">num_px = <span class="number">64</span></span><br><span class="line"><span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Number of training examples: m_train = "</span> + str(m_train))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Number of testing examples: m_test = "</span> + str(m_test))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Height/Width of each image: num_px = "</span> + str(num_px))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Each image is of size: ("</span> + str(num_px) + <span class="string">", "</span> + str(num_px) + <span class="string">", 3)"</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_set_x shape: "</span> + str(train_set_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_set_y shape: "</span> + str(train_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_set_x shape: "</span> + str(test_set_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_set_y shape: "</span> + str(test_set_y.shape))</span><br></pre></td></tr></table></figure>
+<pre><code>Number of training examples: m_train = 209
+Number of testing examples: m_test = 50
+Height/Width of each image: num_px = 64
+Each image is of size: (64, 64, 3)
+train_set_x shape: (209, 64, 64, 3)
+train_set_y shape: (1, 209)
+test_set_x shape: (50, 64, 64, 3)
+test_set_y shape: (1, 50)
+</code></pre><p><strong>Expected Output for m_train, m_test and num_px</strong>: </p>
+<table style="width:15%"><br>  <tr><br>    <td><strong>m_train</strong></td><br>    <td> 209 </td><br>  </tr><br><br>  <tr><br>    <td><strong>m_test</strong></td><br>    <td> 50 </td><br>  </tr><br><br>  <tr><br>    <td><strong>num_px</strong></td><br>    <td> 64 </td><br>  </tr><br><br></table>
+
+
+<p>For convenience, you should now reshape images of shape (num_px, num_px, 3) in a numpy-array of shape (num_px $<em>$ num_px $</em>$ 3, 1). After this, our training (and test) dataset is a numpy-array where each column represents a flattened image. There should be m_train (respectively m_test) columns.</p>
+<p><strong>Exercise:</strong> Reshape the training and test data sets so that images of size (num_px, num_px, 3) are flattened into single vectors of shape (num_px $<em>$ num_px $</em>$ 3, 1).</p>
+<p>A trick when you want to flatten a matrix X of shape (a,b,c,d) to a matrix X_flatten of shape (b$<em>$c$</em>$d, a) is to use:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_flatten = X.reshape(X.shape[<span class="number">0</span>], <span class="number">-1</span>).T      <span class="comment"># X.T is the transpose of X</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reshape the training and test examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### START CODE HERE ### (≈ 2 lines of code)</span></span><br><span class="line">train_set_x_flatten = train_set_x_orig.reshape(train_set_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line">test_set_x_flatten = test_set_x_orig.reshape(test_set_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"><span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_set_x_flatten shape: "</span> + str(train_set_x_flatten.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_set_y shape: "</span> + str(train_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_set_x_flatten shape: "</span> + str(test_set_x_flatten.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_set_y shape: "</span> + str(test_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"sanity check after reshaping: "</span> + str(train_set_x_flatten[<span class="number">0</span>:<span class="number">5</span>,<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>train_set_x_flatten shape: (12288, 209)
+train_set_y shape: (1, 209)
+test_set_x_flatten shape: (12288, 50)
+test_set_y shape: (1, 50)
+sanity check after reshaping: [17 31 56 22 33]
+</code></pre><p><strong>Expected Output</strong>: </p>
+<table style="width:35%"><br>  <tr><br>    <td><strong>train_set_x_flatten shape</strong></td><br>    <td> (12288, 209)</td><br>  </tr><br>  <tr><br>    <td><strong>train_set_y shape</strong></td><br>    <td>(1, 209)</td><br>  </tr><br>  <tr><br>    <td><strong>test_set_x_flatten shape</strong></td><br>    <td>(12288, 50)</td><br>  </tr><br>  <tr><br>    <td><strong>test_set_y shape</strong></td><br>    <td>(1, 50)</td><br>  </tr><br>  <tr><br>  <td><strong>sanity check after reshaping</strong></td><br>  <td>[17 31 56 22 33]</td><br>  </tr><br></table>
+
+<p>To represent color images, the red, green and blue channels (RGB) must be specified for each pixel, and so the pixel value is actually a vector of three numbers ranging from 0 to 255.</p>
+<p>One common preprocessing step in machine learning is to center and standardize your dataset, meaning that you substract the mean of the whole numpy array from each example, and then divide each example by the standard deviation of the whole numpy array. But for picture datasets, it is simpler and more convenient and works almost as well to just divide every row of the dataset by 255 (the maximum value of a pixel channel).</p>
+<p>During the training of your model, you’re going to multiply weights and add biases to some initial inputs in order to observe neuron activations. Then you backpropogate with the gradients to train the model. But, it is extremely important for each feature to have a similar range such that our gradients don’t explode. You will see that more in detail later in the lectures.</p>
+<p>Let’s standardize our dataset.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_set_x = train_set_x_flatten/<span class="number">255.</span></span><br><span class="line">test_set_x = test_set_x_flatten/<span class="number">255.</span></span><br></pre></td></tr></table></figure>
+<p><font color="green"><br><strong>What you need to remember:</strong></font></p>
+<p>Common steps for pre-processing a new dataset are:</p>
+<ul>
+<li>Figure out the dimensions and shapes of the problem (m_train, m_test, num_px, …)</li>
+<li>Reshape the datasets such that each example is now a vector of size (num_px * num_px * 3, 1)</li>
+<li>“Standardize” the data</li>
+</ul>
+<h2 id="3-General-Architecture-of-the-learning-algorithm"><a href="#3-General-Architecture-of-the-learning-algorithm" class="headerlink" title="3 - General Architecture of the learning algorithm"></a>3 - General Architecture of the learning algorithm</h2><p>It’s time to design a simple algorithm to distinguish cat images from non-cat images.</p>
+<p>You will build a Logistic Regression, using a Neural Network mindset. The following Figure explains why <strong>Logistic Regression is actually a very simple Neural Network!</strong></p>
+<p><strong>Mathematical expression of the algorithm</strong>:</p>
+<p>For one example $x^{(i)}$:<br>$$z^{(i)} = w^T x^{(i)} + b \tag{1}$$<br>$$\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2}$$<br>$$ \mathcal{L}(a^{(i)}, y^{(i)}) =  - y^{(i)}  \log(a^{(i)}) - (1-y^{(i)} )  \log(1-a^{(i)})\tag{3}$$</p>
+<p>The cost is then computed by summing over all training examples:<br>$$ J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{6}$$</p>
+<p><strong>Key steps</strong>:<br>In this exercise, you will carry out the following steps: </p>
+<pre><code>- Initialize the parameters of the model
+- Learn the parameters for the model by minimizing the cost  
+- Use the learned parameters to make predictions (on the test set)
+- Analyse the results and conclude
+</code></pre><h2 id="4-Building-the-parts-of-our-algorithm"><a href="#4-Building-the-parts-of-our-algorithm" class="headerlink" title="4 - Building the parts of our algorithm"></a>4 - Building the parts of our algorithm</h2><p>The main steps for building a Neural Network are:</p>
+<ol>
+<li>Define the model structure (such as number of input features) </li>
+<li>Initialize the model’s parameters</li>
+<li>Loop:<ul>
+<li>Calculate current loss (forward propagation)</li>
+<li>Calculate current gradient (backward propagation)</li>
+<li>Update parameters (gradient descent)</li>
+</ul>
+</li>
+</ol>
+<p>You often build 1-3 separately and integrate them into one function we call <code>model()</code>.</p>
+<h3 id="4-1-Helper-functions"><a href="#4-1-Helper-functions" class="headerlink" title="4.1 - Helper functions"></a>4.1 - Helper functions</h3><p><strong>Exercise</strong>: Using your code from “Python Basics”, implement <code>sigmoid()</code>. As you’ve seen in the figure above, you need to compute $sigmoid( w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}$ to make predictions. Use np.exp().</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: sigmoid</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Compute the sigmoid of z</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    z -- A scalar or numpy array of any size.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">    s -- sigmoid(z)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">    s = <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> (<span class="string">"sigmoid([0, 2]) = "</span> + str(sigmoid(np.array([<span class="number">0</span>,<span class="number">2</span>]))))</span><br></pre></td></tr></table></figure>
+<pre><code>sigmoid([0, 2]) = [0.5        0.88079708]
+</code></pre><p>​    </p>
+<p><strong>Expected Output</strong>: </p>
+<table><br>  <tr><br>    <td><strong>sigmoid([0, 2])</strong></td><br>    <td> [ 0.5         0.88079708]</td><br>  </tr><br></table>
+
+<h3 id="4-2-Initializing-parameters"><a href="#4-2-Initializing-parameters" class="headerlink" title="4.2 - Initializing parameters"></a>4.2 - Initializing parameters</h3><p><strong>Exercise:</strong> Implement parameter initialization in the cell below. You have to initialize w as a vector of zeros. If you don’t know what numpy function to use, look up np.zeros() in the Numpy library’s documentation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: initialize_with_zeros</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_with_zeros</span><span class="params">(dim)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    This function creates a vector of zeros of shape (dim, 1) for w and initializes b to 0.</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Argument:</span></span><br><span class="line"><span class="string">    dim -- size of the w vector we want (or number of parameters in this case)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    w -- initialized vector of shape (dim, 1)</span></span><br><span class="line"><span class="string">    b -- initialized scalar (corresponds to the bias)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">    w = np.zeros((dim, <span class="number">1</span>))</span><br><span class="line">    b = <span class="number">0</span></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    <span class="keyword">assert</span>(w.shape == (dim, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">assert</span>(isinstance(b, float) <span class="keyword">or</span> isinstance(b, int))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> w, b</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dim = <span class="number">2</span></span><br><span class="line">w, b = initialize_with_zeros(dim)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"w = "</span> + str(w))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"b = "</span> + str(b))</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">(2, 1)</span></span><br><span class="line"><span class="string">w = [[0.]</span></span><br><span class="line"><span class="string"> [0.]]</span></span><br><span class="line"><span class="string">b = 0</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<p><strong>Expected Output</strong>: </p>
+<table style="width:15%"><br>    <tr><br>        <td>  <strong> w </strong>  </td><br>        <td> [[ 0.]<br> [ 0.]] </td><br>    </tr><br>    <tr><br>        <td>  <strong> b </strong>  </td><br>        <td> 0 </td><br>    </tr><br></table>
+
+<p>For image inputs, w will be of shape (num_px $\times$ num_px $\times$ 3, 1).</p>
+<h3 id="4-3-Forward-and-Backward-propagation"><a href="#4-3-Forward-and-Backward-propagation" class="headerlink" title="4.3 - Forward and Backward propagation"></a>4.3 - Forward and Backward propagation</h3><p>Now that your parameters are initialized, you can do the “forward” and “backward” propagation steps for learning the parameters.</p>
+<p><strong>Exercise:</strong> Implement a function <code>propagate()</code> that computes the cost function and its gradient.</p>
+<p><strong>Hints</strong>:</p>
+<p>Forward Propagation:</p>
+<ul>
+<li>You get X</li>
+<li>You compute $A = \sigma(w^T X + b) = (a^{(0)}, a^{(1)}, …, a^{(m-1)}, a^{(m)})$</li>
+<li>You calculate the cost function: $J = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}\log(a^{(i)})+(1-y^{(i)})\log(1-a^{(i)})$</li>
+</ul>
+<p>Here are the two formulas you will be using: </p>
+<p>$$ \frac{\partial J}{\partial w} = \frac{1}{m}X(A-Y)^T\tag{7}$$<br>$$ \frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^m (a^{(i)}-y^{(i)})\tag{8}$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: propagate</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">propagate</span><span class="params">(w, b, X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implement the cost function and its gradient for the propagation explained above</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    w -- weights, a numpy array of size (num_px * num_px * 3, 1)</span></span><br><span class="line"><span class="string">    b -- bias, a scalar</span></span><br><span class="line"><span class="string">    X -- data of size (num_px * num_px * 3, number of examples)</span></span><br><span class="line"><span class="string">    Y -- true "label" vector (containing 0 if non-cat, 1 if cat) of size (1, number of examples)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">    cost -- negative log-likelihood cost for logistic regression</span></span><br><span class="line"><span class="string">    dw -- gradient of the loss with respect to w, thus same shape as w</span></span><br><span class="line"><span class="string">    db -- gradient of the loss with respect to b, thus same shape as b</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Tips:</span></span><br><span class="line"><span class="string">    - Write your code step by step for the propagation. np.log(), np.dot()</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># FORWARD PROPAGATION (FROM X TO COST)</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 2 lines of code)</span></span><br><span class="line">    A = sigmoid(w.T@X + b)            <span class="comment"># compute activation</span></span><br><span class="line">    cost = (-Y*np.log(A) + (Y<span class="number">-1</span>)*np.log(<span class="number">1</span>-A)).sum() / m</span><br><span class="line">    <span class="comment"># compute cost</span></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># BACKWARD PROPAGATION (TO FIND GRAD)</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 2 lines of code)</span></span><br><span class="line">    dw = (X@(A-Y).T) / m</span><br><span class="line">    db = (A - Y).mean()</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span>(dw.shape == w.shape)</span><br><span class="line">    <span class="keyword">assert</span>(db.dtype == float)</span><br><span class="line">    cost = np.squeeze(cost)</span><br><span class="line">    <span class="keyword">assert</span>(cost.shape == ()), cost.shape</span><br><span class="line">    </span><br><span class="line">    grads = &#123;<span class="string">"dw"</span>: dw,</span><br><span class="line">             <span class="string">"db"</span>: db&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> grads, cost</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">w, b, X, Y = np.array([[<span class="number">1</span>],[<span class="number">2</span>]]), <span class="number">2</span>, np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]]), np.array([[<span class="number">1</span>,<span class="number">0</span>]])</span><br><span class="line">grads, cost = propagate(w, b, X, Y)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"dw = "</span> + str(grads[<span class="string">"dw"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"db = "</span> + str(grads[<span class="string">"db"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"cost = "</span> + str(cost))</span><br></pre></td></tr></table></figure>
+<pre><code>dw = [[0.99993216]
+ [1.99980262]]
+db = 0.49993523062470574
+cost = 6.000064773192205
+</code></pre><p><strong>Expected Output</strong>:</p>
+<table style="width:50%"><br>    <tr><br>        <td>  <strong> dw </strong>  </td><br>        <td> [[ 0.99993216]<br> [ 1.99980262]]</td><br>    </tr><br>    <tr><br>        <td>  <strong> db </strong>  </td><br>        <td> 0.499935230625 </td><br>    </tr><br>    <tr><br>        <td>  <strong> cost </strong>  </td><br>        <td> 6.000064773192205</td><br>    </tr><br><br></table>
+
+<h3 id="d-Optimization"><a href="#d-Optimization" class="headerlink" title="d) Optimization"></a>d) Optimization</h3><ul>
+<li>You have initialized your parameters.</li>
+<li>You are also able to compute a cost function and its gradient.</li>
+<li>Now, you want to update the parameters using gradient descent.</li>
+</ul>
+<p><strong>Exercise:</strong> Write down the optimization function. The goal is to learn $w$ and $b$ by minimizing the cost function $J$. For a parameter $\theta$, the update rule is $ \theta = \theta - \alpha \text{ } d\theta$, where $\alpha$ is the learning rate.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: optimize</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">optimize</span><span class="params">(w, b, X, Y, num_iterations, learning_rate, print_cost = False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    This function optimizes w and b by running a gradient descent algorithm</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    w -- weights, a numpy array of size (num_px * num_px * 3, 1)</span></span><br><span class="line"><span class="string">    b -- bias, a scalar</span></span><br><span class="line"><span class="string">    X -- data of shape (num_px * num_px * 3, number of examples)</span></span><br><span class="line"><span class="string">    Y -- true "label" vector (containing 0 if non-cat, 1 if cat), of shape (1, number of examples)</span></span><br><span class="line"><span class="string">    num_iterations -- number of iterations of the optimization loop</span></span><br><span class="line"><span class="string">    learning_rate -- learning rate of the gradient descent update rule</span></span><br><span class="line"><span class="string">    print_cost -- True to print the loss every 100 steps</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    params -- dictionary containing the weights w and bias b</span></span><br><span class="line"><span class="string">    grads -- dictionary containing the gradients of the weights and bias with respect to the cost function</span></span><br><span class="line"><span class="string">    costs -- list of all the costs computed during the optimization, this will be used to plot the learning curve.</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Tips:</span></span><br><span class="line"><span class="string">    You basically need to write down two steps and iterate through them:</span></span><br><span class="line"><span class="string">        1) Calculate the cost and the gradient for the current parameters. Use propagate().</span></span><br><span class="line"><span class="string">        2) Update the parameters using gradient descent rule for w and b.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    costs = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iterations):</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Cost and gradient calculation (≈ 1-4 lines of code)</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### </span></span><br><span class="line">        grads, cost = propagate(w, b, X, Y)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Retrieve derivatives from grads</span></span><br><span class="line">        dw = grads[<span class="string">"dw"</span>]</span><br><span class="line">        db = grads[<span class="string">"db"</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># update rule (≈ 2 lines of code)</span></span><br><span class="line">        <span class="comment">### START CODE HERE ###</span></span><br><span class="line">        w = w - learning_rate * dw </span><br><span class="line">        b = b - learning_rate * db</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Record the costs，每过100个样本，记录代价</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            costs.append(cost)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Print the cost every 100 training examples</span></span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">"Cost after iteration %i: %f"</span> %(i, cost))</span><br><span class="line">    </span><br><span class="line">    params = &#123;<span class="string">"w"</span>: w,</span><br><span class="line">              <span class="string">"b"</span>: b&#125;</span><br><span class="line">    </span><br><span class="line">    grads = &#123;<span class="string">"dw"</span>: dw,</span><br><span class="line">             <span class="string">"db"</span>: db&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> params, grads, costs</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">params, grads, costs = optimize(w, b, X, Y, num_iterations= <span class="number">100</span>, learning_rate = <span class="number">0.009</span>, print_cost = <span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"w = "</span> + str(params[<span class="string">"w"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"b = "</span> + str(params[<span class="string">"b"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"dw = "</span> + str(grads[<span class="string">"dw"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"db = "</span> + str(grads[<span class="string">"db"</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>w = [[0.1124579 ]
+ [0.23106775]]
+b = 1.5593049248448891
+dw = [[0.90158428]
+ [1.76250842]]
+db = 0.4304620716786828
+</code></pre><p><strong>Expected Output</strong>: </p>
+<table style="width:40%"><br>    <tr><br>       <td> <strong>w</strong> </td><br>       <td>[[ 0.1124579 ]<br> [ 0.23106775]] </td><br>    </tr><br><br>    <tr><br>       <td> <strong>b</strong> </td><br>       <td> 1.55930492484 </td><br>    </tr><br>    <tr><br>       <td> <strong>dw</strong> </td><br>       <td> [[ 0.90158428]<br> [ 1.76250842]] </td><br>    </tr><br>    <tr><br>       <td> <strong>db</strong> </td><br>       <td> 0.430462071679 </td><br>    </tr><br><br></table>
+
+<p><strong>Exercise:</strong> The previous function will output the learned w and b. We are able to use w and b to predict the labels for a dataset X. Implement the <code>predict()</code> function. There is two steps to computing predictions:</p>
+<ol>
+<li><p>Calculate $\hat{Y} = A = \sigma(w^T X + b)$</p>
+</li>
+<li><p>Convert the entries of a into 0 (if activation &lt;= 0.5) or 1 (if activation &gt; 0.5), stores the predictions in a vector <code>Y_prediction</code>. If you wish, you can use an <code>if</code>/<code>else</code> statement in a <code>for</code> loop (though there is also a way to vectorize this). </p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: predict</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(w, b, X)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Predict whether the label is 0 or 1 using learned logistic regression parameters (w, b)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    w -- weights, a numpy array of size (num_px * num_px * 3, 1)</span></span><br><span class="line"><span class="string">    b -- bias, a scalar</span></span><br><span class="line"><span class="string">    X -- data of size (num_px * num_px * 3, number of examples)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    Y_prediction -- a numpy array (vector) containing all predictions (0/1) for the examples in X</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    </span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line">    Y_prediction = np.zeros((<span class="number">1</span>,m))</span><br><span class="line">    w = w.reshape(X.shape[<span class="number">0</span>], <span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Compute vector "A" predicting the probabilities of a cat being present in the picture</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">    A = sigmoid(w.T @ X + b)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(A.shape[<span class="number">1</span>]):</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Convert probabilities A[0,i] to actual predictions p[0,i]</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 4 lines of code)</span></span><br><span class="line">        <span class="keyword">if</span> A[<span class="number">0</span>, i] &lt; <span class="number">0.5</span>:            </span><br><span class="line">            Y_prediction[<span class="number">0</span>, i] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            Y_prediction[<span class="number">0</span>, i] = <span class="number">1</span></span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assert</span>(Y_prediction.shape == (<span class="number">1</span>, m))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Y_prediction</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> (<span class="string">"predictions = "</span> + str(predict(w, b, X)))</span><br></pre></td></tr></table></figure>
+<pre><code>predictions = [[1. 1.]]
+</code></pre><p>​    </p>
+<p><strong>Expected Output</strong>: </p>
+<table style="width:30%"><br>    <tr><br>         <td><br>             <strong>predictions</strong><br>         </td><br>          <td><br>            [[ 1.  1.]]<br>         </td><br>   </tr><br><br></table>
+
+
+<p><font color="green"><br><strong>What to remember:</strong><br>You’ve implemented several functions that:</font></p>
+<ul>
+<li>Initialize (w,b)</li>
+<li>Optimize the loss iteratively to learn parameters (w,b):<ul>
+<li>computing the cost and its gradient </li>
+<li>updating the parameters using gradient descent</li>
+</ul>
+</li>
+<li>Use the learned (w,b) to predict the labels for a given set of examples</li>
+</ul>
+<h2 id="5-Merge-all-functions-into-a-model"><a href="#5-Merge-all-functions-into-a-model" class="headerlink" title="5 - Merge all functions into a model"></a>5 - Merge all functions into a model</h2><p>You will now see how the overall model is structured by putting together all the building blocks (functions implemented in the previous parts) together, in the right order.</p>
+<p><strong>Exercise:</strong> Implement the model function. Use the following notation:</p>
+<pre><code>- Y_prediction for your predictions on the test set
+- Y_prediction_train for your predictions on the train set
+- w, costs, grads for the outputs of optimize()
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: model</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X_train, Y_train, X_test, Y_test, num_iterations = <span class="number">2000</span>, learning_rate = <span class="number">0.5</span>, print_cost = False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Builds the logistic regression model by calling the function you've implemented previously</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    X_train -- training set represented by a numpy array of shape (num_px * num_px * 3, m_train)</span></span><br><span class="line"><span class="string">    Y_train -- training labels represented by a numpy array (vector) of shape (1, m_train)</span></span><br><span class="line"><span class="string">    X_test -- test set represented by a numpy array of shape (num_px * num_px * 3, m_test)</span></span><br><span class="line"><span class="string">    Y_test -- test labels represented by a numpy array (vector) of shape (1, m_test)</span></span><br><span class="line"><span class="string">    num_iterations -- hyperparameter representing the number of iterations to optimize the parameters</span></span><br><span class="line"><span class="string">    learning_rate -- hyperparameter representing the learning rate used in the update rule of optimize()</span></span><br><span class="line"><span class="string">    print_cost -- Set to true to print the cost every 100 iterations</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    d -- dictionary containing information about the model.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">### START CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># initialize parameters with zeros (≈ 1 line of code)</span></span><br><span class="line">    w, b = initialize_with_zeros(X_train.shape[<span class="number">0</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Gradient descent (≈ 1 line of code)</span></span><br><span class="line">    parameters, grads, costs = optimize(w, b, X_train, Y_train, num_iterations,</span><br><span class="line">                                        learning_rate, print_cost)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Retrieve parameters w and b from dictionary "parameters"</span></span><br><span class="line">    w = parameters[<span class="string">'w'</span>]</span><br><span class="line">    b = parameters[<span class="string">'b'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Predict test/train set examples (≈ 2 lines of code)</span></span><br><span class="line">    Y_prediction_test = predict(w, b, X_test)</span><br><span class="line">    Y_prediction_train = predict(w, b, X_train)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Print train/test Errors</span></span><br><span class="line">    print(<span class="string">"train accuracy: &#123;&#125; %"</span>.format(<span class="number">100</span> - np.mean(np.abs(Y_prediction_train - Y_train)) * <span class="number">100</span>))</span><br><span class="line">    print(<span class="string">"test accuracy: &#123;&#125; %"</span>.format(<span class="number">100</span> - np.mean(np.abs(Y_prediction_test - Y_test)) * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    d = &#123;<span class="string">"costs"</span>: costs,</span><br><span class="line">         <span class="string">"Y_prediction_test"</span>: Y_prediction_test, </span><br><span class="line">         <span class="string">"Y_prediction_train"</span> : Y_prediction_train, </span><br><span class="line">         <span class="string">"w"</span> : w, </span><br><span class="line">         <span class="string">"b"</span> : b,</span><br><span class="line">         <span class="string">"learning_rate"</span> : learning_rate,</span><br><span class="line">         <span class="string">"num_iterations"</span>: num_iterations&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+<p>Run the following cell to train your model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = <span class="number">2000</span>, learning_rate = <span class="number">0.005</span>, print_cost = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>Expected Output</strong>: </p>
+<table style="width:40%"><br>​<br>    <tr><br>        <td> <strong>Train Accuracy</strong>  </td><br>        <td> 99.04306220095694 % </td><br>    </tr><br><br>    <tr><br>        <td><strong>Test Accuracy</strong> </td><br>        <td> 70.0 % </td><br>    </tr><br></table> 
+
+
+
+
+<p><strong>Comment</strong>: Training accuracy is close to 100%. This is a good sanity check: your model is working and has high enough capacity to fit the training data. Test error is 68%. It is actually not bad for this simple model, given the small dataset we used and that logistic regression is a linear classifier. But no worries, you’ll build an even better classifier next week!</p>
+<p>Also, you see that the model is clearly overfitting the training data. Later in this specialization you will learn how to reduce overfitting, for example by using regularization. Using the code below (and changing the <code>index</code> variable) you can look at predictions on pictures of the test set.</p>
+<p>这里的classes的类型是dtype=’|S7’ ，取值的时候，需要用int强转一下，否则报错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example of a picture that was wrongly classified.</span></span><br><span class="line">index = <span class="number">23</span></span><br><span class="line">plt.imshow(test_set_x[:,index].reshape((num_px, num_px, <span class="number">3</span>)))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(test_set_y[<span class="number">0</span>,index]) + <span class="string">", you predicted that it is a \""</span> + classes[int(d[<span class="string">"Y_prediction_test"</span>][<span class="number">0</span>,index])].decode(<span class="string">"utf-8"</span>) +  <span class="string">"\" picture."</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>y = 1, you predicted that it is a &quot;cat&quot; picture.
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-54528b56401f0f9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_45_1.png"></p>
+<p>Let’s also plot the cost function and the gradients.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot learning curve (with costs)</span></span><br><span class="line">costs = np.squeeze(d[<span class="string">'costs'</span>])</span><br><span class="line">plt.plot(costs)</span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'iterations (per hundreds)'</span>)</span><br><span class="line">plt.title(<span class="string">"Learning rate ="</span> + str(d[<span class="string">"learning_rate"</span>]))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-9eb325fc26b48f01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_47_0.png"></p>
+<p><strong>Interpretation</strong>:<br>You can see the cost decreasing. It shows that the parameters are being learned. However, you see that you could train the model even more on the training set. Try to increase the number of iterations in the cell above and rerun the cells. You might see that the training set accuracy goes up, but the test set accuracy goes down. This is called overfitting. </p>
+<h2 id="6-Further-analysis-optional-ungraded-exercise"><a href="#6-Further-analysis-optional-ungraded-exercise" class="headerlink" title="6 - Further analysis (optional/ungraded exercise)"></a>6 - Further analysis (optional/ungraded exercise)</h2><p>Congratulations on building your first image classification model. Let’s analyze it further, and examine possible choices for the learning rate $\alpha$. </p>
+<h4 id="Choice-of-learning-rate"><a href="#Choice-of-learning-rate" class="headerlink" title="Choice of learning rate"></a>Choice of learning rate</h4><p><strong>Reminder</strong>:<br>In order for Gradient Descent to work you must choose the learning rate wisely. The learning rate $\alpha$  determines how rapidly we update the parameters. If the learning rate is too large we may “overshoot” the optimal value. Similarly, if it is too small we will need too many iterations to converge to the best values. That’s why it is crucial to use a well-tuned learning rate.</p>
+<p>Let’s compare the learning curve of our model with several choices of learning rates. Run the cell below. This should take about 1 minute. Feel free also to try different values than the three we have initialized the <code>learning_rates</code> variable to contain, and see what happens. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">learning_rates = [<span class="number">0.01</span>, <span class="number">0.001</span>, <span class="number">0.0001</span>]</span><br><span class="line">models = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> learning_rates:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"learning rate is: "</span> + str(i))</span><br><span class="line">    models[str(i)] = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = <span class="number">1500</span>, learning_rate = i, print_cost = <span class="keyword">False</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'\n'</span> + <span class="string">"-------------------------------------------------------"</span> + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> learning_rates:</span><br><span class="line">    plt.plot(np.squeeze(models[str(i)][<span class="string">"costs"</span>]), label= str(models[str(i)][<span class="string">"learning_rate"</span>]))</span><br><span class="line"></span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'iterations'</span>)</span><br><span class="line"></span><br><span class="line">legend = plt.legend(loc=<span class="string">'upper center'</span>, shadow=<span class="keyword">True</span>)</span><br><span class="line">frame = legend.get_frame()</span><br><span class="line">frame.set_facecolor(<span class="string">'0.90'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>learning rate is: 0.01
+train accuracy: 99.52153110047847 %
+test accuracy: 68.0 %
+
+-------------------------------------------------------
+
+learning rate is: 0.001
+train accuracy: 88.99521531100478 %
+test accuracy: 64.0 %
+
+-------------------------------------------------------
+
+learning rate is: 0.0001
+train accuracy: 68.42105263157895 %
+test accuracy: 36.0 %
+
+-------------------------------------------------------
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-80213451e0169d1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_51_1.png"></p>
+<p><strong>Interpretation</strong>: </p>
+<ul>
+<li>Different learning rates give different costs and thus different predictions results.</li>
+<li>If the learning rate is too large (0.01), the cost may oscillate up and down. It may even diverge (though in this example, using 0.01 still eventually ends up at a good value for the cost). </li>
+<li>A lower cost doesn’t mean a better model. You have to check if there is possibly overfitting. It happens when the training accuracy is a lot higher than the test accuracy.</li>
+<li>In deep learning, we usually recommend that you: <ul>
+<li>Choose the learning rate that better minimizes the cost function.</li>
+<li>If your model overfits, use other techniques to reduce overfitting. (We’ll talk about this in later videos.) </li>
+</ul>
+</li>
+</ul>
+<h2 id="7-Test-with-your-own-image-optional-ungraded-exercise"><a href="#7-Test-with-your-own-image-optional-ungraded-exercise" class="headerlink" title="7 - Test with your own image (optional/ungraded exercise)"></a>7 - Test with your own image (optional/ungraded exercise)</h2><p>Congratulations on finishing this assignment. You can use your own image and see the output of your model. To do that:</p>
+<pre><code>1. Click on &quot;File&quot; in the upper bar of this notebook, then click &quot;Open&quot; to go on your Coursera Hub.
+2. Add your image to this Jupyter Notebook&apos;s directory, in the &quot;images&quot; folder
+3. Change your image&apos;s name in the following code
+4. Run the code and check if the algorithm is right (1 = cat, 0 = non-cat)!
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## START CODE HERE ## (PUT YOUR IMAGE NAME) </span></span><br><span class="line">my_image = <span class="string">"cat_in_iran.jpg"</span>   <span class="comment"># change this to the name of your image file </span></span><br><span class="line"><span class="comment">## END CODE HERE ##</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># We preprocess the image to fit your algorithm.</span></span><br><span class="line">fname = <span class="string">"images/"</span> + my_image</span><br><span class="line">image = np.array(ndimage.imread(fname, flatten=<span class="keyword">False</span>))</span><br><span class="line">my_image = scipy.misc.imresize(image, size=(num_px,num_px)).reshape((<span class="number">1</span>, num_px*num_px*<span class="number">3</span>)).T</span><br><span class="line">my_predicted_image = predict(d[<span class="string">"w"</span>], d[<span class="string">"b"</span>], my_image)</span><br><span class="line"></span><br><span class="line">plt.imshow(image)</span><br><span class="line">print(<span class="string">"y = "</span> + str(np.squeeze(my_predicted_image)) + <span class="string">", your algorithm predicts a \""</span> + classes[int(np.squeeze(my_predicted_image)),].decode(<span class="string">"utf-8"</span>) +  <span class="string">"\" picture."</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>D:\Anaconda3\envs\Tensorflow\lib\site-packages\ipykernel_launcher.py:7: DeprecationWarning: `imread` is deprecated!
+`imread` is deprecated in SciPy 1.0.0.
+Use ``matplotlib.pyplot.imread`` instead.
+  import sys
+D:\Anaconda3\envs\Tensorflow\lib\site-packages\ipykernel_launcher.py:8: DeprecationWarning: `imresize` is deprecated!
+`imresize` is deprecated in SciPy 1.0.0, and will be removed in 1.2.0.
+Use ``skimage.transform.resize`` instead.
+</code></pre><p>​    </p>
+<pre><code>y = 1.0, your algorithm predicts a &quot;cat&quot; picture.
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-5421303c442b4e4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="output_54_2.png"></p>
+<p><font color="green"><br><strong>What to remember from this assignment:</strong></font></p>
+<ol>
+<li>Preprocessing the dataset is important.</li>
+<li>You implemented each function separately: initialize(), propagate(), optimize(). Then you built a model().</li>
+<li>Tuning the learning rate (which is an example of a “hyperparameter”) can make a big difference to the algorithm. You will see more examples of this later in this course!</li>
+</ol>
+<p>Finally, if you’d like, we invite you to try different things on this Notebook. Make sure you submit before trying anything. Once you submit, things you can play with include:</p>
+<pre><code>- Play with the learning rate and the number of iterations
+- Try different initialization methods and compare the results
+- Test other preprocessings (center the data, or divide each row by its standard deviation)
+</code></pre><p>Bibliography:</p>
+<ul>
+<li><a href="http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/" target="_blank" rel="noopener">http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/</a></li>
+<li><a href="https://stats.stackexchange.com/questions/211436/why-do-we-normalize-images-by-subtracting-the-datasets-image-mean-and-not-the-c" target="_blank" rel="noopener">https://stats.stackexchange.com/questions/211436/why-do-we-normalize-images-by-subtracting-the-datasets-image-mean-and-not-the-c</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/01/180601-异常检测和推荐系统/" rel="next" title="吴恩达机器学习作业Python实现(八)：异常检测和推荐系统">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习作业Python实现(八)：异常检测和推荐系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Cowry" />
+            
+              <p class="site-author-name" itemprop="name">Cowry</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cowry5" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2658018575" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/Cowry5" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Logistic-Regression-with-a-Neural-Network-mindset"><span class="nav-number">1.</span> <span class="nav-text">Logistic Regression with a Neural Network mindset</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Packages"><span class="nav-number">1.1.</span> <span class="nav-text">1 - Packages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Overview-of-the-Problem-set"><span class="nav-number">1.2.</span> <span class="nav-text">2 - Overview of the Problem set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-General-Architecture-of-the-learning-algorithm"><span class="nav-number">1.3.</span> <span class="nav-text">3 - General Architecture of the learning algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Building-the-parts-of-our-algorithm"><span class="nav-number">1.4.</span> <span class="nav-text">4 - Building the parts of our algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Helper-functions"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 - Helper functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Initializing-parameters"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 - Initializing parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Forward-and-Backward-propagation"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 - Forward and Backward propagation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-Optimization"><span class="nav-number">1.4.4.</span> <span class="nav-text">d) Optimization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Merge-all-functions-into-a-model"><span class="nav-number">1.5.</span> <span class="nav-text">5 - Merge all functions into a model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Further-analysis-optional-ungraded-exercise"><span class="nav-number">1.6.</span> <span class="nav-text">6 - Further analysis (optional/ungraded exercise)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Choice-of-learning-rate"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">Choice of learning rate</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Test-with-your-own-image-optional-ungraded-exercise"><span class="nav-number">1.7.</span> <span class="nav-text">7 - Test with your own image (optional/ungraded exercise)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cowry</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Words total count&#58;</span>
+    
+    <span title="Words total count">27.1k</span>
+  
+</div>
+
+<div class="busuanzi-count">
+  <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>     
+    </span>
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>    
+    </span>
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mrmD4pdG7Ueu5OlKl2v1Ig47-9Nh9j0Va", "T6pUVA4kFI5NzhTwXhWePPS8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
