@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta https-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta https-equiv="Cache-Control" content="no-transform" />
+<meta https-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Deep Neural Network for Image Classification: ApplicationWhen you finish this, you will have finished the last programming assignment of Week 4, and also the last programming assignment of this course">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification">
+<meta property="og:url" content="https://yoursite.com/2018/06/05/180605-吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification/index.html">
+<meta property="og:site_name" content="Cowry">
+<meta property="og:description" content="Deep Neural Network for Image Classification: ApplicationWhen you finish this, you will have finished the last programming assignment of Week 4, and also the last programming assignment of this course">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-e74903fc287db357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-3cca26de5b755d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-436f58c8cbf7e394.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-53a8f7c2ddc8f9bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-92198b2d531f7c9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-c2996dfcf3995dbf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://yoursite.com/2018/06/05/180605-吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep%20Neural%20Network%20for%20Image%20Classification/output_30_1.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-d5df6433561ead90.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11023262-618c13298ce5756b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-06-05T14:34:29.010Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification">
+<meta name="twitter:description" content="Deep Neural Network for Image Classification: ApplicationWhen you finish this, you will have finished the last programming assignment of Week 4, and also the last programming assignment of this course">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11023262-e74903fc287db357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2018/06/05/180605-吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification/"/>
+
+
+
+
+
+  <title>吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification | Cowry</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9aa1b9dca27042171881932a6fb39c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="https://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cowry</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Live your life with passion!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="https://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2018/06/05/180605-吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Cowry">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Cowry">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-05T22:31:31+08:00">
+                2018-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/05/180605-吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification/" class="leancloud_visitors" data-flag-title="吴恩达深度学习-神经网络和深度学习-第四周(二)：Deep Neural Network for Image Classification">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count&#58;</span>
+                
+                <span title="Words count">
+                  2,952
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Deep-Neural-Network-for-Image-Classification-Application"><a href="#Deep-Neural-Network-for-Image-Classification-Application" class="headerlink" title="Deep Neural Network for Image Classification: Application"></a>Deep Neural Network for Image Classification: Application</h1><p>When you finish this, you will have finished the last programming assignment of Week 4, and also the last programming assignment of this course! </p>
+<p>You will use use the functions you’d implemented in the previous assignment to build a deep network, and apply it to cat vs non-cat classification. Hopefully, you will see an improvement in accuracy relative to your previous logistic regression implementation.  </p>
+<p><strong>After this assignment you will be able to:</strong></p>
+<ul>
+<li>Build and apply a deep neural network to supervised learning. </li>
+</ul>
+<p>Let’s get started!</p>
+<h2 id="1-Packages"><a href="#1-Packages" class="headerlink" title="1 - Packages"></a>1 - Packages</h2><p>Let’s first import all the packages that you will need during this assignment. </p>
+<ul>
+<li><a href="www.numpy.org">numpy</a> is the fundamental package for scientific computing with Python.</li>
+<li><a href="http://matplotlib.org" target="_blank" rel="noopener">matplotlib</a> is a library to plot graphs in Python.</li>
+<li><a href="http://www.h5py.org" target="_blank" rel="noopener">h5py</a> is a common package to interact with a dataset that is stored on an H5 file.</li>
+<li><a href="http://www.pythonware.com/products/pil/" target="_blank" rel="noopener">PIL</a> and <a href="https://www.scipy.org/" target="_blank" rel="noopener">scipy</a> are used here to test your model with your own picture at the end.</li>
+<li>dnn_app_utils provides the functions implemented in the “Building your Deep Neural Network: Step by Step” assignment to this notebook.</li>
+<li>np.random.seed(1) is used to keep all the random function calls consistent. It will help us grade your work.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> scipy</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> ndimage</span><br><span class="line"><span class="keyword">from</span> dnn_app_utils_v2 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line">plt.rcParams[<span class="string">'figure.figsize'</span>] = (<span class="number">5.0</span>, <span class="number">4.0</span>) <span class="comment"># set default size of plots</span></span><br><span class="line">plt.rcParams[<span class="string">'image.interpolation'</span>] = <span class="string">'nearest'</span></span><br><span class="line">plt.rcParams[<span class="string">'image.cmap'</span>] = <span class="string">'gray'</span></span><br><span class="line"></span><br><span class="line">%load_ext autoreload</span><br><span class="line">%autoreload <span class="number">2</span></span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="2-Dataset"><a href="#2-Dataset" class="headerlink" title="2 - Dataset"></a>2 - Dataset</h2><p>You will use the same “Cat vs non-Cat” dataset as in “Logistic Regression as a Neural Network” (Assignment 2). The model you had built had 70% test accuracy on classifying cats vs non-cats images. Hopefully, your new model will perform a better!</p>
+<p><strong>Problem Statement</strong>: You are given a dataset (“data.h5”) containing:</p>
+<pre><code>- a training set of m_train images labelled as cat (1) or non-cat (0)
+- a test set of m_test images labelled as cat and non-cat
+- each image is of shape (num_px, num_px, 3) where 3 is for the 3 channels (RGB).
+</code></pre><p>Let’s get more familiar with the dataset. Load the data by running the cell below.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_x_orig, train_y, test_x_orig, test_y, classes = load_data()</span><br></pre></td></tr></table></figure>
+<p>The following code will show you an image in the dataset. Feel free to change the index and re-run the cell multiple times to see other images. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example of a picture</span></span><br><span class="line">index = <span class="number">13</span></span><br><span class="line">plt.imshow(train_x_orig[index])</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(train_y[<span class="number">0</span>,index]) + <span class="string">". It's a "</span> + classes[train_y[<span class="number">0</span>,index]].decode(<span class="string">"utf-8"</span>) +  <span class="string">" picture."</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>y = 1. It&apos;s a cat picture.
+</code></pre><p>​    </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-e74903fc287db357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Explore your dataset </span></span><br><span class="line">m_train = train_x_orig.shape[<span class="number">0</span>]</span><br><span class="line">num_px = train_x_orig.shape[<span class="number">1</span>]</span><br><span class="line">m_test = test_x_orig.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Number of training examples: "</span> + str(m_train))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Number of testing examples: "</span> + str(m_test))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Each image is of size: ("</span> + str(num_px) + <span class="string">", "</span> + str(num_px) + <span class="string">", 3)"</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_x_orig shape: "</span> + str(train_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_y shape: "</span> + str(train_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_x_orig shape: "</span> + str(test_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_y shape: "</span> + str(test_y.shape))</span><br></pre></td></tr></table></figure>
+<pre><code>Number of training examples: 209
+Number of testing examples: 50
+Each image is of size: (64, 64, 3)
+train_x_orig shape: (209, 64, 64, 3)
+train_y shape: (1, 209)
+test_x_orig shape: (50, 64, 64, 3)
+test_y shape: (1, 50)
+</code></pre><p>As usual, you reshape and standardize the images before feeding them to the network. The code is given in the cell below.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-3cca26de5b755d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<caption><center> <u>Figure 1</u>: Image to vector conversion. <br> </center></caption>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reshape the training and test examples</span></span><br><span class="line"><span class="comment"># 这里转置成 (n, m) ，以便喂给神经网络</span></span><br><span class="line">train_x_flatten = train_x_orig.reshape(train_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T   <span class="comment"># The "-1" makes reshape flatten the remaining dimensions</span></span><br><span class="line">test_x_flatten = test_x_orig.reshape(test_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"></span><br><span class="line"><span class="comment"># Standardize data to have feature values between 0 and 1.</span></span><br><span class="line">train_x = train_x_flatten/<span class="number">255.</span></span><br><span class="line">test_x = test_x_flatten/<span class="number">255.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"train_x's shape: "</span> + str(train_x.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"test_x's shape: "</span> + str(test_x.shape))</span><br></pre></td></tr></table></figure>
+<pre><code>train_x&apos;s shape: (12288, 209)
+test_x&apos;s shape: (12288, 50)
+</code></pre><p>$12,288$ equals $64 \times 64 \times 3$ which is the size of one reshaped image vector.</p>
+<h2 id="3-Architecture-of-your-model"><a href="#3-Architecture-of-your-model" class="headerlink" title="3 - Architecture of your model"></a>3 - Architecture of your model</h2><p>Now that you are familiar with the dataset, it is time to build a deep neural network to distinguish cat images from non-cat images.</p>
+<p>You will build two different models:</p>
+<ul>
+<li>A 2-layer neural network</li>
+<li>An L-layer deep neural network</li>
+</ul>
+<p>You will then compare the performance of these models, and also try out different values for $L$. </p>
+<p>Let’s look at the two architectures.</p>
+<h3 id="3-1-2-layer-neural-network"><a href="#3-1-2-layer-neural-network" class="headerlink" title="3.1 - 2-layer neural network"></a>3.1 - 2-layer neural network</h3><p><img src="https://upload-images.jianshu.io/upload_images/11023262-436f58c8cbf7e394.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><caption><center> <u>Figure 2</u>: 2-layer neural network. <br> The model can be summarized as: <strong><em>INPUT -&gt; LINEAR -&gt; RELU -&gt; LINEAR -&gt; SIGMOID -&gt; OUTPUT</em></strong>. </center></caption><br>
+<u>Detailed Architecture of figure 2</u>:
+- The input is a (64,64,3) image which is flattened to a vector of size $(12288,1)$. 
+- The corresponding vector: $[x_0,x_1,...,x_{12287}]^T$ is then multiplied by the weight matrix $W^{[1]}$ of size $(n^{[1]}, 12288)$.
+- You then add a bias term and take its relu to get the following vector: $[a_0^{[1]}, a_1^{[1]},..., a_{n^{[1]}-1}^{[1]}]^T$.
+- You then repeat the same process.
+- You multiply the resulting vector by $W^{[2]}$ and add your intercept (bias). 
+- Finally, you take the sigmoid of the result. If it is greater than 0.5, you classify it to be a cat.
+</p>
+<h3 id="3-2-L-layer-deep-neural-network"><a href="#3-2-L-layer-deep-neural-network" class="headerlink" title="3.2 - L-layer deep neural network"></a>3.2 - L-layer deep neural network</h3><p>It is hard to represent an L-layer deep neural network with the above representation. However, here is a simplified network representation:</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-53a8f7c2ddc8f9bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><caption><center> <u>Figure 3</u>: L-layer neural network. <br> The model can be summarized as: <strong><em>[LINEAR -&gt; RELU] $\times$ (L-1) -&gt; LINEAR -&gt; SIGMOID</em></strong></center></caption><br>
+<u>Detailed Architecture of figure 3</u>:
+- The input is a (64,64,3) image which is flattened to a vector of size (12288,1).
+- The corresponding vector: $[x_0,x_1,...,x_{12287}]^T$ is then multiplied by the weight matrix $W^{[1]}$ and then you add the intercept $b^{[1]}$. The result is called the linear unit.
+- Next, you take the relu of the linear unit. This process could be repeated several times for each $(W^{[l]}, b^{[l]})$ depending on the model architecture.
+- Finally, you take the sigmoid of the final linear unit. If it is greater than 0.5, you classify it to be a cat.
+</p>
+<h3 id="3-3-General-methodology"><a href="#3-3-General-methodology" class="headerlink" title="3.3 - General methodology"></a>3.3 - General methodology</h3><p>As usual you will follow the Deep Learning methodology to build the model:</p>
+<pre><code>1. Initialize parameters / Define hyperparameters
+2. Loop for num_iterations:
+    a. Forward propagation
+    b. Compute cost function
+    c. Backward propagation
+    d. Update parameters (using parameters, and grads from backprop) 
+4. Use trained parameters to predict labels
+</code></pre><p>Let’s now implement those two models!</p>
+<h2 id="4-Two-layer-neural-network"><a href="#4-Two-layer-neural-network" class="headerlink" title="4 - Two-layer neural network"></a>4 - Two-layer neural network</h2><p><strong>Question</strong>:  Use the helper functions you have implemented in the previous assignment to build a 2-layer neural network with the following structure: <em>LINEAR -&gt; RELU -&gt; LINEAR -&gt; SIGMOID</em>. The functions you may need and their inputs are:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_parameters</span><span class="params">(n_x, n_h, n_y)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> parameters </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_activation_forward</span><span class="params">(A_prev, W, b, activation)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> A, cache</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span><span class="params">(AL, Y)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> cost</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_activation_backward</span><span class="params">(dA, cache, activation)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> dA_prev, dW, db</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_parameters</span><span class="params">(parameters, grads, learning_rate)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### CONSTANTS DEFINING THE MODEL ####</span></span><br><span class="line">n_x = <span class="number">12288</span>     <span class="comment"># num_px * num_px * 3</span></span><br><span class="line">n_h = <span class="number">7</span></span><br><span class="line">n_y = <span class="number">1</span></span><br><span class="line">layers_dims = (n_x, n_h, n_y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: two_layer_model</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_layer_model</span><span class="params">(X, Y, layers_dims, learning_rate = <span class="number">0.0075</span>, num_iterations = <span class="number">3000</span>, print_cost=False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implements a two-layer neural network: LINEAR-&gt;RELU-&gt;LINEAR-&gt;SIGMOID.</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    X -- input data, of shape (n_x, number of examples)</span></span><br><span class="line"><span class="string">    Y -- true "label" vector (containing 0 if cat, 1 if non-cat), of shape (1, number of examples)</span></span><br><span class="line"><span class="string">    layers_dims -- dimensions of the layers (n_x, n_h, n_y)</span></span><br><span class="line"><span class="string">    num_iterations -- number of iterations of the optimization loop</span></span><br><span class="line"><span class="string">    learning_rate -- learning rate of the gradient descent update rule</span></span><br><span class="line"><span class="string">    print_cost -- If set to True, this will print the cost every 100 iterations </span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    parameters -- a dictionary containing W1, W2, b1, and b2</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    grads = &#123;&#125;</span><br><span class="line">    costs = []                              <span class="comment"># to keep track of the cost</span></span><br><span class="line">    m = X.shape[<span class="number">1</span>]                           <span class="comment"># number of examples</span></span><br><span class="line">    (n_x, n_h, n_y) = layers_dims</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Initialize parameters dictionary, by calling one of the functions you'd previously implemented</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">    parameters = initialize_parameters(n_x, n_h, n_y)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Get W1, b1, W2 and b2 from the dictionary parameters.</span></span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    b1 = parameters[<span class="string">"b1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b2 = parameters[<span class="string">"b2"</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Loop (gradient descent)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_iterations):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Forward propagation: LINEAR -&gt; RELU -&gt; LINEAR -&gt; SIGMOID. Inputs: "X, W1, b1". Output: "A1, cache1, A2, cache2".</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 2 lines of code)</span></span><br><span class="line">        A1, cache1 = linear_activation_forward(X, W1, b1, <span class="string">'relu'</span>)</span><br><span class="line">        A2, cache2 = linear_activation_forward(A1, W2, b2, <span class="string">'sigmoid'</span>)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Compute cost</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">        cost = compute_cost(A2, Y)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Initializing backward propagation</span></span><br><span class="line">        dA2 = - (np.divide(Y, A2) - np.divide(<span class="number">1</span> - Y, <span class="number">1</span> - A2))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Backward propagation. Inputs: "dA2, cache2, cache1". Outputs: "dA1, dW2, db2; also dA0 (not used), dW1, db1".</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 2 lines of code)</span></span><br><span class="line">        dA1, dW2, db2 = linear_activation_backward(dA2, cache2, <span class="string">'sigmoid'</span>)</span><br><span class="line">        dA0, dW1, db1 = linear_activation_backward(dA1, cache1, <span class="string">'relu'</span>)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Set grads['dWl'] to dW1, grads['db1'] to db1, grads['dW2'] to dW2, grads['db2'] to db2</span></span><br><span class="line">        grads[<span class="string">'dW1'</span>] = dW1</span><br><span class="line">        grads[<span class="string">'db1'</span>] = db1</span><br><span class="line">        grads[<span class="string">'dW2'</span>] = dW2</span><br><span class="line">        grads[<span class="string">'db2'</span>] = db2</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Update parameters.</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (approx. 1 line of code)</span></span><br><span class="line">        parameters = update_parameters(parameters, grads, learning_rate)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Retrieve W1, b1, W2, b2 from parameters</span></span><br><span class="line">        W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">        b1 = parameters[<span class="string">"b1"</span>]</span><br><span class="line">        W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">        b2 = parameters[<span class="string">"b2"</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Print the cost every 100 training example</span></span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"Cost after iteration &#123;&#125;: &#123;&#125;"</span>.format(i, np.squeeze(cost)))</span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            costs.append(cost)</span><br><span class="line">       </span><br><span class="line">    <span class="comment"># plot the cost</span></span><br><span class="line"></span><br><span class="line">    plt.plot(np.squeeze(costs))</span><br><span class="line">    plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'iterations (per tens)'</span>)</span><br><span class="line">    plt.title(<span class="string">"Learning rate ="</span> + str(learning_rate))</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure>
+<p>Run the cell below to train your parameters. See if your model runs. The cost should be decreasing. It may take up to 5 minutes to run 2500 iterations. Check if the “Cost after iteration 0” matches the expected output below, if not click on the square (⬛) on the upper bar of the notebook to stop the cell and try to find your error.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = <span class="number">2500</span>, print_cost=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-92198b2d531f7c9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>Expected Output</strong>:</p>
+<table><br>    <tr><br>        <td> <strong>Cost after iteration 0</strong></td><br>        <td> 0.6930497356599888 </td><br>    </tr><br>    <tr><br>        <td> <strong>Cost after iteration 100</strong></td><br>        <td> 0.6464320953428849 </td><br>    </tr><br>    <tr><br>        <td> <strong>…</strong></td><br>        <td> … </td><br>    </tr><br>    <tr><br>        <td> <strong>Cost after iteration 2400</strong></td><br>        <td> 0.048554785628770206 </td><br>    </tr><br></table>
+
+<p>Good thing you built a vectorized implementation! Otherwise it might have taken 10 times longer to train this.</p>
+<p>Now, you can use the trained parameters to classify images from the dataset. To see your predictions on the training and test sets, run the cell below.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predictions_train = predict(train_x, train_y, parameters)</span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy: 0.9999999999999998
+</code></pre><p>​    </p>
+<p><strong>Expected Output</strong>:</p>
+<table><br>    <tr><br>        <td> <strong>Accuracy</strong></td><br>        <td> 1.0 </td><br>    </tr><br></table>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predictions_test = predict(test_x, test_y, parameters)</span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy: 0.72
+</code></pre><p>​    </p>
+<p><strong>Expected Output</strong>:</p>
+<table><br>    <tr><br>        <td> <strong>Accuracy</strong></td><br>        <td> 0.72 </td><br>    </tr><br></table>
+
+<p><strong>Note</strong>: You may notice that running the model on fewer iterations (say 1500) gives better accuracy on the test set. This is called “early stopping” and we will talk about it in the next course. Early stopping is a way to prevent overfitting. </p>
+<p>Congratulations! It seems that your 2-layer neural network has better performance (72%) than the logistic regression implementation (70%, assignment week 2). Let’s see if you can do even better with an $L$-layer model.</p>
+<h2 id="5-L-layer-Neural-Network"><a href="#5-L-layer-Neural-Network" class="headerlink" title="5 - L-layer Neural Network"></a>5 - L-layer Neural Network</h2><p><strong>Question</strong>: Use the helper functions you have implemented previously to build an $L$-layer neural network with the following structure: <em>[LINEAR -&gt; RELU]$\times$(L-1) -&gt; LINEAR -&gt; SIGMOID</em>. The functions you may need and their inputs are:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_parameters_deep</span><span class="params">(layer_dims)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> parameters </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">L_model_forward</span><span class="params">(X, parameters)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> AL, caches</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span><span class="params">(AL, Y)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> cost</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">L_model_backward</span><span class="params">(AL, Y, caches)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> grads</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_parameters</span><span class="params">(parameters, grads, learning_rate)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### CONSTANTS ###</span></span><br><span class="line">layers_dims = [<span class="number">12288</span>, <span class="number">20</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">1</span>] <span class="comment">#  5-layer model</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: L_layer_model</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">L_layer_model</span><span class="params">(X, Y, layers_dims, learning_rate = <span class="number">0.0075</span>, num_iterations = <span class="number">3000</span>, print_cost=False)</span>:</span><span class="comment">#lr was 0.009</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implements a L-layer neural network: [LINEAR-&gt;RELU]*(L-1)-&gt;LINEAR-&gt;SIGMOID.</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    X -- data, numpy array of shape (number of examples, num_px * num_px * 3)</span></span><br><span class="line"><span class="string">    Y -- true "label" vector (containing 0 if cat, 1 if non-cat), of shape (1, number of examples)</span></span><br><span class="line"><span class="string">    layers_dims -- list containing the input size and each layer size, of length (number of layers + 1).</span></span><br><span class="line"><span class="string">    learning_rate -- learning rate of the gradient descent update rule</span></span><br><span class="line"><span class="string">    num_iterations -- number of iterations of the optimization loop</span></span><br><span class="line"><span class="string">    print_cost -- if True, it prints the cost every 100 steps</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    parameters -- parameters learnt by the model. They can then be used to predict.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    costs = []                         <span class="comment"># keep track of cost</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Parameters initialization.</span></span><br><span class="line">    <span class="comment">### START CODE HERE ###</span></span><br><span class="line">    parameters = initialize_parameters_deep(layers_dims)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Loop (gradient descent)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_iterations):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Forward propagation: [LINEAR -&gt; RELU]*(L-1) -&gt; LINEAR -&gt; SIGMOID.</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">        AL, caches = L_model_forward(X, parameters)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Compute cost.</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">        cost = compute_cost(AL, Y)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">    </span><br><span class="line">        <span class="comment"># Backward propagation.</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">        grads = L_model_backward(AL, Y, caches)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># Update parameters.</span></span><br><span class="line">        <span class="comment">### START CODE HERE ### (≈ 1 line of code)</span></span><br><span class="line">        parameters = update_parameters(parameters, grads, learning_rate)</span><br><span class="line">        <span class="comment">### END CODE HERE ###</span></span><br><span class="line">                </span><br><span class="line">        <span class="comment"># Print the cost every 100 training example</span></span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">"Cost after iteration %i: %f"</span> %(i, cost))</span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            costs.append(cost)</span><br><span class="line">            </span><br><span class="line">    <span class="comment"># plot the cost</span></span><br><span class="line">    plt.plot(np.squeeze(costs))</span><br><span class="line">    plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'iterations (per tens)'</span>)</span><br><span class="line">    plt.title(<span class="string">"Learning rate ="</span> + str(learning_rate))</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure>
+<p>You will now train the model as a 5-layer neural network. </p>
+<p>Run the cell below to train your model. The cost should decrease on every iteration. It may take up to 5 minutes to run 2500 iterations. Check if the “Cost after iteration 0” matches the expected output below, if not click on the square (⬛) on the upper bar of the notebook to stop the cell and try to find your error.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parameters = L_layer_model(train_x, train_y, layers_dims, num_iterations = <span class="number">2500</span>, print_cost = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-c2996dfcf3995dbf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><img src="output_30_1.png" alt="png"></p>
+<p><strong>Expected Output</strong>:</p>
+<table><br>    <tr><br>        <td> <strong>Cost after iteration 0</strong></td><br>        <td> 0.771749 </td><br>    </tr><br>    <tr><br>        <td> <strong>Cost after iteration 100</strong></td><br>        <td> 0.672053 </td><br>    </tr><br>    <tr><br>        <td> <strong>…</strong></td><br>        <td> … </td><br>    </tr><br>    <tr><br>        <td> <strong>Cost after iteration 2400</strong></td><br>        <td> 0.092878 </td><br>    </tr><br></table>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pred_train = predict(train_x, train_y, parameters)</span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy: 0.9856459330143539
+</code></pre><p>​    </p>
+<table><br>    <tr><br>    <td><br>    <strong>Train Accuracy</strong><br>    </td><br>    <td><br>    0.985645933014<br>    </td><br>    </tr><br></table>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pred_test = predict(test_x, test_y, parameters)</span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy: 0.8
+</code></pre><p>​    </p>
+<p><strong>Expected Output</strong>:</p>
+<table><br>    <tr><br>        <td> <strong>Test Accuracy</strong></td><br>        <td> 0.8 </td><br>    </tr><br></table>
+
+<p>Congrats! It seems that your 5-layer neural network has better performance (80%) than your 2-layer neural network (72%) on the same test set. </p>
+<p>This is good performance for this task. Nice job! </p>
+<p>Though in the next course on “Improving deep neural networks” you will learn how to obtain even higher accuracy by systematically searching for better hyperparameters (learning_rate, layers_dims, num_iterations, and others you’ll also learn in the next course). </p>
+<h2 id="6-Results-Analysis"><a href="#6-Results-Analysis" class="headerlink" title="6) Results Analysis"></a>6) Results Analysis</h2><p>First, let’s take a look at some images the L-layer model labeled incorrectly. This will show a few mislabeled images. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_mislabeled_images(classes, test_x, test_y, pred_test)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/11023262-d5df6433561ead90.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>A few type of images the model tends to do poorly on include:</strong> </p>
+<ul>
+<li>Cat body in an unusual position</li>
+<li>Cat appears against a background of a similar color</li>
+<li>Unusual cat color and species</li>
+<li>Camera Angle</li>
+<li>Brightness of the picture</li>
+<li>Scale variation (cat is very large or small in image) </li>
+</ul>
+<h2 id="7-Test-with-your-own-image-optional-ungraded-exercise"><a href="#7-Test-with-your-own-image-optional-ungraded-exercise" class="headerlink" title="7) Test with your own image (optional/ungraded exercise)"></a>7) Test with your own image (optional/ungraded exercise)</h2><p>Congratulations on finishing this assignment. You can use your own image and see the output of your model. To do that:</p>
+<pre><code>1. Click on &quot;File&quot; in the upper bar of this notebook, then click &quot;Open&quot; to go on your Coursera Hub.
+2. Add your image to this Jupyter Notebook&apos;s directory, in the &quot;images&quot; folder
+3. Change your image&apos;s name in the following code
+4. Run the code and check if the algorithm is right (1 = cat, 0 = non-cat)!
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## START CODE HERE ##</span></span><br><span class="line">my_image = <span class="string">"my_image.jpg"</span> <span class="comment"># change this to the name of your image file </span></span><br><span class="line">my_label_y = [<span class="number">1</span>] <span class="comment"># the true class of your image (1 -&gt; cat, 0 -&gt; non-cat)</span></span><br><span class="line"><span class="comment">## END CODE HERE ##</span></span><br><span class="line"></span><br><span class="line">fname = <span class="string">"images/"</span> + my_image</span><br><span class="line">image = np.array(ndimage.imread(fname, flatten=<span class="keyword">False</span>))</span><br><span class="line">my_image = scipy.misc.imresize(image, size=(num_px,num_px)).reshape((num_px*num_px*<span class="number">3</span>,<span class="number">1</span>))</span><br><span class="line">my_predicted_image = predict(my_image, my_label_y, parameters)</span><br><span class="line"></span><br><span class="line">plt.imshow(image)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(np.squeeze(my_predicted_image)) + <span class="string">", your L-layer model predicts a \""</span> + classes[int(np.squeeze(my_predicted_image)),].decode(<span class="string">"utf-8"</span>) +  <span class="string">"\" picture."</span>)</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<pre><code>Accuracy: 1.0
+y = 1.0, your L-layer model predicts a &quot;cat&quot; picture.
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/11023262-618c13298ce5756b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>References</strong>:</p>
+<ul>
+<li>for auto-reloading external module: <a href="http://stackoverflow.com/questions/1907993/autoreload-of-modules-in-ipython" target="_blank" rel="noopener">http://stackoverflow.com/questions/1907993/autoreload-of-modules-in-ipython</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Cowry wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅公众号，与我随时交流哦~</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/05/180605-吴恩达深度学习-神经网络和深度学习-第四周(一)：Building your Deep Neural Network/" rel="next" title="吴恩达深度学习-神经网络和深度学习-第四周(一)：Building your Deep Neural Network">
+                <i class="fa fa-chevron-left"></i> 吴恩达深度学习-神经网络和深度学习-第四周(一)：Building your Deep Neural Network
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjQwMy8xMjkzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Cowry" />
+            
+              <p class="site-author-name" itemprop="name">Cowry</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cowry5" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2658018575" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/Cowry5" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Deep-Neural-Network-for-Image-Classification-Application"><span class="nav-number">1.</span> <span class="nav-text">Deep Neural Network for Image Classification: Application</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Packages"><span class="nav-number">1.1.</span> <span class="nav-text">1 - Packages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Dataset"><span class="nav-number">1.2.</span> <span class="nav-text">2 - Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Architecture-of-your-model"><span class="nav-number">1.3.</span> <span class="nav-text">3 - Architecture of your model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-layer-neural-network"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 - 2-layer neural network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-L-layer-deep-neural-network"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 - L-layer deep neural network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-General-methodology"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 - General methodology</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Two-layer-neural-network"><span class="nav-number">1.4.</span> <span class="nav-text">4 - Two-layer neural network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-L-layer-Neural-Network"><span class="nav-number">1.5.</span> <span class="nav-text">5 - L-layer Neural Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Results-Analysis"><span class="nav-number">1.6.</span> <span class="nav-text">6) Results Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Test-with-your-own-image-optional-ungraded-exercise"><span class="nav-number">1.7.</span> <span class="nav-text">7) Test with your own image (optional/ungraded exercise)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cowry</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Words total count&#58;</span>
+    
+    <span title="Words total count">39.8k</span>
+  
+</div>
+
+<div class="busuanzi-count">
+  <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>     
+    </span>
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>    
+    </span>
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mrmD4pdG7Ueu5OlKl2v1Ig47-9Nh9j0Va", "T6pUVA4kFI5NzhTwXhWePPS8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
